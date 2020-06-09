@@ -1,30 +1,60 @@
 <template>
-  <div class="SelectOperation">
-    <label>Select an Operation:</label>
-    <select v-model="type" name="types" id="types">
-      <option :key="ty" v-for="ty in types">
-        {{ ty }}
-      </option>
-    </select>
-    <label>Data:</label>
-    <div class="Data">
-      <label for="text">Name:</label>
-      <input v-model="name" type="text" id="OperationName" />
-      <label for="categories">Category:</label>
-      <select v-model="category" name="categories" id="categories">
-        <option :key="cate" v-for="cate in categories">
-          {{ cate }}
-        </option>
-      </select>
-      <label for="text">Amount:</label>
-      <input v-model="amount" type="text" id="Amount" />
-    </div>
-    <div>
-      <router-link to="/ModifyDeleteItem" tag="button"
-        >Modify/Delete existing Item</router-link
-      >
-      <button @click="registerItem" class="button save">Save</button>
-    </div>
+  <div class="register">
+    <footer id="footer">
+      <div class="inner">
+        <label>Select an Operation:</label>
+        <select v-model="type" id="types" class="text option">
+          <option :key="ty" v-for="ty in types">
+            {{ ty }}
+          </option>
+        </select>
+        <h3>Information:</h3>
+
+        <form action="#" method="post">
+          <div class="field half first">
+            <label for="name">Name</label>
+            <input
+              name="name"
+              id="name"
+              type="text"
+              placeholder="Name"
+              v-model="name"
+            />
+          </div>
+          <div class="field half">
+            <label for="categories">Category</label>
+            <select v-model="category" id="categories" class="text option">
+              <option :key="cate" v-for="cate in categories">
+                {{ cate }}
+              </option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="amount">Amount</label>
+            <textarea
+              v-model="amount"
+              name="amount"
+              id="amount"
+              rows="6"
+              placeholder="Amount"
+            ></textarea>
+          </div>
+          <ul class="actions">
+            <li>
+              <router-link
+                to="/ModifyDeleteItem"
+                tag="button"
+                class="button mod"
+                >Modify/Delete existing Item</router-link
+              >
+            </li>
+            <li>
+              <button @click="registerItem" class="button save">Save</button>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -70,7 +100,7 @@ export default {
         });
       }
     }
-    //<style src="./Register.css" scoped></style>
   }
 };
 </script>
+<style src="./Register.css" scoped></style>

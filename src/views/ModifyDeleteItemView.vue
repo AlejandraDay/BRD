@@ -1,49 +1,86 @@
 <template>
   <div class="SelectOperation">
-    <label>Select an Item:</label>
-    <select v-model="selectedItem" name="types" id="types">
-      <option :key="ty.name" v-for="ty in items">
-        {{ (ty.name, ty.category, ty.amount, ty.type) }}
-      </option>
-    </select>
-    <label>Data:</label>
-    <div class="Data">
-      <label for="text">Name:</label>
-      <input
-        v-model="name"
-        type="text"
-        id="OperationName"
-        placeholder="name.."
-      />
-      <label for="categories">Category:</label>
-      <select v-model="category" name="categories" id="categories">
-        <option :key="cate" v-for="cate in categories">
-          {{ cate }}
-        </option>
-      </select>
-      <label for="text">Amount:</label>
-      <input v-model="amount" type="text" id="Amount" />
-    </div>
-    <div>
-      <button @click="registerItem" class="button save">Save</button>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th :key="column" v-for="column in columns">
-            {{ column }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr :key="item.name" v-for="item in items">
-          <td>{{ item.name }}</td>
-          <td>{{ item.category }}</td>
-          <td>{{ item.amount }}</td>
-          <td>{{ item.type }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <footer id="footer">
+      <div class="inner">
+        <label>Select an Item:</label>
+        <select
+          v-model="selectedItem"
+          name="types"
+          id="types"
+          class="text option"
+        >
+          <option :key="ty.name" v-for="ty in items">
+            {{ (ty.name, ty.category, ty.amount, ty.type) }}
+          </option>
+        </select>
+        <h3>Information:</h3>
+
+        <form action="#" method="post">
+          <div class="field half first">
+            <label for="name">Name</label>
+            <input
+              name="name"
+              id="name"
+              type="text"
+              placeholder="Name"
+              v-model="name"
+            />
+          </div>
+          <div class="field half">
+            <label for="categories">Category</label>
+            <select v-model="category" id="categories" class="text option">
+              <option :key="cate" v-for="cate in categories">
+                {{ cate }}
+              </option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="amount">Amount</label>
+            <textarea
+              v-model="amount"
+              name="amount"
+              id="amount"
+              rows="6"
+              placeholder="Amount"
+            ></textarea>
+          </div>
+          <ul class="actions">
+            <li>
+              <router-link
+                to="/ModifyDeleteItem"
+                tag="button"
+                class="button mod"
+                >Modify/Delete existing Item</router-link
+              >
+            </li>
+            <li>
+              <button @click="registerItem" class="button save">Save</button>
+            </li>
+          </ul>
+        </form>
+        <div class="container-table">
+          <div class="wrap-table">
+            <table class="table">
+              <thead>
+                <tr class="row head">
+                  <th class="column" :key="column" v-for="column in columns">
+                    {{ column }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row body" :key="item.name" v-for="item in items">
+                  <td class="column">{{ item.name }}</td>
+                  <td class="column">{{ item.category }}</td>
+                  <td class="column">{{ item.amount }}</td>
+                  <td class="column">{{ item.type }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -89,7 +126,7 @@ export default {
         });
       }
     }
-    //<style src="./Register.css" scoped></style>
   }
 };
 </script>
+<style src="./Register.css" scoped></style>
