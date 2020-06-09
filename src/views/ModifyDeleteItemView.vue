@@ -1,15 +1,20 @@
 <template>
   <div class="SelectOperation">
-    <label>Select an Operation:</label>
-    <select v-model="type" name="types" id="types">
-      <option :key="ty" v-for="ty in types">
-        {{ ty }}
+    <label>Select an Item:</label>
+    <select v-model="selectedItem" name="types" id="types">
+      <option :key="ty.name" v-for="ty in items">
+        {{ (ty.name, ty.category, ty.amount, ty.type) }}
       </option>
     </select>
     <label>Data:</label>
     <div class="Data">
       <label for="text">Name:</label>
-      <input v-model="name" type="text" id="OperationName" />
+      <input
+        v-model="name"
+        type="text"
+        id="OperationName"
+        placeholder="name.."
+      />
       <label for="categories">Category:</label>
       <select v-model="category" name="categories" id="categories">
         <option :key="cate" v-for="cate in categories">
@@ -20,11 +25,25 @@
       <input v-model="amount" type="text" id="Amount" />
     </div>
     <div>
-      <router-link to="/ModifyDeleteItem" tag="button"
-        >Modify/Delete existing Item</router-link
-      >
       <button @click="registerItem" class="button save">Save</button>
     </div>
+    <table>
+      <thead>
+        <tr>
+          <th :key="column" v-for="column in columns">
+            {{ column }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr :key="item.name" v-for="item in items">
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.amount }}</td>
+          <td>{{ item.type }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -41,7 +60,7 @@ export default {
       name: "",
       category: "",
       amount: "",
-      type: ""
+      selectedItem: {}
     };
   },
   computed: {

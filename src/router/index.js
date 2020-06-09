@@ -16,10 +16,12 @@ const routes = [
   {
     path: "/registerIncomeExpense",
     name: "RegisterIncomeExpenseView",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import("../views/RegisterIncomeExpenseView.vue")
+  },
+  {
+    path: "/ModifyDeleteItem",
+    name: "ModifyDeleteItemView",
+    component: () => import("../views/ModifyDeleteItemView.vue")
   }
 ];
 
