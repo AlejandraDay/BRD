@@ -1,0 +1,11 @@
+{
+    "items": [
+        {"name": "Kevin Quiroga","ci":"7815499","email":"kevinq@gmail.com","phone":"79845264","pwd":"13234"},
+        {"name": "name2","ci":"124","email":"@","phone":"1234","pwd":"13234"},
+        {"name": "name3","ci":"124","email":"@","phone":"1234","pwd":"13234"},
+        {"name": "name4","ci":"124","email":"@","phone":"1234","pwd":"13234"},
+        {"name": "name6","ci":"124","email":"@","phone":"1234","pwd":"13234"},
+        {"name": "name5","ci":"124","email":"@","phone":"1234","pwd":"13234"}
+
+    ]
+}

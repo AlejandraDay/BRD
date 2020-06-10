@@ -1,16 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Register Account</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <router-link to="/registerUsser">Register Usser</router-link>
     <router-view />
   </div>
 </template>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
