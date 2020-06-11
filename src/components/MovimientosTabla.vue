@@ -10,14 +10,34 @@
         </tr>
       </thead>
       <tbody>
-        <tr :key="item.id" v-for="item in movimientos">
-          <td>{{ item.id }}</td>
-          <td>{{ item.categoria }}</td>
-          <td>{{ item.monto }}</td>
-          <td>{{ item.descripcion }}</td>
+        <tr :key="item.id" v-for="(item, index) in movimientos">
+          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+            {{ index }}
+          </td>
+          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+            {{ item.id }}
+          </td>
+          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+            {{ item.categoria }}
+          </td>
+          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+            {{ item.monto }}
+          </td>
+          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+            {{ item.descripcion }}
+          </td>
         </tr>
       </tbody>
     </table>
+    <div>
+      <select v-model="elemento">
+        <option :key="item" v-for="item in this.elementos">{{ item }}</option>
+      </select>
+      <button>Inicio</button>
+      <button>Anterior</button>
+      <button>Siguiente</button>
+      <button>Final</button>
+    </div>
   </div>
 </template>
 
@@ -30,7 +50,9 @@ export default {
   data() {
     return {
       filtro: "",
-      categoria: "todas"
+      elementos: [5, 10, 15],
+      elemento: 5,
+      agrupar: 1
     };
   },
   computed: {
@@ -39,6 +61,12 @@ export default {
     },
     cabeceras() {
       return this.$store.state.CABECERAS[0];
+    },
+    limiteSuperior() {
+      return this.elemento * this.agrupar;
+    },
+    limiteInferior() {
+      return this.limiteSuperior - this.elemento;
     }
   }
 };
