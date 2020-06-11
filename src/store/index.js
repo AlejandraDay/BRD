@@ -15,20 +15,29 @@ export default new Vuex.Store({
     addItem({ commit }, item) {
       // actions previous to mutations
       commit("mutateItemList", item);
-      // only permit one param
       //var obj = itemsData;
       //JSON.stringify(obj.push(item));
+    },
+    updateItem({ commit }, itemToUpdate) {
+      commit("updateItem", itemToUpdate);
+    },
+    deleteItem({ commit }, itemToDelete) {
+      commit("deleteItem", itemToDelete);
     }
   },
   mutations: {
     // mutateStudentList(state, param) {
     mutateItemList(state, item) {
-      /*var found = this.items.filter(it => it.name === item.name);
-      if (found === null) {
-        state.items.push(item);
-      } else {*/
       state.items.push(item);
-      //}
+    },
+    updateItem(state, itemToUpdate) {
+      const foundItem = state.items.findIndex(
+        st => st.name === itemToUpdate.name
+      );
+      state.items[foundItem] = itemToUpdate;
+    },
+    deleteItem(state, itemToUpdate) {
+      state.items = state.items.filter(it => it.name !== itemToUpdate.name);
     }
   },
   ///////////

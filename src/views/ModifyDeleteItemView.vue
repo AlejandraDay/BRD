@@ -10,7 +10,7 @@
           class="text option"
         >
           <option :key="ty.name" v-for="ty in items">
-            {{ (ty.name, ty.category, ty.amount, ty.type) }}
+            {{ ty.name }}
           </option>
         </select>
         <h3>Information:</h3>
@@ -45,14 +45,6 @@
             ></textarea>
           </div>
           <ul class="actions">
-            <li>
-              <router-link
-                to="/ModifyDeleteItem"
-                tag="button"
-                class="button mod"
-                >Modify/Delete existing Item</router-link
-              >
-            </li>
             <li>
               <button @click="registerItem" class="button save">Save</button>
             </li>
@@ -102,7 +94,6 @@ export default {
   },
   computed: {
     ...mapGetters(["getItemList"]),
-    // getList,
     items() {
       return this.getItemList;
     }

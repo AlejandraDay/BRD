@@ -10,7 +10,7 @@
         </select>
         <h3>Information:</h3>
 
-        <form action="#" method="post">
+        <form>
           <div class="field half first">
             <label for="name">Name</label>
             <input
@@ -35,8 +35,7 @@
               v-model="amount"
               name="amount"
               id="amount"
-              rows="6"
-              placeholder="Amount"
+              placeholder="Bs."
             ></textarea>
           </div>
           <ul class="actions">
@@ -76,7 +75,6 @@ export default {
   },
   computed: {
     ...mapGetters(["getItemList"]),
-    // getList,
     items() {
       return this.getItemList;
     }
@@ -90,7 +88,7 @@ export default {
         this.amount == "" ||
         this.type == ""
       ) {
-        alert("The spaces can't be empty");
+        alert("The spaces can not be empty");
       } else {
         this.addItem({
           name: this.name,
@@ -103,4 +101,5 @@ export default {
   }
 };
 </script>
+
 <style src="./Register.css" scoped></style>
