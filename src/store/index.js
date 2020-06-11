@@ -4,33 +4,30 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-import itemsData from "@/database/Usser.json";
+import usser from "@/database/Usser.json";
 
 export default new Vuex.Store({
   state: {
-    items: itemsData.items,
-    loggedUser: { name: "User1" }
+    items: usser.items,
+    usserCurrent: { ci: "-1" }
   },
   //////////
   actions: {
     addItem({ commit }, item) {
-      /* var fs = require("fs");
-      fs.writeFile(itemsData, JSON.stringify(item), function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("JSON saved");
-        }
-      });*/
-      // actions previous to mutations
       commit("mutateItemList", item);
       // only permit one param
+    },
+    updateAccountUsser({ commit }, account) {
+      commit("accountCurrent", account);
     }
   },
   mutations: {
     // mutateStudentList(state, param) {
     mutateItemList(state, item) {
       state.items.push(item);
+    },
+    accountCurrent(state, account) {
+      state.usserCurrent.ci = account;
     },
     updateAccount(state, studentToUpdate) {
       const foundStudentIndex = state.students.findIndex(
@@ -40,13 +37,16 @@ export default new Vuex.Store({
       state.students[foundStudentIndex] = studentToUpdate;
     },
     deleteAccount(state, studetToDelete) {
-      state.students = state.students.filter(st => st.id !== studetToDelete.id);
+      state.students = state.items.filter(st => st.id !== studetToDelete.id);
     }
   },
   ///////////
   getters: {
     getItemList(state) {
-      return state.items;
+      return state.items; /*.filter(account => account.ci === filterAccount.ci);*/
+    },
+    idAccount(state) {
+      return state.usserCurrent;
     }
   },
 

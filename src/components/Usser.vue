@@ -1,5 +1,5 @@
 <template>
-  <div class="SelectOperation">
+  <div class="DataAcc">
     <br />
     <h1>Register Account</h1>
     <div class="Data">
@@ -92,6 +92,7 @@ export default {
       return pwd;
     },
     ...mapActions(["addItem"]),
+    ...mapActions(["updateAccountUsser"]),
     registerItem() {
       if (
         this.name == "" ||
@@ -115,6 +116,7 @@ export default {
             pwd: this.changetype(this.pwd)
           });
           console.log("Saved Account");
+          this.updateAccountUsser(this.ci);
           this.redirectInit();
         } else {
           console.log("Invalid Password");

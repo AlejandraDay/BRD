@@ -1,6 +1,8 @@
 <template>
   <div>
-    <label for="text">Init</label>
+    <li>
+      {{ id }}
+    </li>
     <table>
       <thead>
         <tr>
@@ -33,9 +35,14 @@ export default {
   },
   computed: {
     ...mapGetters(["getItemList"]),
+    ...mapGetters(["idAccount"]),
     // getList,
     items() {
       return this.getItemList;
+    },
+    id() {
+      console.log(this.idAccount.ci);
+      return this.idAccount.ci;
     }
   }
 };
