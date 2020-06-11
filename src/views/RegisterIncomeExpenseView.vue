@@ -1,6 +1,9 @@
 <template>
   <div class="register">
     <footer id="footer">
+      <li>
+        <router-link to="/home" tag="button" class="buttonback">­←</router-link>
+      </li>
       <div class="inner">
         <label>Select an Operation:</label>
         <select v-model="type" id="types" class="text option">
@@ -74,9 +77,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getItemList"]),
+    ...mapGetters(["getItemList", "getUser", "getLastItemId"]),
     items() {
       return this.getItemList;
+    },
+    user() {
+      return this.getUser;
+    },
+    lastId() {
+      return this.getLastItemId;
     }
   },
   methods: {
@@ -94,7 +103,9 @@ export default {
           name: this.name,
           category: this.category,
           amount: this.amount,
-          type: this.type
+          type: this.type,
+          user: this.user,
+          id: this.lastId + 1
         });
       }
     }

@@ -8,7 +8,7 @@ import itemsData from "@/views/IncomeExpense.json";
 export default new Vuex.Store({
   state: {
     items: itemsData.items,
-    loggedUser: { name: "User1" }
+    CURRENT_USER: -1
   },
   //////////
   actions: {
@@ -31,19 +31,23 @@ export default new Vuex.Store({
       state.items.push(item);
     },
     updateItem(state, itemToUpdate) {
-      const foundItem = state.items.findIndex(
-        st => st.name === itemToUpdate.name
-      );
+      const foundItem = state.items.findIndex(st => st.id === itemToUpdate.id);
       state.items[foundItem] = itemToUpdate;
     },
     deleteItem(state, itemToUpdate) {
-      state.items = state.items.filter(it => it.name !== itemToUpdate.name);
+      state.items = state.items.filter(it => it.id !== itemToUpdate.id);
     }
   },
   ///////////
   getters: {
     getItemList(state) {
       return state.items;
+    },
+    getUser(state) {
+      return state.CURRENT_USER;
+    },
+    getLastItemId(state) {
+      return state.items[state.items.length - 1].id;
     }
   },
 

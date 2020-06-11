@@ -1,6 +1,9 @@
 <template>
   <div class="SelectOperation">
     <footer id="footer">
+      <li>
+        <router-link to="/home" tag="button" class="buttonback">­←</router-link>
+      </li>
       <div class="inner">
         <label>Select an Item:</label>
         <select
@@ -15,7 +18,7 @@
         </select>
         <h3>Information:</h3>
 
-        <form action="#" method="post">
+        <form>
           <div class="field half first">
             <label for="name">Name</label>
             <input
@@ -46,7 +49,8 @@
           </div>
           <ul class="actions">
             <li>
-              <button @click="registerItem" class="button save">Save</button>
+              <button @click="ModifyItem" class="button save">Save</button>
+              <button @click="deleteItem" class="button delete">Delete</button>
             </li>
           </ul>
         </form>
@@ -93,14 +97,20 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getItemList"]),
+    ...mapGetters(["getItemList", "getUser", "getLastItemId"]),
     items() {
       return this.getItemList;
+    },
+    user() {
+      return this.getUser;
+    },
+    lastId() {
+      return this.getLastItemId;
     }
   },
   methods: {
-    ...mapActions(["addItem"]),
-    registerItem() {
+    ...mapActions(["updateItem", "deleteItem"]),
+    ModifyItem() {
       if (
         this.name == "" ||
         this.category == "" ||
@@ -109,12 +119,26 @@ export default {
       ) {
         alert("The spaces can't be empty");
       } else {
-        this.addItem({
+        this.updateItem({
           name: this.name,
           category: this.category,
           amount: this.amount,
-          type: this.type
+          type: this.type,
+          user: this.selectedItem.user,
+          id: this.selectedItem.id
         });
+      }
+    },
+    deleteItem() {
+      if (
+        this.name == "" ||
+        this.category == "" ||
+        this.amount == "" ||
+        this.type == ""
+      ) {
+        alert("The spaces can't be empty");
+      } else {
+        this.deleteItem(this.selectedItem);
       }
     }
   }
