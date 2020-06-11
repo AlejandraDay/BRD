@@ -11,19 +11,19 @@
       </thead>
       <tbody>
         <tr :key="item.id" v-for="(item, index) in movimientos">
-          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+          <td v-if="index >= limiteInferior && index < limiteSuperior">
             {{ index }}
           </td>
-          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+          <td v-if="index >= limiteInferior && index < limiteSuperior">
             {{ item.id }}
           </td>
-          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+          <td v-if="index >= limiteInferior && index < limiteSuperior">
             {{ item.categoria }}
           </td>
-          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+          <td v-if="index >= limiteInferior && index < limiteSuperior">
             {{ item.monto }}
           </td>
-          <td v-if="index >= limiteInferior && index <= limiteSuperior">
+          <td v-if="index >= limiteInferior && index < limiteSuperior">
             {{ item.descripcion }}
           </td>
         </tr>
@@ -33,10 +33,10 @@
       <select v-model="elemento">
         <option :key="item" v-for="item in this.elementos">{{ item }}</option>
       </select>
-      <button>Inicio</button>
-      <button>Anterior</button>
-      <button>Siguiente</button>
-      <button>Final</button>
+      <button v-on:click="inicio()">Inicio</button>
+      <button v-on:click="izquierda()">Anterior</button>
+      <button v-on:click="derecha()">Siguiente</button>
+      <button v-on:click="fin()">Final</button>
     </div>
   </div>
 </template>
@@ -49,11 +49,29 @@ export default {
   },
   data() {
     return {
-      filtro: "",
+      filter: '',
       elementos: [5, 10, 15],
       elemento: 5,
       agrupar: 1
     };
+  },
+  methods: {
+    derecha() {
+      if (this.agrupar < Math.ceil(this.movimientos.length/this.elemento)) {
+        this.agrupar++;
+      }
+    },
+    izquierda() {
+      if (this.agrupar > 1) {
+        this.agrupar--;
+      }
+    },
+    inicio() {
+      this.agrupar = 1;
+    },
+    fin() {
+      this.agrupar = Math.ceil(this.movimientos.length/this.elemento);
+    }
   },
   computed: {
     movimientos() {
