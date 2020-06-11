@@ -31,6 +31,16 @@ export default new Vuex.Store({
     // mutateStudentList(state, param) {
     mutateItemList(state, item) {
       state.items.push(item);
+    },
+    updateAccount(state, studentToUpdate) {
+      const foundStudentIndex = state.students.findIndex(
+        st => st.id === studentToUpdate.id
+      );
+      // if (index >= 0)
+      state.students[foundStudentIndex] = studentToUpdate;
+    },
+    deleteAccount(state, studetToDelete) {
+      state.students = state.students.filter(st => st.id !== studetToDelete.id);
     }
   },
   ///////////

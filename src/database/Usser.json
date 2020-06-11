@@ -1,11 +1,39 @@
 {
     "items": [
-        {"name": "Kevin Quiroga","ci":"7815499","email":"kevinq@gmail.com","phone":"79845264","pwd":"13234"},
-        {"name": "name2","ci":"124","email":"@","phone":"1234","pwd":"13234"},
-        {"name": "name3","ci":"124","email":"@","phone":"1234","pwd":"13234"},
-        {"name": "name4","ci":"124","email":"@","phone":"1234","pwd":"13234"},
-        {"name": "name6","ci":"124","email":"@","phone":"1234","pwd":"13234"},
-        {"name": "name5","ci":"124","email":"@","phone":"1234","pwd":"13234"}
-
+        {
+            "name": "Alejandra Quelali",
+            "ci":"7815499",
+            "email":"aleq@gmail.com",
+            "phone":"79845264",
+            "pwd":"13234day"
+        },
+        {
+            "name": "Kevin Quiroga",
+            "ci":"7825499",
+            "email":"kevinq@gmail.com",
+            "phone":"79845264",
+            "pwd":"45678kevin"
+        },
+        {
+            "name": "Niolas Zeballos",
+            "ci":"1234663",
+            "email":"nicozeb@gmail.com",
+            "phone":"79845264",
+            "pwd":"34575aaa"
+        },
+        {
+            "name": "Stefano Sossi",
+            "ci":"112346",
+            "email":"kevinq@gmail.com",
+            "phone":"79845264",
+            "pwd":"132341235"
+        },
+        {
+            "name": "Sonia Gutierrez",
+            "ci":"34556124",
+            "email":"soni124@gmail.com",
+            "phone":"79845264",
+            "pwd":"13234"
+        }
     ]
 }

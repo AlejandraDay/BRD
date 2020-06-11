@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <router-link to="/registerUsser">Register Usser</router-link>
+    <div id="router">
+      <router-link to="/registerUsser">Register Usser</router-link>
+    </div>
+    <div id="position">
+      <button id="profile" @click="redirectProfile()">Perfil</button>
+    </div>
     <router-view />
   </div>
 </template>
@@ -10,7 +15,7 @@
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+
   color: #2c3e50;
 }
 
@@ -26,4 +31,29 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+#profile {
+  border-radius: 50%;
+  padding: 20px;
+}
+#position {
+  text-align: right;
+}
+#router {
+  text-align: center;
+}
 </style>
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      name: ""
+    };
+  },
+  methods: {
+    redirectProfile() {
+      this.$router.push("Account");
+    }
+  }
+};
+</script>
