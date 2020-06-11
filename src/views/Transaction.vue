@@ -1,17 +1,17 @@
 <template>
   <div>
-    <MovimientosTabla msg="Esta es la sección de la tabla de movimientos" />
+    <TransactionTable msg="This is the transaction's table" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import MovimientosTabla from "@/components/MovimientosTabla.vue";
+import TransactionTable from "@/components/TransactionTable.vue";
 
 export default {
-  name: "Movimientos",
+  name: "Transaction",
   components: {
-    MovimientosTabla
+    TransactionTable
   }
 };
 </script>
