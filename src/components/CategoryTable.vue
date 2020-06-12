@@ -2,6 +2,8 @@
   <div class="table">
     <h1>{{ msg }}</h1>
     <input v-model="searchName" placeholder="Search" />
+    <br />
+    <br />
     <table>
       <thead>
         <tr>
@@ -10,14 +12,15 @@
       </thead>
       <tbody>
         <tr :key="item.id" v-for="(item, index) in filteredGroups">
-          <td>{{ index + lowerLimmit }}</td>
-          <td>{{ item.id }}</td>
+          <td class="index">{{ index + lowerLimmit }}</td>
+          <td class="id">{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.user }}</td>
         </tr>
       </tbody>
     </table>
     <div>
+      <br />
       <select v-model="groupBy">
         <option :key="item" v-for="item in this.groupBy_">{{ item }}</option>
       </select>
@@ -94,6 +97,18 @@ export default {
 </script>
 
 <style scoped>
+input {
+  width: 50%;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: 2px solid #555;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.index,
+.id {
+  width: 10%;
+}
 .tabla {
   font-size: 18px;
   color: brown;
@@ -107,8 +122,5 @@ table {
   margin: auto;
   width: 50%;
   padding: 10px;
-}
-td {
-  color: black;
 }
 </style>
