@@ -1,19 +1,15 @@
 <template>
   <div>
-    <CategoryReg msg="Category Register" />
-    <CategoryTable msg="Categories Table" />
+    <CategoryReg msg="Categories Register" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import CategoryTable from "@/components/CategoryTable.vue";
 import CategoryReg from "@/components/CategoryReg.vue";
-
 export default {
-  name: "Categories",
+  name: "CategoryRegister",
   components: {
-    CategoryTable,
     CategoryReg
   }
 };

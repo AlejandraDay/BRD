@@ -2,6 +2,7 @@
   <div class="table">
     <h1>{{ msg }}</h1>
     <input v-model="searchName" placeholder="Search" />
+    <button @click="redirectRegister()" class="addbutton">Add New</button>
     <br />
     <br />
     <table>
@@ -16,18 +17,38 @@
           <td class="id">{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.user }}</td>
+          <td
+            class="categbtn"
+            v-if="item.user === currentUser || item.user === 0"
+          >
+            <!--If the current user created this category or its admin, can edit it-->
+            <button class="editButton" @click="editCat(item)">EDIT</button>
+          </td>
+          <td
+            class="categbtn"
+            v-if="item.user === currentUser || item.user === 0"
+          >
+            <!--If the current user created this category or its admin, can delete it-->
+            <button class="deleteButton" @click="deleteCat(item)">
+              DELETE
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
     <div>
       <br />
+      <label>Items per Page:</label>
       <select v-model="groupBy">
         <option :key="item" v-for="item in this.groupBy_">{{ item }}</option>
       </select>
-      <button v-on:click="start()">Start</button>
-      <button v-on:click="previous()">Previous</button>
-      <button v-on:click="next()">Next</button>
-      <button v-on:click="last()">Last</button>
+      <br />
+      <br />
+
+      <button v-on:click="first()" class="pagingButton">First</button>
+      <button v-on:click="previous()" class="pagingButton">Previous</button>
+      <button v-on:click="next()" class="pagingButton">Next</button>
+      <button v-on:click="last()" class="pagingButton">Last</button>
     </div>
   </div>
 </template>
@@ -44,7 +65,8 @@ export default {
       searchName: "",
       groupBy_: [5, 10, 15],
       groupBy: 5,
-      group: 1
+      group: 1,
+      currentUser: 1
     };
   },
   methods: {
@@ -58,19 +80,57 @@ export default {
         this.group--;
       }
     },
-    start() {
+    first() {
       this.group = 1;
     },
     last() {
       this.group = Math.ceil(this.filtered.length / this.groupBy);
+    },
+    redirectRegister() {
+      this.$router.push("register-categories");
+    },
+    deleteCat(categ) {
+      var hasTransactions = true; //Change with checking function
+      if (hasTransactions) {
+        if (confirm("Are you sure you want to delete " + categ.name + "?")) {
+          console.log("Deleting " + categ.name + " | " + categ.id);
+          this.$store.commit("deleteCategory", categ);
+        }
+      } else {
+        alert("Unable to Delete, transactions still using this category");
+        //to do function when exists incomes or expenses available with this category
+      }
+    },
+    editCat(categ) {
+      var hasTransactions = true; //Change with checking function
+      if (hasTransactions) {
+        var updatedName = prompt("Insert the updated name:", "");
+        if (updatedName == null || updatedName == "") {
+          console.log("Tried to change for empty name, cancelling");
+        } else {
+          if (
+            confirm(
+              "Are you sure you want to change " +
+                categ.name +
+                " with " +
+                updatedName +
+                "?"
+            )
+          ) {
+            console.log("Updating " + categ.id);
+            categ.name = updatedName;
+            this.$store.commit("editCategory", categ);
+          }
+        }
+      } else {
+        alert("Unable to Delete, transactions still using this category");
+        //to do function when exists incomes or expenses available with this category
+      }
     }
   },
   computed: {
     filtered() {
       const categoryList = this.categories;
-      //.filter(
-      // (item, index) => index >= this.lowerLimmit && index < this.upperLimmit
-      //);
       return this.searchName === ""
         ? categoryList
         : categoryList.filter(item => item.name.includes(this.searchName));
@@ -98,9 +158,9 @@ export default {
 
 <style scoped>
 input {
-  width: 50%;
+  width: 40%;
   padding: 10px 20px;
-  margin: 8px 0;
+  margin: 8px 2px;
   border: 2px solid #555;
   box-sizing: border-box;
   border-radius: 4px;
@@ -108,6 +168,33 @@ input {
 .index,
 .id {
   width: 10%;
+}
+.categbtn {
+  width: 5%;
+}
+.addbutton {
+  width: 10%;
+  padding: 10px 20px;
+  margin: 8px 2px;
+  border: 2px solid #555;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.deleteButton,
+.editButton {
+  border-style: solid;
+
+  margin: 1px 1px;
+  padding: 2px 9px;
+  width: 100%;
+  height: 100%;
+}
+.pagingButton {
+  border-style: solid;
+  border: 2px solid #555;
+  margin: 1px 1px;
+  padding: 2px 9px;
+  width: 7%;
 }
 .tabla {
   font-size: 18px;
@@ -120,7 +207,7 @@ td {
 }
 table {
   margin: auto;
-  width: 50%;
+  width: 60%;
   padding: 10px;
 }
 </style>
