@@ -9,8 +9,8 @@
       <br />
       <br />
       <label for="text">CI:</label>
-      <input v-model="ci" type="text" />
-      <label class="alarm" v-if="ci == ''">*Obligatory information</label>
+      <input v-model="ci" type="number" />
+      <label class="alarm" v-if="ci == 0">*Obligatory information</label>
 
       <br />
       <br />
@@ -30,12 +30,12 @@
       <br />
       <br />
       <label for="text">Password:</label>
-      <input v-model="pwd" type="password" />
+      <input class="stylePwd" v-model="pwd" type="password" />
       <label class="alarm" v-if="pwd == ''">*Obligatory information</label>
       <br />
       <br />
       <label for="text">Confirm Password:</label>
-      <input v-model="confirmPwd" type="password" />
+      <input class="stylePwd" v-model="confirmPwd" type="password" />
       <label class="alarm" v-if="confirmPwd == ''"
         >*Obligatory information</label
       >
@@ -47,9 +47,9 @@
       >
       <br />
       <br />
-    </div>
-    <div id="saveData">
-      <button @click="registerItem" class="button save">Save</button>
+      <div class="alingButton">
+        <button @click="registerItem" class="button save">Save</button>
+      </div>
     </div>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       name: "",
-      ci: "",
+      ci: 0,
       email: "",
       phone: "",
       pwd: "",
@@ -96,7 +96,7 @@ export default {
     registerItem() {
       if (
         this.name == "" ||
-        this.ci == "" ||
+        this.ci == 0 ||
         this.email == "" ||
         this.phone == "" ||
         this.changetype(this.pwd) == "" ||
@@ -126,41 +126,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-.alarm {
-  color: red;
-  font-size: 12px;
-}
-input {
-  width: 100%;
-  padding: 10px 20px;
-  margin: 8px 0;
-  border: 2px solid #555;
-  box-sizing: border-box;
-  border-radius: 4px;
-}
-h1 {
-  font-size: 24px;
-  text-align: center;
-}
-label {
-  text-align: left;
-}
-button {
-  display: inline-block;
-  padding: 10px 100px;
-  font-size: 24px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: seashell;
-  color: #fff;
-  background-color: rgb(116, 187, 187);
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 5px #999;
-}
-#saveData {
-  text-align: center;
-}
-</style>
+<style src="./style.css" scoped></style>

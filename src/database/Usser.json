@@ -2,35 +2,35 @@
     "items": [
         {
             "name": "Alejandra Quelali",
-            "ci":"7815499",
+            "ci":7815499,
             "email":"aleq@gmail.com",
             "phone":"79845264",
             "pwd":"13234day"
         },
         {
             "name": "Kevin Quiroga",
-            "ci":"7825499",
+            "ci":7825499,
             "email":"kevinq@gmail.com",
             "phone":"79845264",
             "pwd":"45678kevin"
         },
         {
             "name": "Niolas Zeballos",
-            "ci":"1234663",
+            "ci":1234663,
             "email":"nicozeb@gmail.com",
             "phone":"79845264",
             "pwd":"34575aaa"
         },
         {
             "name": "Stefano Sossi",
-            "ci":"112346",
+            "ci":112346,
             "email":"kevinq@gmail.com",
             "phone":"79845264",
             "pwd":"132341235"
         },
         {
             "name": "Sonia Gutierrez",
-            "ci":"34556124",
+            "ci":3455612,
             "email":"soni124@gmail.com",
             "phone":"79845264",
             "pwd":"13234"

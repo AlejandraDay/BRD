@@ -4,12 +4,19 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-import usser from "@/database/Usser.json";
-
 export default new Vuex.Store({
   state: {
-    items: usser.items,
-    usserCurrent: { ci: "-1" }
+    accounts: [
+      {
+        name: "Alejandra Quelali",
+        ci: 7815499,
+        email: "aleq@gmail.com",
+        phone: "79845264",
+        pwd: "13234day"
+      }
+    ],
+    usserCurrent: -1,
+    viewAccount: true
   },
   //////////
   actions: {
@@ -19,37 +26,48 @@ export default new Vuex.Store({
     },
     updateAccountUsser({ commit }, account) {
       commit("accountCurrent", account);
+    },
+    profileView({ commit }, value) {
+      commit("profileView", value);
+    },
+    updateAccount({ commit }, accountToUpdate) {
+      commit("mutateUpdateAccount", accountToUpdate);
     }
   },
   mutations: {
     // mutateStudentList(state, param) {
     mutateItemList(state, item) {
-      state.items.push(item);
+      state.accounts.push(item);
+    },
+    mutateUpdateAccount(state, accountToUpdate) {
+      const foundAccountIndex = state.accounts.findIndex(
+        account => account.ci == accountToUpdate.ci
+      );
+      state.accounts[foundAccountIndex] = accountToUpdate;
+      console.log(state.accounts[foundAccountIndex].name);
     },
     accountCurrent(state, account) {
-      state.usserCurrent.ci = account;
+      state.usserCurrent = account;
     },
-    updateAccount(state, studentToUpdate) {
-      const foundStudentIndex = state.students.findIndex(
-        st => st.id === studentToUpdate.id
-      );
-      // if (index >= 0)
-      state.students[foundStudentIndex] = studentToUpdate;
-    },
-    deleteAccount(state, studetToDelete) {
-      state.students = state.items.filter(st => st.id !== studetToDelete.id);
+    profileView(state, value) {
+      state.viewAccount = value;
     }
   },
   ///////////
   getters: {
-    getItemList(state) {
-      return state.items; /*.filter(account => account.ci === filterAccount.ci);*/
+    getAccount(state) {
+      const account = state.accounts.filter(
+        account => account.ci === state.usserCurrent
+      );
+      return account[0];
     },
     idAccount(state) {
       return state.usserCurrent;
+    },
+    getProfileView(state) {
+      return state.viewAccount;
     }
   },
-
   ///////////
   modules: {}
 });

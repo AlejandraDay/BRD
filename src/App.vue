@@ -3,7 +3,7 @@
     <div id="router">
       <router-link to="/registerUsser">Register Usser</router-link>
     </div>
-    <div id="position">
+    <div v-if="visible" id="position">
       <button id="profile" @click="redirectProfile()">Perfil</button>
     </div>
     <router-view />
@@ -43,6 +43,7 @@
 }
 </style>
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "App",
   data() {
@@ -51,8 +52,16 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["profileView"]),
     redirectProfile() {
+      this.profileView(false);
       this.$router.push("Account");
+    }
+  },
+  computed: {
+    ...mapGetters(["getProfileView"]),
+    visible() {
+      return this.getProfileView;
     }
   }
 };
