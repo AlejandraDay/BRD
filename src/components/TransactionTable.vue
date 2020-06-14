@@ -3,14 +3,18 @@
     <h1>{{ msg }}</h1>
     <table>
       <thead>
-        <tr>
+        <tr class="header">
           <th :key="column" v-for="column in this.headers">
             {{ column }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr :key="item.id" v-for="(item, index) in filtered">
+        <tr
+          :key="item.id"
+          v-for="(item, index) in filtered"
+          :class="[item.amount < 0 ? 'expense' : 'profit']"
+        >
           <td>{{ index + lowerLimmit }}</td>
           <td>{{ item.id }}</td>
           <td>{{ item.category }}</td>
@@ -86,15 +90,11 @@ export default {
 </script>
 
 <style scoped>
-.table {
-  font-size: 18px;
-  color: brown;
-}
-
 table,
 th,
 td {
   border: 1px solid black;
+  font-size: 18px;
 }
 
 table {
@@ -105,5 +105,18 @@ table {
 
 td {
   color: black;
+}
+
+.header {
+  background-color: rgb(0, 89, 255);
+  color: white;
+}
+
+.expense {
+  background-color: rgb(228, 50, 43);
+}
+
+.profit {
+  background-color: rgb(84, 221, 84);
 }
 </style>
