@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "CategoryRegister",
   props: {
@@ -38,6 +39,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["addCategory"]),
     newCategory() {
       if (this.name == null || this.name == "") {
         alert("Name field can't be empty");
@@ -47,19 +49,29 @@ export default {
         const id = this.lastId() + 1;
         if (this.incomeBox) {
           console.log("Adding new Income Category " + this.name);
-          this.$store.commit("addCategory", {
+          this.addCategory({
             id: "I" + id, //autogen id
             name: this.name,
             user: this.currentUser
           });
+          //this.$store.commit("addCategory", {
+          // id: "I" + id, //autogen id
+          // name: this.name,
+          // user: this.currentUser
+          //});
         }
         if (this.expenseBox) {
           console.log("Adding new Expense Category " + this.name);
-          this.$store.commit("addCategory", {
+          this.addCategory({
             id: "E" + id, //autogen id
             name: this.name,
             user: this.currentUser
           });
+          //this.$store.commit("addCategory", {
+          // id: "E" + id, //autogen id
+          // name: this.name,
+          //user: this.currentUser
+          //});
         }
         this.name = "";
       }
