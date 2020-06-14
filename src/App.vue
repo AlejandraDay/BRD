@@ -9,9 +9,36 @@
     <div id="nav">
       <router-link to="/transaction">transactions</router-link>
     </div>
-    <router-view />
+    <router-link to="/registerIncomeExpense"
+      >Register Income Expense</router-link
+    >
   </div>
 </template>
+
+<script>
+import { mapActions, mapGetters } from "vuex";
+export default {
+  name: "App",
+  data() {
+    return {
+      name: ""
+    };
+  },
+  methods: {
+    ...mapActions(["profileView"]),
+    redirectProfile() {
+      this.profileView(false);
+      this.$router.push("Account");
+    }
+  },
+  computed: {
+    ...mapGetters(["getProfileView"]),
+    visible() {
+      return this.getProfileView;
+    }
+  }
+};
+</script>
 
 <style>
 #app {
@@ -45,27 +72,3 @@
   text-align: center;
 }
 </style>
-<script>
-import { mapActions, mapGetters } from "vuex";
-export default {
-  name: "App",
-  data() {
-    return {
-      name: ""
-    };
-  },
-  methods: {
-    ...mapActions(["profileView"]),
-    redirectProfile() {
-      this.profileView(false);
-      this.$router.push("Account");
-    }
-  },
-  computed: {
-    ...mapGetters(["getProfileView"]),
-    visible() {
-      return this.getProfileView;
-    }
-  }
-};
-</script>

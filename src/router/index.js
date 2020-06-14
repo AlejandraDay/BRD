@@ -30,6 +30,16 @@ const routes = [
     component: () => import("../views/Account.vue")
   },
   {
+    path: "/registerIncomeExpense",
+    name: "RegisterIncomeExpenseView",
+    component: () => import("../views/RegisterIncomeExpenseView.vue")
+  },
+  {
+    path: "/ModifyDeleteItem",
+    name: "ModifyDeleteItemView",
+    component: () => import("../views/ModifyDeleteItemView.vue")
+  },
+  {
     path: "/home",
     name: "Home",
     // route level code-splitting
