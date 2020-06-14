@@ -32,6 +32,21 @@ describe("Modify Delete Income Expense", () => {
     localVue.use(Vuex);
     store = new Vuex.Store(mockStore);
   });
+  it("process valid data", () => {
+    const wrapper = shallowMount(ModifyDeleteItemView, {
+      store,
+      localVue
+    });
+    wrapper.setProps({
+      name: "example",
+      category: "other",
+      type: "income",
+      user: 0,
+      id: 1,
+      amount: "2222"
+    });
+    wrapper.vm.ModifyItem();
+  });
   it("it should 8 items", () => {
     const expectedLenght = 8 + 1; // + 1 'cause the row of names
     const wrapper = shallowMount(ModifyDeleteItemView, {

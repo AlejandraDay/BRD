@@ -12,53 +12,50 @@
           </option>
         </select>
         <h3>Information:</h3>
-
-        <form>
-          <div class="field half first">
-            <label for="name">Name</label>
-            <input
-              name="name"
-              id="name"
-              type="text"
-              placeholder="Name"
-              v-model="name"
-            />
-            <label class="alarmName" v-if="name == ''"
-              >*Obligatory information</label
+        <div class="field half first">
+          <label for="name">Name</label>
+          <input
+            name="name"
+            id="name"
+            type="text"
+            placeholder="Name"
+            v-model="name"
+          />
+          <label class="alarmName" v-if="name == ''"
+            >*Obligatory information</label
+          >
+        </div>
+        <div class="field half">
+          <label for="categories">Category</label>
+          <select v-model="category" id="categories">
+            <option
+              :key="cate"
+              v-for="cate in categories"
+              class="optionsCategory"
             >
-          </div>
-          <div class="field half">
-            <label for="categories">Category</label>
-            <select v-model="category" id="categories">
-              <option
-                :key="cate"
-                v-for="cate in categories"
-                class="optionsCategory"
-              >
-                {{ cate }}
-              </option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="amount">Amount</label>
-            <textarea
-              v-model="amount"
-              name="amount"
-              id="amount"
-              rows="6"
-              placeholder="Amount"
-            ></textarea>
-            <label class="alarmAmount" v-if="amount == ''"
-              >*Obligatory information</label
-            >
-          </div>
-          <ul class="actions">
-            <li>
-              <button @click="ModifyItem" class="button save">Save</button>
-              <button @click="deleteItem" class="button delete">Delete</button>
-            </li>
-          </ul>
-        </form>
+              {{ cate }}
+            </option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="amount">Amount</label>
+          <textarea
+            v-model="amount"
+            name="amount"
+            id="amount"
+            rows="6"
+            placeholder="Amount"
+          ></textarea>
+          <label class="alarmAmount" v-if="amount == ''"
+            >*Obligatory information</label
+          >
+        </div>
+        <ul class="actions">
+          <li>
+            <button @click="ModifyItem" class="button save">Save</button>
+            <button @click="deleteItem" class="button delete">Delete</button>
+          </li>
+        </ul>
         <div class="container-table">
           <div class="wrap-table">
             <table class="table">
