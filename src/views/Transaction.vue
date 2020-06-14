@@ -1,6 +1,10 @@
 <template>
   <div>
     <TransactionTable msg="This is the transaction's table" />
+    <br />
+    <button>Add/Edit/Delete</button>
+    <br />
+    <button>Categories</button>
   </div>
 </template>
 
