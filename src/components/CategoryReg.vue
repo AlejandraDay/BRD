@@ -69,10 +69,18 @@ export default {
   color: red;
   font-size: 12px;
 }
-input {
-  width: 50%;
+.button {
   padding: 10px 20px;
-  margin: 8px 0;
+  width: 10%;
+  margin: 8px 2px;
+  border: 2px solid #555;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+input {
+  width: 40%;
+  padding: 10px 20px;
+  margin: 8px 2px;
   border: 2px solid #555;
   box-sizing: border-box;
   border-radius: 4px;
