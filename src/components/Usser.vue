@@ -4,7 +4,12 @@
     <h1>Register Account</h1>
     <div class="Data">
       <label for="text">Name:</label>
-      <inputname="name" id="name" type="text" placeholder="Name" v-model="name"
+      <input
+        name="name"
+        id="name"
+        type="text"
+        placeholder="Name"
+        v-model="name"
       />
       <label id="alarm" class="alarm" v-if="name == ''"
         >*Obligatory information</label

@@ -237,9 +237,7 @@ export default new Vuex.Store({
       let foundAccountIndex = state.ACCOUNTS.findIndex(
         account => account.ci == accountToUpdate.ci
       );
-      console.log(accountToUpdate);
-      state.ACCOUNTS[foundAccountIndex] = accountToUpdate;
-      console.log(state.ACCOUNTS[foundAccountIndex]);
+      state.ACCOUNTS.splice(foundAccountIndex, 1, accountToUpdate);
     },
     accountCurrent(state, account) {
       state.CURRENT_USER = account;
