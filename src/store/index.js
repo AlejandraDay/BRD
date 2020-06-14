@@ -39,5 +39,13 @@ export default new Vuex.Store({
       commit("deleteCategory", categ);
     }
   },
+  getters: {
+    getCategoryList(state) {
+      return state.CATEGORIES;
+    },
+    getCategoryTableHeader(state) {
+      return state.HEADERCATEG[0];
+    }
+  },
   modules: {}
 });

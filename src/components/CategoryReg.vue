@@ -6,11 +6,17 @@
       <label for="text">Name:</label>
       <label class="alarm" v-if="name == ''">*Obligatory field</label>
       <br />
-      <input v-model="name" type="text" placeholder="Category Name" />
+      <input
+        v-model="name"
+        type="text"
+        placeholder="Category Name"
+        class="addInput"
+      />
       <button v-on:click="newCategory()" class="button">Add</button>
-
       <br />
-      <br />
+      <label for="text">Create as:</label>
+      <label> <input type="checkbox" v-model="incomeBox" />Incomes </label>
+      <label> <input type="checkbox" v-model="expenseBox" />Expenses </label>
     </div>
     <!--div id="saveData">
       <button @click="registerCateg" class="savebtn">Save</button>
@@ -26,6 +32,8 @@ export default {
   data() {
     return {
       name: "",
+      incomeBox: true,
+      expenseBox: true,
       currentUser: 0
     };
   },
@@ -33,19 +41,26 @@ export default {
     newCategory() {
       if (this.name == null || this.name == "") {
         alert("Name field can't be empty");
+      } else if (!(this.incomeBox || this.expenseBox)) {
+        alert("Unchecked type, atleast one must be selected");
       } else {
-        console.log("Adding new Category " + this.name);
         const id = this.lastId() + 1;
-        this.$store.commit("addCategory", {
-          id: "I" + id, //autogen id
-          name: this.name,
-          user: this.currentUser
-        });
-        this.$store.commit("addCategory", {
-          id: "E" + id, //autogen id
-          name: this.name,
-          user: this.currentUser
-        });
+        if (this.incomeBox) {
+          console.log("Adding new Income Category " + this.name);
+          this.$store.commit("addCategory", {
+            id: "I" + id, //autogen id
+            name: this.name,
+            user: this.currentUser
+          });
+        }
+        if (this.expenseBox) {
+          console.log("Adding new Expense Category " + this.name);
+          this.$store.commit("addCategory", {
+            id: "E" + id, //autogen id
+            name: this.name,
+            user: this.currentUser
+          });
+        }
         this.name = "";
       }
     },
@@ -77,7 +92,8 @@ export default {
   box-sizing: border-box;
   border-radius: 4px;
 }
-input {
+
+.addInput {
   width: 40%;
   padding: 10px 20px;
   margin: 8px 2px;

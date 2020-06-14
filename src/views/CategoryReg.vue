@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button @click="redirectTable()" class="addbutton">Go to Table</button>
     <CategoryReg msg="Categories Register" />
   </div>
 </template>
@@ -11,6 +12,11 @@ export default {
   name: "CategoryRegister",
   components: {
     CategoryReg
+  },
+  methods: {
+    redirectTable() {
+      this.$router.push("categories");
+    }
   }
 };
 </script>

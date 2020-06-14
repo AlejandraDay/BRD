@@ -2,9 +2,10 @@
   <div class="table">
     <h1>{{ msg }}</h1>
     <input v-model="searchName" placeholder="Search" />
-    <button @click="redirectRegister()" class="addbutton">Add New</button>
+    <!--button @click="redirectRegister()" class="addbutton">Add New</button-->
     <br />
     <br />
+
     <table>
       <thead>
         <tr>
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "CategoryTable",
   props: {
@@ -70,6 +72,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["deleteCategory", "updateCategory"]),
     next() {
       if (this.group < Math.ceil(this.filtered.length / this.groupBy)) {
         this.group++;
@@ -94,7 +97,8 @@ export default {
       if (hasTransactions) {
         if (confirm("Are you sure you want to delete " + categ.name + "?")) {
           console.log("Deleting " + categ.name + " | " + categ.id);
-          this.$store.commit("deleteCategory", categ);
+          this.deleteCategory(categ);
+          //  this.$store.commit("deleteCategory", categ);
         }
       } else {
         alert("Unable to Delete, transactions still using this category");
@@ -119,7 +123,8 @@ export default {
           ) {
             console.log("Updating " + categ.id);
             categ.name = updatedName;
-            this.$store.commit("editCategory", categ);
+            this.updateCategory(categ);
+            //this.$store.commit("editCategory", categ);
           }
         }
       } else {
@@ -129,6 +134,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["getCategoryList", "getCategoryTableHeader"]),
     filtered() {
       const categoryList = this.categories;
       return this.searchName === ""
@@ -136,10 +142,12 @@ export default {
         : categoryList.filter(item => item.name.includes(this.searchName));
     },
     categories() {
-      return this.$store.state.CATEGORIES;
+      //return this.$store.state.CATEGORIES;
+      return this.getCategoryList;
     },
     headers() {
-      return this.$store.state.HEADERCATEG[0];
+      return this.getCategoryTableHeader;
+      // return this.$store.state.HEADERCATEG[0];
     },
     upperLimmit() {
       return this.groupBy * this.group;
