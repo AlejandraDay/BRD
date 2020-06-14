@@ -1,7 +1,7 @@
 <template>
   <div>
     <button @click="redirectTable()" class="addbutton">Go to Table</button>
-    <CategoryReg msg="Categories Register" />
+    <CategoryReg />
   </div>
 </template>
 

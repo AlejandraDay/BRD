@@ -1,7 +1,7 @@
 <template>
   <div>
-    <CategoryReg msg="Category Register" />
-    <CategoryTable msg="Categories Table" />
+    <CategoryReg />
+    <CategoryTable />
   </div>
 </template>
 

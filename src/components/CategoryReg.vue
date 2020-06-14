@@ -1,7 +1,7 @@
 <template>
   <div class="RegCateg">
     <br />
-    <h1>{{ msg }}</h1>
+    <h1 id="categoryRegister-title">Register a Category</h1>
     <div class="Data">
       <label for="text">Name:</label>
       <label class="alarm" v-if="name == ''">*Obligatory field</label>

@@ -1,7 +1,12 @@
 <template>
   <div class="table">
-    <h1>{{ msg }}</h1>
-    <input v-model="searchName" placeholder="Search" />
+    <h1 id="categoryTable-title">Categories Table</h1>
+    <select v-model="filter" id="selectableFilter" class="selectableFilter">
+      <option>All</option>
+      <option>Incomes</option>
+      <option>Expenses</option>
+    </select>
+    <input v-model="searchName" placeholder="Search by name" />
     <!--button @click="redirectRegister()" class="addbutton">Add New</button-->
     <br />
     <br />
@@ -136,7 +141,10 @@ export default {
   computed: {
     ...mapGetters(["getCategoryList", "getCategoryTableHeader"]),
     filtered() {
-      const categoryList = this.categories;
+      const categoryList =
+        this.filter === "All"
+          ? this.categories
+          : this.categories.filter(item => item.id.includes(this.filter[0]));
       return this.searchName === ""
         ? categoryList
         : categoryList.filter(item => item.name.includes(this.searchName));
@@ -165,6 +173,14 @@ export default {
 </script>
 
 <style scoped>
+.selectableFilter {
+  width: 10%;
+  padding: 10px 20px;
+  margin: 8px 2px;
+  border: 2px solid #555;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
 input {
   width: 40%;
   padding: 10px 20px;
