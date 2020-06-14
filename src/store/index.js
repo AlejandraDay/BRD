@@ -30,7 +30,10 @@ export default new Vuex.Store({
     ],
     CURRENT_USER: -1,
     VIEW_ACCOUNT: false,
-    HEADERS: [["Index", "ID", "Name", "Category", "Amount", "Description"]],
+    HEADERS: [
+      ["Index", "ID", "Name", "Category", "Amount", "Description"],
+      ["Index", "ID", "Name", "Created By", "Type"]
+    ],
     TRANSACTIONS: [
       {
         user: 0,
@@ -227,6 +230,15 @@ export default new Vuex.Store({
     },
     addItem({ commit }, item) {
       commit("mutateItemList", item);
+    },
+    addCategory({ commit }, categ) {
+      commit("addCategory", categ);
+    },
+    updateCategory({ commit }, categ) {
+      commit("updateCategory", categ);
+    },
+    deleteCategory({ commit }, categ) {
+      commit("deleteCategory", categ);
     }
   },
   mutations: {
@@ -265,6 +277,22 @@ export default new Vuex.Store({
       state.TRANSACTIONS = state.TRANSACTIONS.filter(
         it => it.id !== itemToUpdate.id
       );
+    },
+    deleteCategory(state, categDelete) {
+      state.CATEGORIES = state.CATEGORIES.filter(
+        categ => categ.id !== categDelete.id
+      );
+    },
+    updateCategory(state, updatedCateg) {
+      const categoryIndex = state.CATEGORIES.findIndex(
+        categ => categ.id === updatedCateg.id
+      );
+      if (categoryIndex >= 0) {
+        state.CATEGORIES[categoryIndex] = updatedCateg;
+      }
+    },
+    addCategory(state, newCateg) {
+      state.CATEGORIES.push(newCateg);
     }
   },
   getters: {
@@ -288,6 +316,12 @@ export default new Vuex.Store({
     },
     getLastItemId(state) {
       return state.items[state.items.length - 1].id;
+    },
+    getCategoryList(state) {
+      return state.CATEGORIES;
+    },
+    getCategoryTableHeader(state) {
+      return state.HEADERS[1];
     }
   },
   modules: {}

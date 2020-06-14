@@ -9,6 +9,7 @@
     <div id="nav">
       <router-link to="/transaction">transactions</router-link>
     </div>
+    <router-link to="/categories">Categories</router-link>
     <router-link to="/registerIncomeExpense"
       >Register Income Expense</router-link
     >
