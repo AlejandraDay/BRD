@@ -17,6 +17,7 @@
         >
           <td>{{ index + lowerLimmit }}</td>
           <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
           <td>{{ item.category }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.description }}</td>

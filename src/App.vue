@@ -12,6 +12,7 @@
     <router-link to="/registerIncomeExpense"
       >Register Income Expense</router-link
     >
+    <router-view />
   </div>
 </template>
 
