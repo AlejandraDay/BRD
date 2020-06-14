@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     USERS: [{ ci: 0, name: "admin", email: "admin@default.com", pwd: "admin" }],
     CATEGORIES: Category.categories,
-    HEADERCATEG: [["Index", "ID", "Name", "Created By"]]
+    HEADERCATEG: [["Index", "ID", "Name", "Created By", "Type"]]
   },
   mutations: {
     deleteCategory(state, categDelete) {

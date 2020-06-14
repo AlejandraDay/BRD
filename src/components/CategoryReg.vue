@@ -46,13 +46,14 @@ export default {
       } else if (!(this.incomeBox || this.expenseBox)) {
         alert("Unchecked type, atleast one must be selected");
       } else {
-        const id = this.lastId() + 1;
         if (this.incomeBox) {
           console.log("Adding new Income Category " + this.name);
+          const id = this.lastId() + 1;
           this.addCategory({
-            id: "I" + id, //autogen id
+            id: id, //autogen id
             name: this.name,
-            user: this.currentUser
+            user: this.currentUser,
+            type: true
           });
           //this.$store.commit("addCategory", {
           // id: "I" + id, //autogen id
@@ -61,11 +62,13 @@ export default {
           //});
         }
         if (this.expenseBox) {
+          const id = this.lastId() + 1;
           console.log("Adding new Expense Category " + this.name);
           this.addCategory({
-            id: "E" + id, //autogen id
+            id: id, //autogen id
             name: this.name,
-            user: this.currentUser
+            user: this.currentUser,
+            type: false
           });
           //this.$store.commit("addCategory", {
           // id: "E" + id, //autogen id
@@ -79,7 +82,7 @@ export default {
     lastId() {
       return Math.max.apply(
         Math,
-        this.categories.map(item => String(item.id).substr(1))
+        this.categories.map(item => item.id)
       );
     }
   },

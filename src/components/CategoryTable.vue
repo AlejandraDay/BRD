@@ -23,6 +23,8 @@
           <td class="id">{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.user }}</td>
+          <td v-if="item.type">Income</td>
+          <td v-else>Expense</td>
           <td
             class="categbtn"
             v-if="item.user === currentUser || item.user === 0"
@@ -141,10 +143,19 @@ export default {
   computed: {
     ...mapGetters(["getCategoryList", "getCategoryTableHeader"]),
     filtered() {
+      const self = this;
       const categoryList =
         this.filter === "All"
           ? this.categories
-          : this.categories.filter(item => item.id.includes(this.filter[0]));
+          : this.categories.filter(function(item) {
+              if (
+                (self.filter == "Incomes" && item.type) ||
+                (self.filter == "Expenses" && !item.type)
+              ) {
+                return true;
+              }
+              return false;
+            });
       return this.searchName === ""
         ? categoryList
         : categoryList.filter(item => item.name.includes(this.searchName));
