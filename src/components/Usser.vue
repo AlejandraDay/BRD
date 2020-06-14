@@ -4,11 +4,14 @@
     <h1>Register Account</h1>
     <div class="Data">
       <label for="text">Name:</label>
-      <inputname="name" id="name" type="text" placeholder="Name" v-model="name"
+      <input
+        name="name"
+        id="name"
+        type="text"
+        placeholder="Name"
+        v-model="name"
       />
-      <label id="alarm" class="alarm" v-if="name == ''"
-        >*Obligatory information</label
-      >
+      <label class="alarm" v-if="name == ''">*Obligatory information</label>
       <br />
       <br />
       <label for="text">CI:</label>
@@ -33,18 +36,23 @@
       <br />
       <br />
       <label for="text">Password:</label>
-      <input class="stylePwd" v-model="pwd" type="password" />
+      <input id="pwd" class="stylePwd" v-model="pwd" type="password" />
       <label class="alarm" v-if="pwd == ''">*Obligatory information</label>
       <br />
       <br />
       <label for="text">Confirm Password:</label>
-      <input class="stylePwd" v-model="confirmPwd" type="password" />
+      <input
+        id="confirmPwd"
+        class="stylePwd"
+        v-model="confirmPwd"
+        type="password"
+      />
       <label class="alarm" v-if="confirmPwd == ''"
         >*Obligatory information</label
       >
       <br />
       <label
-        class="alarm"
+        id="dontEqual"
         v-if="pwd != '' && confirmPwd != '' && pwd != confirmPwd"
         >*Passwords don't match</label
       >
@@ -96,7 +104,7 @@ export default {
       }
       return pwd;
     },
-    ...mapActions(["addItem"]),
+    ...mapActions(["addAccount"]),
     ...mapActions(["updateAccountUsser"]),
     registerItem() {
       if (
@@ -113,7 +121,7 @@ export default {
           this.changetype(this.pwd) == this.changetype(this.confirmPwd) &&
           this.validateEmail(this.email)
         ) {
-          this.addItem({
+          this.addAccount({
             name: this.name,
             ci: this.ci,
             email: this.email,

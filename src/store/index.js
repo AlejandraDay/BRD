@@ -20,8 +20,8 @@ export default new Vuex.Store({
   },
   //////////
   actions: {
-    addItem({ commit }, item) {
-      commit("mutateItemList", item);
+    addAccount({ commit }, item) {
+      commit("mutateAccountList", item);
       // only permit one param
     },
     updateAccountUsser({ commit }, account) {
@@ -39,7 +39,7 @@ export default new Vuex.Store({
   },
   mutations: {
     // mutateStudentList(state, param) {
-    mutateItemList(state, item) {
+    mutateAccountList(state, item) {
       state.accounts.push(item);
     },
     updateAccount(state, accountToUpdate) {
@@ -47,7 +47,7 @@ export default new Vuex.Store({
         account => account.ci == accountToUpdate.ci
       );
       console.log(accountToUpdate);
-      state.accounts[foundAccountIndex] = accountToUpdate;
+      state.accounts.splice(foundAccountIndex, 1, accountToUpdate);
       console.log(state.accounts[foundAccountIndex]);
     },
     accountCurrent(state, account) {

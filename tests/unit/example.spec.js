@@ -2,8 +2,8 @@ import { assert } from "chai";
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 //import HelloWorld from "@/components/HelloWorld.vue";
 import AccountView from "@/views/Account.vue";
-import RegisterAccount from "@/views/RegisterUsser.vue";
-import RegisterAccountView from "@/components/Usser.vue";
+import RegisterAccountView from "@/views/RegisterUsser.vue";
+import RegisterAccount from "@/components/Usser.vue";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import { mockStore } from "./mockStore";
@@ -47,7 +47,7 @@ describe("RegisterAccount.vue", () => {
     // wrapper = TestUtil.get(.....)
   });
   it("The Register Account should be rendered", () => {
-    const wrapper = shallowMount(RegisterAccount, {
+    const wrapper = shallowMount(RegisterAccountView, {
       store,
       localVue
     }); // wrapper = { new Vue(), html, find, findAll, etc }
@@ -56,7 +56,7 @@ describe("RegisterAccount.vue", () => {
     assert.equal(titleAccountActual.text(), "Register Account");
   });
   it("All input have obligatory information", () => {
-    const wrapper = shallowMount(RegisterAccountView, {
+    const wrapper = shallowMount(RegisterAccount, {
       data: {
         message: "*Obligatory information",
         name: "",
@@ -81,11 +81,50 @@ describe("RegisterAccount.vue", () => {
       pwd: "12",
       confirmPwd: "12"
     });
-    assert.isFalse(wrapper.isEmpty());
-  }); /*
+    // assert.isFalse(wrapper.isEmpty());
+  });
   it(" Equal of Password and ConfirmPassword", () => {
+    const wrapper = shallowMount(RegisterAccount, {
+      data: {
+        pwd: "",
+        confirmPwd: ""
+      },
+      store,
+      localVue
+    });
+    wrapper.setData({
+      pwd: "123",
+      confirmPwd: "123"
+    });
+    const password = wrapper.find("#pwd");
+    const confirmPwd = wrapper.find("#confirmPwd");
+    assert.isTrue(wrapper.exists());
+    assert.equal(password.text(), confirmPwd.text());
+    // assert.isFalse(wrapper.isEmpty());
+  });
 
-  });*/
+  it(" Alarm of Password and ConfirmPassword don't equal", () => {
+    const wrapper = shallowMount(RegisterAccount, {
+      data: {
+        pwd: "",
+        confirmPwd: ""
+      },
+      store,
+      localVue
+    });
+    wrapper.setData({
+      pwd: "123",
+      confirmPwd: "12"
+    });
+    const password = wrapper.find("#pwd");
+    const confirmPwd = wrapper.find("#confirmPwd");
+    const alarmMessagePwd = wrapper.find("#dontEqual");
+
+    assert.isTrue(wrapper.exists());
+    assert.notequal(password.text(), confirmPwd.text());
+    assert.equal(alarmMessagePwd.text(), "*Passwords don't match");
+    //  assert.isFalse(wrapper.isEmpty());
+  });
 });
 /**it("Accounts that exists initially", () => {
     const wrapper = shallowMount(GroupDraw, {

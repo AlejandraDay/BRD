@@ -162,8 +162,8 @@ export default {
           });
           console.log(this.account);
           alert("Changes made successsfully");
+          this.$forceUpdate();
           this.redirectInit();
-          //this.accountToEdit = Object.assign({}, this.getAccount);
         } else {
           console.log("Invalid Changes");
         }
