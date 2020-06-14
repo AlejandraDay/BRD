@@ -30,12 +30,37 @@ const routes = [
     component: () => import("../views/Account.vue")
   },
   {
+    path: "/registerIncomeExpense",
+    name: "RegisterIncomeExpenseView",
+    component: () => import("../views/RegisterIncomeExpenseView.vue")
+  },
+  {
+    path: "/ModifyDeleteItem",
+    name: "ModifyDeleteItemView",
+    component: () => import("../views/ModifyDeleteItemView.vue")
+  },
+  {
     path: "/home",
     name: "Home",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import("../views/Home.vue")
+  },
+  {
+    path: "/transaction",
+    name: "Transaction",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Transaction.vue")
+  },
+  {
+    path: "/categories",
+    name: "Categories",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Categories.vue")
   }
 ];
 
