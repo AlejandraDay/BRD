@@ -1,7 +1,7 @@
 <template>
   <div>
-    <label> Data Account</label>
-    <AccountData>Account</AccountData>
+    <label>Data Account</label>
+    <AccountData id="account">Account</AccountData>
   </div>
 </template>
 <script>

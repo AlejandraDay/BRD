@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Usser>RegistrarUsuario</Usser>
+    <Usser id="usser">Register Account</Usser>
   </div>
 </template>
 
