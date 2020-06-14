@@ -23,6 +23,9 @@
               placeholder="Name"
               v-model="name"
             />
+            <label class="alarmName" v-if="name == ''"
+              >*Obligatory information</label
+            >
           </div>
           <div class="field half">
             <label for="categories">Category</label>
@@ -40,6 +43,9 @@
               id="amount"
               placeholder="Bs."
             ></textarea>
+            <label class="alarmAmount" v-if="amount == ''"
+              >*Obligatory information</label
+            >
           </div>
           <ul class="actions">
             <li>

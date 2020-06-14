@@ -6,13 +6,8 @@
       </li>
       <div class="inner">
         <label>Select an Item:</label>
-        <select
-          v-model="selectedItem"
-          name="types"
-          id="types"
-          class="text option"
-        >
-          <option :key="ty.name" v-for="ty in items">
+        <select v-model="selectedItem" name="types" id="types">
+          <option :key="ty.name" v-for="ty in items" class="optionsName">
             {{ ty.name }}
           </option>
         </select>
@@ -28,11 +23,18 @@
               placeholder="Name"
               v-model="name"
             />
+            <label class="alarmName" v-if="name == ''"
+              >*Obligatory information</label
+            >
           </div>
           <div class="field half">
             <label for="categories">Category</label>
-            <select v-model="category" id="categories" class="text option">
-              <option :key="cate" v-for="cate in categories">
+            <select v-model="category" id="categories">
+              <option
+                :key="cate"
+                v-for="cate in categories"
+                class="optionsCategory"
+              >
                 {{ cate }}
               </option>
             </select>
@@ -46,6 +48,9 @@
               rows="6"
               placeholder="Amount"
             ></textarea>
+            <label class="alarmAmount" v-if="amount == ''"
+              >*Obligatory information</label
+            >
           </div>
           <ul class="actions">
             <li>
@@ -83,7 +88,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "RegisterIncomeExpenseView",
+  name: "ModifyDeleteItemView",
   components: {},
   data() {
     return {
