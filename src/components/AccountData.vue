@@ -54,24 +54,13 @@
       <div class="alingButton">
         <button @click="saveUpdateAccount" class="button save">Save</button>
       </div>
+      <br />
+      <div class="alingButton">
+        <button @click="deleteA(id)" class="delete">
+          Delete Account
+        </button>
+      </div>
     </div>
-    <!--table>
-      <thead>
-        <tr>
-          <th :key="column" v-for="column in columns">
-            {{ column }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr :key="item.ci" v-for="item in account">
-          <td>{{ item.name }}</td>
-          <td>{{ item.ci }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.pwd }}</td>
-        </tr>
-      </tbody>
-    </table-->
   </div>
 </template>
 <script>
@@ -91,7 +80,7 @@ export default {
     };
   },
   mounted() {
-    this.accountToEdit = Object.assign({}, this.getAccount);
+    this.accountToEdit = Object.assign({}, this.account);
   },
   computed: {
     ...mapGetters(["getAccount"]),
@@ -105,7 +94,30 @@ export default {
       return this.idAccount;
     }
   },
+  watch: {
+    /* account: {
+      handler: function(oldValue, newValue) {
+        // eslint-disable-next-line no-debugger
+        this.accountToEdit = Object.assign({}, this.account);
+        console.log("mensaje fuera de if");
+        console.log(newValue);
+        if (oldValue !== newValue) {
+          this.accountToEdit = Object.assign({}, this.account);
+          console.log(newValue);
+        }
+      }
+    }*/
+  },
   methods: {
+    ...mapActions(["profileView"]),
+    redirectInit() {
+      this.profileView(true);
+      this.$router.push("Home");
+    },
+    redirectLogin() {
+      this.profileView(true);
+      this.$router.push("RegisterUsser");
+    },
     validateEmail(email) {
       var valEmail = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
       if (valEmail.test(email)) {
@@ -123,21 +135,22 @@ export default {
       return pwd;
     },
     ...mapActions(["updateAccount"]),
+    ...mapActions(["deleteAccount"]),
     saveUpdateAccount() {
       // eslint-disable-next-line no-debugger
       // debugger;
 
       if (
-        this.accountToEdit.name == "" ||
-        this.accountToEdit.email == "" ||
-        this.accountToEdit.phone == "" ||
-        this.changetype(this.pwd) == "" ||
-        this.changetype(this.confirmPwd) == ""
+        this.accountToEdit.name === "" ||
+        this.accountToEdit.email === "" ||
+        this.accountToEdit.phone === "" ||
+        this.changetype(this.pwd) === "" ||
+        this.changetype(this.confirmPwd) === ""
       ) {
         console.log("There don't have to be empty fields");
       } else {
         if (
-          this.changetype(this.pwd) == this.changetype(this.confirmPwd) &&
+          this.changetype(this.pwd) === this.changetype(this.confirmPwd) &&
           this.validateEmail(this.accountToEdit.email)
         ) {
           this.updateAccount({
@@ -147,10 +160,19 @@ export default {
             phone: this.accountToEdit.phone,
             pwd: this.changetype(this.pwd)
           });
+          console.log(this.account);
+          alert("Changes made successsfully");
+          this.redirectInit();
+          //this.accountToEdit = Object.assign({}, this.getAccount);
         } else {
-          console.log("Invalid Password");
+          console.log("Invalid Changes");
         }
       }
+    },
+    deleteA(id) {
+      this.deleteAccount(id);
+      //console.log()
+      this.redirectLogin;
     }
   }
 };

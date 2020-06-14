@@ -72,7 +72,9 @@ export default {
   },
 
   methods: {
-    redirectInit() {
+    ...mapActions(["profileView"]),
+    redirectView() {
+      this.profileView(false);
       this.$router.push("Account");
     },
     validateEmail(email) {
@@ -117,7 +119,7 @@ export default {
           });
           console.log("Saved Account");
           this.updateAccountUsser(this.ci);
-          this.redirectInit();
+          this.redirectView();
         } else {
           console.log("Invalid Password");
         }

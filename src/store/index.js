@@ -16,7 +16,7 @@ export default new Vuex.Store({
       }
     ],
     usserCurrent: -1,
-    viewAccount: true
+    viewAccount: false
   },
   //////////
   actions: {
@@ -31,7 +31,10 @@ export default new Vuex.Store({
       commit("profileView", value);
     },
     updateAccount({ commit }, accountToUpdate) {
-      commit("mutateUpdateAccount", accountToUpdate);
+      commit("updateAccount", accountToUpdate);
+    },
+    deleteAccount({ commit }, idToDelete) {
+      commit("deleteAccount", idToDelete);
     }
   },
   mutations: {
@@ -39,24 +42,33 @@ export default new Vuex.Store({
     mutateItemList(state, item) {
       state.accounts.push(item);
     },
-    mutateUpdateAccount(state, accountToUpdate) {
-      const foundAccountIndex = state.accounts.findIndex(
+    updateAccount(state, accountToUpdate) {
+      let foundAccountIndex = state.accounts.findIndex(
         account => account.ci == accountToUpdate.ci
       );
+      console.log(accountToUpdate);
       state.accounts[foundAccountIndex] = accountToUpdate;
-      console.log(state.accounts[foundAccountIndex].name);
+      console.log(state.accounts[foundAccountIndex]);
     },
     accountCurrent(state, account) {
       state.usserCurrent = account;
     },
     profileView(state, value) {
       state.viewAccount = value;
+    },
+    deleteAccount(state, idToDelete) {
+      let indexToDelete = state.accounts.indexOf(
+        user => user.ci === idToDelete
+      );
+      //delete state.accounts[aux];
+      state.accounts.splice(indexToDelete, 1);
+      console.log(state.accounts);
     }
   },
   ///////////
   getters: {
     getAccount(state) {
-      const account = state.accounts.filter(
+      let account = state.accounts.filter(
         account => account.ci === state.usserCurrent
       );
       return account[0];
