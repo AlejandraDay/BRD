@@ -5,6 +5,7 @@
     </div>
     <div v-if="visible" id="position">
       <button id="profile" @click="redirectProfile()">Perfil</button>
+    </div>
     <div id="nav">
       <router-link to="/transaction">transactions</router-link>
     </div>

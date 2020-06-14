@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    accounts: [
+    ACCOUNTS: [
       { ci: 0, name: "general", email: "general@example.com", pwd: "admin" },
       {
         ci: 7815499,
@@ -129,46 +129,44 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    // mutateStudentList(state, param) {
     mutateItemList(state, item) {
-      state.accounts.push(item);
+      state.ACCOUNTS.push(item);
     },
     updateAccount(state, accountToUpdate) {
-      let foundAccountIndex = state.accounts.findIndex(
+      let foundAccountIndex = state.ACCOUNTS.findIndex(
         account => account.ci == accountToUpdate.ci
       );
       console.log(accountToUpdate);
-      state.accounts[foundAccountIndex] = accountToUpdate;
-      console.log(state.accounts[foundAccountIndex]);
+      state.ACCOUNTS[foundAccountIndex] = accountToUpdate;
+      console.log(state.ACCOUNTS[foundAccountIndex]);
     },
     accountCurrent(state, account) {
-      state.usserCurrent = account;
+      state.CURRENT_USER = account;
     },
     profileView(state, value) {
-      state.viewAccount = value;
+      state.VIEW_ACCOUNT = value;
     },
     deleteAccount(state, idToDelete) {
-      let indexToDelete = state.accounts.indexOf(
+      let indexToDelete = state.ACCOUNTS.indexOf(
         user => user.ci === idToDelete
       );
-      //delete state.accounts[aux];
-      state.accounts.splice(indexToDelete, 1);
-      console.log(state.accounts);
+      state.ACCOUNTS.splice(indexToDelete, 1);
+      console.log(state.ACCOUNTS);
     }
   },
   ///////////
   getters: {
     getAccount(state) {
-      let account = state.accounts.filter(
-        account => account.ci === state.usserCurrent
+      let account = state.ACCOUNTS.filter(
+        account => account.ci === state.CURRENT_USER
       );
       return account[0];
     },
     idAccount(state) {
-      return state.usserCurrent;
+      return state.CURRENT_USER;
     },
     getProfileView(state) {
-      return state.viewAccount;
+      return state.VIEW_ACCOUNT;
     }
   },
   modules: {}
