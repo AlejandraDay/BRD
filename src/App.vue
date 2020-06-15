@@ -1,18 +1,11 @@
 <template>
   <div id="app">
-    <div id="router">
-      <router-link to="/registerUsser">Register Usser</router-link>
-    </div>
     <div v-if="visible" id="position">
       <button id="profile" @click="redirectProfile()">Perfil</button>
     </div>
     <div id="nav">
-      <router-link to="/transaction">transactions</router-link>
+      <router-link to="/"></router-link>
     </div>
-    <router-link to="/categories">Categories</router-link>
-    <router-link to="/registerIncomeExpense"
-      >Register Income Expense</router-link
-    >
     <router-view />
   </div>
 </template>

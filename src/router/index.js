@@ -40,7 +40,7 @@ const routes = [
     component: () => import("../views/ModifyDeleteItemView.vue")
   },
   {
-    path: "/home",
+    path: "/",
     name: "Home",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
