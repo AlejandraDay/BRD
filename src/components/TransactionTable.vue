@@ -1,6 +1,26 @@
 <template>
   <div class="transactions">
     <h1>{{ msg }}</h1>
+    <div class="filterDateByDate">
+      <label>Filter by: </label>
+      <label><input v-model="filterDateBy.year" type="checkbox" />Year</label>
+      <label><input v-model="filterDateBy.month" type="checkbox" />Month</label>
+      <label><input v-model="filterDateBy.date" type="checkbox" />Date</label>
+      <label>
+        <input v-model="filterCategoryBy" type="checkbox" />Category
+      </label>
+      <br />
+      <input
+        v-if="filterDateBy.year || filterDateBy.month || filterDateBy.date"
+        type="date"
+        v-model="filterDate"
+      />
+      <input
+        v-if="filterCategoryBy"
+        v-model="filterCategory"
+        placeholder="Category Name"
+      />
+    </div>
     <table>
       <thead>
         <tr class="header">
@@ -68,10 +88,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-/*
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
- */
 export default {
   name: "TransactionTable",
   props: {
@@ -79,8 +95,11 @@ export default {
   },
   data() {
     return {
-      filter: "",
-      groupBy_: [5, 10, 15],
+      filterDate: "",
+      filterDateBy: { year: false, month: false, date: false },
+      filterCategory: "",
+      filterCategoryBy: false,
+      groupBy_: [5, 10, 15, 20],
       groupBy: 5,
       group: 1,
       sorted: false,
@@ -89,7 +108,7 @@ export default {
   },
   methods: {
     goRight() {
-      if (this.group < Math.ceil(this.transactions.length / this.groupBy)) {
+      if (this.group < Math.ceil(this.filteredByDC.length / this.groupBy)) {
         this.group++;
       }
     },
@@ -102,7 +121,7 @@ export default {
       this.group = 1;
     },
     end() {
-      this.group = Math.ceil(this.transactions.length / this.groupBy);
+      this.group = Math.ceil(this.filteredByDC.length / this.groupBy);
     },
     getCategoryName(categoryID) {
       return this.getCategoryList.filter(
@@ -128,9 +147,30 @@ export default {
     ...mapGetters(["getHeaders"]),
     ...mapGetters(["getAccounts"]),
     filteredPaging() {
-      return this.transactions.filter(
+      return this.filteredByDC.filter(
         (item, index) => index >= this.lowerLimmit && index < this.upperLimmit
       );
+    },
+    filteredByDC() {
+      let aux = this.transactions;
+      if (this.filterDate !== "") {
+        let aux2 = this.filterDate.split("-");
+        if (this.filterDateBy.year) {
+          aux = aux.filter(t => t.date.year === parseInt(aux2[0]));
+        }
+        if (this.filterDateBy.month) {
+          aux = aux.filter(t => t.date.month === parseInt(aux2[1]));
+        }
+        if (this.filterDateBy.date) {
+          aux = aux.filter(t => t.date.date === parseInt(aux2[2]));
+        }
+      }
+      if (this.filterCategoryBy) {
+        aux = aux.filter(
+          t => 0 <= this.getCategoryName(t.category).search(this.filterCategory)
+        );
+      }
+      return aux;
     },
     transactions() {
       if (this.sorted) {
