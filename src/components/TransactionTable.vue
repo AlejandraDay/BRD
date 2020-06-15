@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div class="transactions">
     <h1>{{ msg }}</h1>
     <table>
       <thead>
@@ -16,15 +16,16 @@
           :class="[item.amount < 0 ? 'expense' : 'profit']"
         >
           <td>{{ index + lowerLimmit }}</td>
+          <td>{{ getUserName(item.user) }}</td>
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.category }}</td>
+          <td>{{ getCategoryName(item.category) }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.description }}</td>
         </tr>
       </tbody>
     </table>
-    <div>
+    <div class="paging">
       <select v-model="groupBy">
         <option :key="item" v-for="item in this.groupBy_">{{ item }}</option>
       </select>
@@ -37,6 +38,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+/*
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+ */
 export default {
   name: "TransactionTable",
   props: {
@@ -66,42 +72,66 @@ export default {
     },
     end() {
       this.group = Math.ceil(this.transactions.length / this.groupBy);
+    },
+    getCategoryName(categoryID) {
+      return this.getCategoryList.filter(
+        category => category.id === categoryID
+      )[0].name;
+    },
+    getUserName(userCI) {
+      return this.accounts.filter(user => user.ci === userCI)[0].name;
     }
   },
   computed: {
+    ...mapGetters(["getItemList"]),
+    ...mapGetters(["getCategoryList"]),
+    ...mapGetters(["getHeaders"]),
+    ...mapGetters(["getAccounts"]),
     filtered() {
       return this.transactions.filter(
         (item, index) => index >= this.lowerLimmit && index < this.upperLimmit
       );
     },
     transactions() {
-      return this.$store.state.TRANSACTIONS;
+      return this.getItemList;
     },
     headers() {
-      return this.$store.state.HEADERS[0];
+      return this.getHeaders[0];
     },
     upperLimmit() {
       return this.groupBy * this.group;
     },
     lowerLimmit() {
       return this.upperLimmit - this.groupBy;
+    },
+    accounts() {
+      return this.getAccounts;
     }
   }
 };
 </script>
 
 <style scoped>
+.paging {
+  margin: auto;
+  width: 75%;
+  right: 1;
+}
+.transactions {
+  margin: auto;
+  width: 75%;
+}
 table,
 th,
 td {
-  border: 1px solid black;
+  border: 2px solid black;
   font-size: 18px;
 }
 
 table {
-  margin: auto;
-  width: 50%;
+  border-color: black;
   padding: 10px;
+  width: 100%;
 }
 
 td {
