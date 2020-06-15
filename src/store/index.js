@@ -297,9 +297,8 @@ export default new Vuex.Store({
       }
     },
     deleteItem(state, itemToDelete) {
-      console.log(itemToDelete);
       state.TRANSACTIONS = state.TRANSACTIONS.filter(
-        it => it.id !== itemToDelete.id
+        it => it.id !== itemToDelete
       );
     },
     deleteCategory(state, categDelete) {

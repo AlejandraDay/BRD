@@ -60,7 +60,7 @@
         <ul class="actions">
           <li>
             <button @click="ModifyItem" class="button save">Save</button>
-            <button @click="deleteItem" class="button delete">Delete</button>
+            <button @click="Delete" class="button delete">Delete</button>
           </li>
         </ul>
         <div class="container-table">
@@ -85,8 +85,8 @@ export default {
       name: "",
       category: "",
       amount: 0,
-      date: [],
-      selectedItem: {}
+      date: {},
+      selectedItem: ""
     };
   },
   computed: {
@@ -121,7 +121,8 @@ export default {
         this.category == "" ||
         this.amount == 0 ||
         this.type == "" ||
-        this.date == {}
+        this.date == {} ||
+        this.selectedItem == ""
       ) {
         alert("The spaces can't be empty");
       } else {
@@ -130,19 +131,20 @@ export default {
         }
         this.findCategoryId();
         this.findItemId();
+        this.findItemUser();
         this.updateItem({
           name: this.name,
           category: this.category,
           amount: this.amount,
           type: this.type,
-          user: this.selectedItem.user,
+          user: this.user,
           id: this.selectedItem,
           date: this.date.split("-")
         });
       }
     },
     Delete() {
-      if (this.selectedItem == {}) {
+      if (this.selectedItem == "") {
         alert("Select an item to delete");
       } else {
         this.findItemId();
@@ -156,6 +158,10 @@ export default {
     findItemId() {
       var index = this.items.findIndex(c => c.name == this.selectedItem);
       this.selectedItem = this.items[index].id;
+    },
+    findItemUser() {
+      var index = this.items.findIndex(c => c.name == this.selectedItem);
+      this.user = this.items[index].user;
     },
     categoryFilter() {
       if (this.type === "income") {
