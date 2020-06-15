@@ -92,20 +92,22 @@ h3 {
     text-decoration: none;
 	font-size: 1.75em;
 }
-form {
-	margin: 0 0 2em 0;
-}
 
-form .field {
+.field {
 	margin-bottom: 1.5em;
 }
 
-form .field.half {
-	display: inline-block;
-	width: 48%;
+.fieldDate {
+    margin-bottom: 1.5em;
+    width: min-content;
 }
 
-form .field.half.first {
+.field.half {
+	display: inline-block;
+    width: 48%;
+}
+
+.field.half.first {
 	margin-right: 3%;
 }
                 
