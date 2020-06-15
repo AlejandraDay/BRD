@@ -31,7 +31,7 @@ export default new Vuex.Store({
     CURRENT_USER: -1,
     VIEW_ACCOUNT: false,
     HEADERS: [
-      ["Index", "ID", "Name", "Category", "Amount", "Description"],
+      ["Index", "User", "ID", "Name", "Category", "Amount", "Description"],
       ["Index", "ID", "Name", "Created By", "Type"]
     ],
     TRANSACTIONS: [
@@ -40,6 +40,7 @@ export default new Vuex.Store({
         id: 101,
         name: "name 1",
         category: 0,
+        //date: { date: 1, month: 12, year: 2000 },
         amount: 500,
         description: "description 1"
       },
@@ -204,7 +205,6 @@ export default new Vuex.Store({
       { id: 3, name: "Transfer", user: 0, type: false }
     ]
   },
-  //////////
   actions: {
     addAccount({ commit }, item) {
       commit("mutateAccountList", item);
@@ -302,6 +302,9 @@ export default new Vuex.Store({
       );
       return account[0];
     },
+    getAccounts(state) {
+      return state.ACCOUNTS;
+    },
     idAccount(state) {
       return state.CURRENT_USER;
     },
@@ -309,19 +312,22 @@ export default new Vuex.Store({
       return state.VIEW_ACCOUNT;
     },
     getItemList(state) {
-      return state.items;
+      return state.TRANSACTIONS;
     },
     getUser(state) {
       return state.CURRENT_USER;
     },
     getLastItemId(state) {
-      return state.items[state.items.length - 1].id;
+      return state.TRANSACTIONS[state.TRANSACTIONS.length - 1].id;
     },
     getCategoryList(state) {
       return state.CATEGORIES;
     },
     getCategoryTableHeader(state) {
       return state.HEADERS[1];
+    },
+    getHeaders(state) {
+      return state.HEADERS;
     }
   },
   modules: {}
