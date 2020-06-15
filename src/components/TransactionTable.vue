@@ -6,22 +6,51 @@
         <tr class="header">
           <th :key="column" v-for="column in this.headers">
             {{ column }}
+            <button
+              class="sort"
+              v-if="column === 'Date' && !sorted"
+              v-on:click="sort()"
+            >
+              Sort
+            </button>
+            <button
+              class="sort"
+              v-else-if="column === 'Date' && sorted"
+              v-on:click="sort()"
+            >
+              Unsort
+            </button>
+            <button
+              class="direction"
+              v-if="column === 'Date' && sorted && direction"
+              v-on:click="giveDirection()"
+            >
+              ↑
+            </button>
+            <button
+              class="direction"
+              v-else-if="column === 'Date' && sorted && !direction"
+              v-on:click="giveDirection()"
+            >
+              ↓
+            </button>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr
           :key="item.id"
-          v-for="(item, index) in filtered"
+          v-for="(item, index) in filteredPaging"
           :class="[item.amount < 0 ? 'expense' : 'profit']"
         >
-          <td>{{ index + lowerLimmit }}</td>
+          <td>{{ index + lowerLimmit + 1 }}</td>
           <td>{{ getUserName(item.user) }}</td>
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ getCategoryName(item.category) }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.description }}</td>
+          <td>{{ getDate(item.date) }}</td>
         </tr>
       </tbody>
     </table>
@@ -53,7 +82,9 @@ export default {
       filter: "",
       groupBy_: [5, 10, 15],
       groupBy: 5,
-      group: 1
+      group: 1,
+      sorted: false,
+      direction: true
     };
   },
   methods: {
@@ -80,6 +111,15 @@ export default {
     },
     getUserName(userCI) {
       return this.accounts.filter(user => user.ci === userCI)[0].name;
+    },
+    getDate({ year, month, date }) {
+      return `${year}-${month}-${date}`;
+    },
+    sort() {
+      this.sorted = !this.sorted;
+    },
+    giveDirection() {
+      this.direction = !this.direction;
     }
   },
   computed: {
@@ -87,12 +127,22 @@ export default {
     ...mapGetters(["getCategoryList"]),
     ...mapGetters(["getHeaders"]),
     ...mapGetters(["getAccounts"]),
-    filtered() {
+    filteredPaging() {
       return this.transactions.filter(
         (item, index) => index >= this.lowerLimmit && index < this.upperLimmit
       );
     },
     transactions() {
+      if (this.sorted) {
+        if (this.direction) {
+          return this.getItemList.slice().sort(function(a, b) {
+            // eslint-disable-next-line prettier/prettier
+            return (b.date.year * 100 + b.date.month * 10 + b.date.date) - (a.date.year * 100 + a.date.month * 10 + a.date.date)});
+        }
+        return this.getItemList.slice().sort(function(a, b) {
+          // eslint-disable-next-line prettier/prettier
+          return (a.date.year * 100 + a.date.month * 10 + a.date.date) - (b.date.year * 100 + b.date.month * 10 + b.date.date)});
+      }
       return this.getItemList;
     },
     headers() {
@@ -112,6 +162,9 @@ export default {
 </script>
 
 <style scoped>
+.sort {
+  margin: auto;
+}
 .paging {
   margin: auto;
   width: 75%;

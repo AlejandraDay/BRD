@@ -52,7 +52,7 @@ export default new Vuex.Store({
         category: 0,
         amount: 500,
         description: "description 1",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2000, month: 12, date: 3 }
       },
       {
         user: 0,
@@ -61,7 +61,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 2",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2000, month: 11, date: 1 }
       },
       {
         user: 0,
@@ -70,7 +70,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 3",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2000, month: 11, date: 1 }
       },
       {
         user: 0,
@@ -79,7 +79,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 4",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -88,7 +88,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 5",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -97,7 +97,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 6",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
