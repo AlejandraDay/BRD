@@ -29,11 +29,11 @@
           <label for="categories">Category</label>
           <select v-model="category" id="categories">
             <option
-              :key="cate"
-              v-for="cate in categories"
+              :key="cate.id"
+              v-for="cate in categoryFilter()"
               class="optionsCategory"
             >
-              {{ cate }}
+              {{ cate.name }}
             </option>
           </select>
         </div>
@@ -50,32 +50,21 @@
             >*Obligatory information</label
           >
         </div>
+        <div class="fieldDate">
+          <label for="dateP">Date</label>
+          <input type="date" id="dateP" name="dateP" v-model="date" />
+          <label class="alarmdate" v-if="date == ''"
+            >*Obligatory information</label
+          >
+        </div>
         <ul class="actions">
           <li>
             <button @click="ModifyItem" class="button save">Save</button>
-            <button @click="deleteItem" class="button delete">Delete</button>
+            <button @click="Delete" class="button delete">Delete</button>
           </li>
         </ul>
         <div class="container-table">
-          <div class="wrap-table">
-            <table class="table">
-              <thead>
-                <tr class="row head">
-                  <th class="column" :key="column" v-for="column in columns">
-                    {{ column }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="row body" :key="item.name" v-for="item in items">
-                  <td class="column">{{ item.name }}</td>
-                  <td class="column">{{ item.category }}</td>
-                  <td class="column">{{ item.amount }}</td>
-                  <td class="column">{{ item.type }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <TransactionTable msg="This is the transaction's table" />
         </div>
       </div>
     </footer>
@@ -84,22 +73,30 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import TransactionTable from "@/components/TransactionTable.vue";
 export default {
   name: "ModifyDeleteItemView",
-  components: {},
+  components: {
+    TransactionTable
+  },
   data() {
     return {
-      categories: ["transfer", "other"],
       types: ["expense", "income"],
-      columns: ["Name", "Category", "Amount", "Type"],
       name: "",
       category: "",
-      amount: "",
-      selectedItem: {}
+      amount: 0,
+      date: {},
+      selectedItem: ""
     };
   },
   computed: {
-    ...mapGetters(["getItemList", "getUser", "getLastItemId"]),
+    ...mapGetters([
+      "getItemList",
+      "getUser",
+      "getLastItemId",
+      "getCategoryList",
+      "getItemTableHeader"
+    ]),
     items() {
       return this.getItemList;
     },
@@ -108,6 +105,12 @@ export default {
     },
     lastId() {
       return this.getLastItemId;
+    },
+    categories() {
+      return this.getCategoryList;
+    },
+    headers() {
+      return this.getItemTableHeader;
     }
   },
   methods: {
@@ -116,31 +119,55 @@ export default {
       if (
         this.name == "" ||
         this.category == "" ||
-        this.amount == "" ||
-        this.type == ""
+        this.amount == 0 ||
+        this.type == "" ||
+        this.date == {} ||
+        this.selectedItem == ""
       ) {
         alert("The spaces can't be empty");
       } else {
+        if (this.type == "expense") {
+          this.amount = this.amount * -1;
+        }
+        this.findCategoryId();
+        this.findItemId();
+        this.findItemUser();
         this.updateItem({
           name: this.name,
           category: this.category,
           amount: this.amount,
           type: this.type,
-          user: this.selectedItem.user,
-          id: this.selectedItem.id
+          user: this.user,
+          id: this.selectedItem,
+          date: this.date.split("-")
         });
       }
     },
-    deleteItem() {
-      if (
-        this.name == "" ||
-        this.category == "" ||
-        this.amount == "" ||
-        this.type == ""
-      ) {
-        alert("The spaces can't be empty");
+    Delete() {
+      if (this.selectedItem == "") {
+        alert("Select an item to delete");
       } else {
+        this.findItemId();
         this.deleteItem(this.selectedItem);
+      }
+    },
+    findCategoryId() {
+      var index = this.categories.findIndex(c => c.name == this.category);
+      this.category = this.categories[index].id;
+    },
+    findItemId() {
+      var index = this.items.findIndex(c => c.name == this.selectedItem);
+      this.selectedItem = this.items[index].id;
+    },
+    findItemUser() {
+      var index = this.items.findIndex(c => c.name == this.selectedItem);
+      this.user = this.items[index].user;
+    },
+    categoryFilter() {
+      if (this.type === "income") {
+        return this.categories.filter(ca => ca.type);
+      } else {
+        return this.categories.filter(ca => !ca.type);
       }
     }
   }
