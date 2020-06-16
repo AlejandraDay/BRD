@@ -56,7 +56,7 @@
         >
         <br />
         <label
-          id="dontEqual"
+          class="notEqual"
           v-if="pwd != '' && confirmPwd != '' && pwd != confirmPwd"
           >*Passwords don't match</label
         >
@@ -84,7 +84,6 @@ export default {
       phone: "",
       pwd: "",
       confirmPwd: "",
-      //pwdVisible: "password",
       check: false
     };
   },
@@ -107,10 +106,8 @@ export default {
     validateEmail(email) {
       var valEmail = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
       if (valEmail.test(email)) {
-        //alert("The email address " + email + " is correct.");
         return true;
       } else {
-        //console.log("The email address is incorrect.");
         return false;
       }
     },
@@ -119,12 +116,12 @@ export default {
     registerNewAccount() {
       var ciRepeat = false;
       if (
-        this.name == "" ||
-        this.ci == 0 ||
-        this.email == "" ||
-        this.phone == "" ||
-        this.pwd == "" ||
-        this.confirmPwd == ""
+        this.name === "" ||
+        this.ci === 0 ||
+        this.email === "" ||
+        this.phone === "" ||
+        this.pwd === "" ||
+        this.confirmPwd === ""
       ) {
         console.log("There don't have to be empty fields");
       } else {
@@ -136,7 +133,7 @@ export default {
         if (ciRepeat) {
           alert("Code already exists");
         } else {
-          if (this.pwd == this.confirmPwd && this.validateEmail(this.email)) {
+          if (this.pwd === this.confirmPwd && this.validateEmail(this.email)) {
             this.addAccount({
               name: this.name,
               ci: this.ci,

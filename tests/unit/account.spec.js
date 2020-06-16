@@ -13,6 +13,14 @@ describe("AccountData.vue", () => {
   let localVue;
   let router;
   let store;
+
+  before(() => {
+    const originalPush = VueRouter.prototype.push;
+    VueRouter.prototype.push = function push(location) {
+      return originalPush.call(this, location).catch(err => err);
+    };
+  });
+
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);

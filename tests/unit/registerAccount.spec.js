@@ -3,7 +3,7 @@ import AccountView from "@/views/Account.vue";
 import RegisterAccountView from "@/views/RegisterUsser.vue";
 import RegisterAccount from "@/components/Usser.vue";
 import { assert } from "chai";
-import { shallowMount, createLocalVue /*mount*/ } from "@vue/test-utils";
+import { shallowMount, createLocalVue, mount } from "@vue/test-utils";
 
 import VueRouter from "vue-router";
 import Vuex from "vuex";
@@ -94,20 +94,16 @@ describe("RegisterAccount.vue", () => {
     assert.isFalse(wrapper.isEmpty());
   });
   it("Equal of password and confirm Password", () => {
-    const wrapper = shallowMount(RegisterAccount, {
+    const wrapper = mount(RegisterAccount, {
       store,
       localVue,
       router
     });
     wrapper.vm.pwd = "12";
     wrapper.vm.confirmPwd = "123345";
+    let length = wrapper.vm.$store.state.ACCOUNTS.length;
     wrapper.vm.registerNewAccount();
-    const password = wrapper.find("#pwd");
-    const confirmPwd = wrapper.find("#confirmPwd");
-    //console.log(password);
-    assert.isTrue(wrapper.exists());
-    assert.equal(password.text(), confirmPwd.text());
-    //assert.isFalse(wrapper.isEmpty());
+    assert.equal(wrapper.vm.$store.state.ACCOUNTS.length, length);
   });
   it("Add new Account", () => {
     const wrapper = shallowMount(RegisterAccount, {
