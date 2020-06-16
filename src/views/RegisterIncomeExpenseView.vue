@@ -29,11 +29,11 @@
           <label for="categories">Category</label>
           <select v-model="category" id="categories">
             <option
-              :key="cate"
-              v-for="cate in categories"
+              :key="cate.id"
+              v-for="cate in categoryFilter()"
               class="optionsCategory"
             >
-              {{ cate }}
+              {{ cate.name }}
             </option>
           </select>
         </div>
@@ -44,9 +44,15 @@
             name="amount"
             id="amount"
             rows="6"
-            placeholder="Amount"
           ></textarea>
           <label class="alarmAmount" v-if="amount == ''"
+            >*Obligatory information</label
+          >
+        </div>
+        <div class="fieldDate">
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" v-model="date" />
+          <label class="alarmdate" v-if="date == ''"
             >*Obligatory information</label
           >
         </div>
@@ -61,25 +67,7 @@
           </li>
         </ul>
         <div class="container-table">
-          <div class="wrap-table">
-            <table class="table">
-              <thead>
-                <tr class="row head">
-                  <th class="column" :key="column" v-for="column in columns">
-                    {{ column }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="row body" :key="item.name" v-for="item in items">
-                  <td class="column">{{ item.name }}</td>
-                  <td class="column">{{ item.category }}</td>
-                  <td class="column">{{ item.amount }}</td>
-                  <td class="column">{{ item.type }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <TransactionTable msg="This is the transaction's table" />
         </div>
       </div>
     </footer>
@@ -88,22 +76,29 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import TransactionTable from "@/components/TransactionTable.vue";
 export default {
   name: "RegisterIncomeExpenseView",
-  components: {},
+  components: {
+    TransactionTable
+  },
   data() {
     return {
-      categories: ["transfer", "other"],
       types: ["expense", "income"],
-      columns: ["Name", "Category", "Amount", "Type"],
       name: "",
       category: "",
-      amount: "",
-      type: ""
+      amount: 0,
+      type: "",
+      date: {}
     };
   },
   computed: {
-    ...mapGetters(["getItemList", "getUser", "getLastItemId"]),
+    ...mapGetters([
+      "getItemList",
+      "getUser",
+      "getLastItemId",
+      "getCategoryList"
+    ]),
     items() {
       return this.getItemList;
     },
@@ -112,6 +107,9 @@ export default {
     },
     lastId() {
       return this.getLastItemId;
+    },
+    categories() {
+      return this.getCategoryList;
     }
   },
   methods: {
@@ -120,19 +118,37 @@ export default {
       if (
         this.name == "" ||
         this.category == "" ||
-        this.amount == "" ||
-        this.type == ""
+        this.amount == 0 ||
+        this.type == "" ||
+        this.date == {}
       ) {
         alert("The spaces can not be empty");
       } else {
+        if (this.type == "expense") {
+          this.amount = this.amount * -1;
+        }
+        let aux = this.date.split("-");
+        this.findCategoryId(this.category);
         this.addItem({
           name: this.name,
           category: this.category,
           amount: this.amount,
           type: this.type,
           user: this.user,
-          id: this.lastId + 1
+          id: this.lastId + 1,
+          date: { year: aux[0], month: aux[1], date: aux[2] }
         });
+      }
+    },
+    findCategoryId() {
+      var index = this.categories.findIndex(c => c.name == this.category);
+      this.category = this.categories[index].id;
+    },
+    categoryFilter() {
+      if (this.type === "income") {
+        return this.categories.filter(ca => ca.type);
+      } else {
+        return this.categories.filter(ca => !ca.type);
       }
     }
   }

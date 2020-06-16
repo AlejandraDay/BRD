@@ -31,8 +31,18 @@ export default new Vuex.Store({
     CURRENT_USER: -1,
     VIEW_ACCOUNT: false,
     HEADERS: [
-      ["Index", "ID", "Name", "Category", "Amount", "Description"],
-      ["Index", "ID", "Name", "Created By", "Type"]
+      [
+        "Index",
+        "User",
+        "ID",
+        "Name",
+        "Category",
+        "Amount",
+        "Description",
+        "Date"
+      ],
+      ["Index", "ID", "Name", "Created By", "Type"],
+      ["Name", "Category", "Amount", "Type"]
     ],
     TRANSACTIONS: [
       {
@@ -41,7 +51,8 @@ export default new Vuex.Store({
         name: "name 1",
         category: 0,
         amount: 500,
-        description: "description 1"
+        description: "description 1",
+        date: { year: 2000, month: 12, date: 3 }
       },
       {
         user: 0,
@@ -49,7 +60,8 @@ export default new Vuex.Store({
         name: "name 2",
         category: 1,
         amount: -50,
-        description: "description 2"
+        description: "description 2",
+        date: { year: 2000, month: 11, date: 1 }
       },
       {
         user: 0,
@@ -57,7 +69,8 @@ export default new Vuex.Store({
         name: "name 3",
         category: 1,
         amount: -50,
-        description: "description 3"
+        description: "description 3",
+        date: { year: 2000, month: 11, date: 1 }
       },
       {
         user: 0,
@@ -65,7 +78,8 @@ export default new Vuex.Store({
         name: "name 4",
         category: 1,
         amount: -50,
-        description: "description 4"
+        description: "description 4",
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -73,7 +87,8 @@ export default new Vuex.Store({
         name: "name 5",
         category: 1,
         amount: -50,
-        description: "description 5"
+        description: "description 5",
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -81,7 +96,8 @@ export default new Vuex.Store({
         name: "name 6",
         category: 1,
         amount: -50,
-        description: "description 6"
+        description: "description 6",
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -89,7 +105,8 @@ export default new Vuex.Store({
         name: "name 7",
         category: 1,
         amount: -50,
-        description: "description 7"
+        description: "description 7",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -97,7 +114,8 @@ export default new Vuex.Store({
         name: "name 8",
         category: 1,
         amount: -50,
-        description: "description 8"
+        description: "description 8",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -105,7 +123,8 @@ export default new Vuex.Store({
         name: "name 9",
         category: 1,
         amount: -50,
-        description: "description 9"
+        description: "description 9",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -113,7 +132,8 @@ export default new Vuex.Store({
         name: "name 10",
         category: 0,
         amount: 80,
-        description: "description 10"
+        description: "description 10",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -121,7 +141,8 @@ export default new Vuex.Store({
         name: "name 11",
         category: 0,
         amount: 8,
-        description: "description 11"
+        description: "description 11",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -129,7 +150,8 @@ export default new Vuex.Store({
         name: "name 12",
         category: 0,
         amount: 66,
-        description: "description 12"
+        description: "description 12",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -137,7 +159,8 @@ export default new Vuex.Store({
         name: "name13",
         category: 2,
         amount: 132,
-        description: "description 13"
+        description: "description 13",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -145,7 +168,8 @@ export default new Vuex.Store({
         name: "name14",
         category: 2,
         amount: 321,
-        description: "description 14"
+        description: "description 14",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -153,7 +177,8 @@ export default new Vuex.Store({
         name: "name15",
         category: 3,
         amount: -465,
-        description: "description 15"
+        description: "description 15",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -161,7 +186,8 @@ export default new Vuex.Store({
         name: "name16",
         category: 3,
         amount: -5465,
-        description: "description 16"
+        description: "description 16",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -169,7 +195,8 @@ export default new Vuex.Store({
         name: "name17",
         category: 0,
         amount: 654,
-        description: "description 17"
+        description: "description 17",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -177,7 +204,8 @@ export default new Vuex.Store({
         name: "name18",
         category: 0,
         amount: 465,
-        description: "description 18"
+        description: "description 18",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -185,7 +213,8 @@ export default new Vuex.Store({
         name: "name19",
         category: 1,
         amount: -564,
-        description: "description 19"
+        description: "description 19",
+        date: { year: 2000, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -193,18 +222,18 @@ export default new Vuex.Store({
         name: "name20",
         category: 1,
         amount: -333,
-        description: "description 20"
+        description: "description 20",
+        date: { year: 2000, month: 12, date: 1 }
       }
     ],
     CATEGORIES: [
       //type: true = income; type: false = expense
-      { id: 0, name: "Other", user: 0, type: true },
-      { id: 1, name: "Other", user: 0, type: false },
-      { id: 2, name: "Transfer", user: 0, type: true },
-      { id: 3, name: "Transfer", user: 0, type: false }
+      { id: 0, name: "OtherI", user: 0, type: true },
+      { id: 1, name: "OtherE", user: 0, type: false },
+      { id: 2, name: "TransferI", user: 0, type: true },
+      { id: 3, name: "TransferE", user: 0, type: false }
     ]
   },
-  //////////
   actions: {
     addAccount({ commit }, item) {
       commit("mutateAccountList", item);
@@ -270,11 +299,13 @@ export default new Vuex.Store({
       const foundItem = state.TRANSACTIONS.findIndex(
         st => st.id === itemToUpdate.id
       );
-      state.TRANSACTIONS[foundItem] = itemToUpdate;
+      if (foundItem >= 0) {
+        state.TRANSACTIONS[foundItem] = itemToUpdate;
+      }
     },
-    deleteItem(state, itemToUpdate) {
+    deleteItem(state, itemToDelete) {
       state.TRANSACTIONS = state.TRANSACTIONS.filter(
-        it => it.id !== itemToUpdate.id
+        it => it.id !== itemToDelete
       );
     },
     deleteCategory(state, categDelete) {
@@ -304,6 +335,9 @@ export default new Vuex.Store({
       );
       return account[0];
     },
+    getAccounts(state) {
+      return state.ACCOUNTS;
+    },
     idAccount(state) {
       return state.CURRENT_USER;
     },
@@ -311,19 +345,25 @@ export default new Vuex.Store({
       return state.VIEW_ACCOUNT;
     },
     getItemList(state) {
-      return state.items;
+      return state.TRANSACTIONS;
     },
     getUser(state) {
       return state.CURRENT_USER;
     },
     getLastItemId(state) {
-      return state.items[state.items.length - 1].id;
+      return state.TRANSACTIONS[state.TRANSACTIONS.length - 1].id;
     },
     getCategoryList(state) {
       return state.CATEGORIES;
     },
     getCategoryTableHeader(state) {
       return state.HEADERS[1];
+    },
+    getHeaders(state) {
+      return state.HEADERS;
+    },
+    getItemTableHeader(state) {
+      return state.HEADERS[2];
     }
   },
   modules: {}
