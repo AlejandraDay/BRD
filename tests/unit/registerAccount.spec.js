@@ -1,4 +1,5 @@
 import AccountView from "@/views/Account.vue";
+//import Account from "@/components/AccountData";
 import RegisterAccountView from "@/views/RegisterUsser.vue";
 import RegisterAccount from "@/components/Usser.vue";
 import { assert } from "chai";
@@ -33,6 +34,14 @@ describe("Account.vue", () => {
 
     assert.equal(titleAccountActual.text(), account);
   });
+  /*it("Delete actual account", () => {
+    const wrapper = shallowMount(Account, {
+      store,
+      localVue
+    });
+    let initialAccountListLength = 3;
+    wrapper.$store.state.CURRENT_USER;
+  });*/
 });
 describe("RegisterAccount.vue", () => {
   let localVue;
@@ -109,10 +118,10 @@ describe("RegisterAccount.vue", () => {
       store,
       localVue
     });
-    let initialAccountListLength = 3;
-    wrapper.vm.registerNewAccount({
-      name: "nombre",
+    let initialAccountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
+    wrapper.vm.addAccount({
       ci: 7,
+      name: "nombre",
       email: "email@gmail.com",
       phone: "122212",
       pwd: "12"

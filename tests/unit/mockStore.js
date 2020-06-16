@@ -1,7 +1,6 @@
 export const mockStore = {
   state: {
     ACCOUNTS: [
-      { ci: 0, name: "general", email: "general@example.com", pwd: "admin" },
       {
         ci: 0,
         name: "general",
