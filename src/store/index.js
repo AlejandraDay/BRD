@@ -309,7 +309,7 @@ export default new Vuex.Store({
       return state.VIEW_ACCOUNT;
     },
     getItemList(state) {
-      return state.items;
+      return state.TRANSACTIONS;
     },
     getUser(state) {
       return state.CURRENT_USER;

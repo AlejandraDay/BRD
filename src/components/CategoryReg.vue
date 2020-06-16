@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "CategoryRegister",
   props: {
@@ -34,8 +34,7 @@ export default {
     return {
       name: "",
       incomeBox: true,
-      expenseBox: true,
-      currentUser: 0
+      expenseBox: true
     };
   },
   methods: {
@@ -47,12 +46,17 @@ export default {
         alert("Unchecked type, atleast one must be selected");
       } else {
         if (this.incomeBox) {
-          console.log("Adding new Income Category " + this.name);
+          console.log(
+            "User: " +
+              this.currentUser +
+              " Adding new Income Category " +
+              this.name
+          );
           const id = this.lastId() + 1;
           this.addCategory({
             id: id, //autogen id
             name: this.name,
-            user: this.currentUser,
+            user: this.currentUserId,
             type: true
           });
           //this.$store.commit("addCategory", {
@@ -67,7 +71,7 @@ export default {
           this.addCategory({
             id: id, //autogen id
             name: this.name,
-            user: this.currentUser,
+            user: this.currentUserId,
             type: false
           });
           //this.$store.commit("addCategory", {
@@ -87,8 +91,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["getCategoryList", "idAccount"]),
     categories() {
-      return this.$store.state.CATEGORIES;
+      return this.getCategoryList;
+    },
+    currentUserId() {
+      return this.idAccount;
     }
   }
 };
