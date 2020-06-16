@@ -4,12 +4,10 @@
     <label for="user" type="number">Please enter your CI: </label>
     <br />
     <input name="user" type="number" v-model="ci" />
-    <label>{{ ci }}</label>
     <br />
     <label for="pwd">Please enter your password: </label>
     <br />
     <input name="pwd" type="password" v-model="pwd" />
-    <label>{{ pwd }}</label>
     <div>
       <button v-on:click="login()">Login</button>
       <button v-on:click="register()">Register</button>
@@ -23,7 +21,7 @@ export default {
   name: "Login",
   data() {
     return {
-      ci: -1,
+      ci: "",
       pwd: ""
     };
   },
@@ -38,7 +36,6 @@ export default {
         alert("Te user with that CI doesn't exist!!!");
         this.ci = -1;
         this.pwd = "";
-        this.$router.push("/");
       } else if (user[0].pwd === this.pwd) {
         alert(`Welcome ${user[0].name}`);
         this.updateAccountUsser(parseInt(user[0].ci));
@@ -48,7 +45,6 @@ export default {
         alert("Something went wrong!!!\nPlease try again.");
         this.ci = -1;
         this.pwd = "";
-        this.$router.push("/");
       }
     },
     register() {
