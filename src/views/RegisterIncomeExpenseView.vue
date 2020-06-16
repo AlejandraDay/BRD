@@ -127,6 +127,7 @@ export default {
         if (this.type == "expense") {
           this.amount = this.amount * -1;
         }
+        let aux = this.date.split("-");
         this.findCategoryId(this.category);
         this.addItem({
           name: this.name,
@@ -135,7 +136,7 @@ export default {
           type: this.type,
           user: this.user,
           id: this.lastId + 1,
-          date: this.date.split("-")
+          date: { year: aux[0], month: aux[1], date: aux[2] }
         });
       }
     },

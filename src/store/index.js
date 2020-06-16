@@ -228,10 +228,10 @@ export default new Vuex.Store({
     ],
     CATEGORIES: [
       //type: true = income; type: false = expense
-      { id: 0, name: "Other", user: 0, type: true },
-      { id: 1, name: "Other", user: 0, type: false },
-      { id: 2, name: "Transfer", user: 0, type: true },
-      { id: 3, name: "Transfer", user: 0, type: false }
+      { id: 0, name: "OtherI", user: 0, type: true },
+      { id: 1, name: "OtherE", user: 0, type: false },
+      { id: 2, name: "TransferI", user: 0, type: true },
+      { id: 3, name: "TransferE", user: 0, type: false }
     ]
   },
   actions: {
