@@ -116,8 +116,8 @@ describe("Register Income Expense", () => {
   it("React to name input", () => {
     const wrapper = shallowMount(RegisterIncomeExpenseView, {
       data: { message: "*Obligatory information", name: "" },
-      store,
-      localVue
+      localVue,
+      store
     });
     const alarmMessage = wrapper.find(".alarmName");
     assert.isTrue(wrapper.exists());
@@ -128,8 +128,8 @@ describe("Register Income Expense", () => {
   it("React to amount input", () => {
     const wrapper = shallowMount(RegisterIncomeExpenseView, {
       data: { message: "*Obligatory information", amount: "" },
-      store,
-      localVue
+      localVue,
+      store
     });
     const alarmMessage = wrapper.find(".alarmAmount");
     assert.isTrue(wrapper.exists());
@@ -139,8 +139,8 @@ describe("Register Income Expense", () => {
   });
   it("calls store register action", () => {
     const wrapper = shallowMount(RegisterIncomeExpenseView, {
-      store,
-      localVue
+      localVue,
+      store
     });
     wrapper.find(".button.save");
     assert.isTrue(wrapper.exists());

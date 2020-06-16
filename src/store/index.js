@@ -335,9 +335,6 @@ export default new Vuex.Store({
       );
       return account[0];
     },
-    getAccounts(state) {
-      return state.ACCOUNTS;
-    },
     idAccount(state) {
       return state.CURRENT_USER;
     },
