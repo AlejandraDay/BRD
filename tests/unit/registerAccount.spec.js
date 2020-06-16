@@ -45,13 +45,13 @@ describe("Account.vue", () => {
 });
 describe("RegisterAccount.vue", () => {
   let localVue;
-  // let router;
+  let router;
   let store;
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
     localVue.use(Vuex);
-    //router = new VueRouter({ routes: [] });
+    router = new VueRouter({ routes: [] });
     store = new Vuex.Store(mockStore);
     // NEXT steps> move this to a util.
     // wrapper = TestUtil.get(.....)
@@ -100,8 +100,8 @@ describe("RegisterAccount.vue", () => {
         confirmPwd: ""
       },
       store,
-      localVue
-      //router
+      localVue,
+      router
     });
     const password = wrapper.find("#pwd");
     const confirmPwd = wrapper.find("#confirmPwd");
@@ -116,16 +116,17 @@ describe("RegisterAccount.vue", () => {
   it("Add new Account", () => {
     const wrapper = shallowMount(RegisterAccount, {
       store,
-      localVue
+      localVue,
+      router
     });
     let initialAccountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
-    wrapper.vm.addAccount({
-      ci: 7,
-      name: "nombre",
-      email: "email@gmail.com",
-      phone: "122212",
-      pwd: "12"
-    });
+    wrapper.vm.ci = 7;
+    wrapper.vm.name = "nombre";
+    wrapper.vm.email = "email@gmail.com";
+    wrapper.vm.phone = "122212";
+    wrapper.vm.pwd = "12";
+    wrapper.vm.confirmPwd = "12";
+    wrapper.vm.registerNewAccount();
     let accountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
     assert.equal(accountListLength, initialAccountListLength + 1);
   });

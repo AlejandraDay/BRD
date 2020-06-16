@@ -1,14 +1,22 @@
 <template>
-  <div>
-    <br />
-    <br />
+  <div class="registerAccount">
     <div>
+      <div class="alingR">
+        <ul class="actions">
+          <div class="alingButton">
+            <button @click="redirectInit()" class="buttonback">←</button>
+          </div>
+          <div class="alingButton">
+            <button @click="redirectLogin()" class="button delete">
+              Sign Off
+            </button>
+          </div>
+        </ul>
+      </div>
       <ul>
         <b
-          ><label>ci: {{ id }} </label></b
+          ><h1>CI: {{ id }}</h1></b
         >
-        <br />
-        <br />
         <label for="text">Name:</label>
         <input v-model="accountToEdit.name" />
         <br />
@@ -51,14 +59,19 @@
           </button>
         </div-->
       </ul>
-      <div class="alingButton">
-        <button @click="saveUpdateAccount" class="button save">Save</button>
-      </div>
-      <br />
-      <div class="alingButton">
-        <button @click="deleteA(id)" class="delete">
-          Delete Account
-        </button>
+      <div class="aline">
+        <ul class="actions">
+          <div class="alingButton">
+            <button @click="saveUpdateAccount" class="button save">
+              Save Changes
+            </button>
+          </div>
+          <div class="alingButton">
+            <button @click="deleteA(id)" class="button delete">
+              Delete Account
+            </button>
+          </div>
+        </ul>
       </div>
     </div>
   </div>
@@ -85,7 +98,6 @@ export default {
   computed: {
     ...mapGetters(["getAccount"]),
     ...mapGetters(["idAccount"]),
-    // getList,
     account() {
       return this.getAccount;
     },
@@ -94,37 +106,21 @@ export default {
       return this.idAccount;
     }
   },
-  watch: {
-    /* account: {
-      handler: function(oldValue, newValue) {
-        // eslint-disable-next-line no-debugger
-        this.accountToEdit = Object.assign({}, this.account);
-        console.log("mensaje fuera de if");
-        console.log(newValue);
-        if (oldValue !== newValue) {
-          this.accountToEdit = Object.assign({}, this.account);
-          console.log(newValue);
-        }
-      }
-    }*/
-  },
   methods: {
     ...mapActions(["profileView"]),
     redirectInit() {
       this.profileView(true);
-      this.$router.push("Home");
+      this.$router.push("/transaction");
     },
     redirectLogin() {
-      this.profileView(true);
-      this.$router.push("RegisterUsser");
+      this.profileView(false);
+      this.$router.push("/");
     },
     validateEmail(email) {
       var valEmail = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
       if (valEmail.test(email)) {
-        //alert("The email address " + email + " is correct.");
         return true;
       } else {
-        //console.log("The email address is incorrect.");
         return false;
       }
     },
@@ -137,9 +133,6 @@ export default {
     ...mapActions(["updateAccount"]),
     ...mapActions(["deleteAccount"]),
     saveUpdateAccount() {
-      // eslint-disable-next-line no-debugger
-      // debugger;
-
       if (
         this.accountToEdit.name === "" ||
         this.accountToEdit.email === "" ||
@@ -170,9 +163,12 @@ export default {
       }
     },
     deleteA(id) {
-      this.deleteAccount(id);
-      //console.log()
-      this.redirectLogin;
+      if (id === 0) {
+        alert("This account can't be deleted because is Administrator account");
+      } else {
+        this.deleteAccount(id);
+        this.redirectLogin();
+      }
     }
   }
 };

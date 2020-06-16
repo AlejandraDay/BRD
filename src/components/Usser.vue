@@ -1,71 +1,78 @@
 <template>
-  <div class="DataAcc">
+  <div class="registerAccount">
     <br />
-    <h1>Register Account</h1>
+    <h3>Register Account</h3>
+    <div class="aline">
+      <button @click="redirectInit()" class="buttonback">←</button>
+    </div>
     <div class="Data">
-      <label for="text">Name:</label>
-      <input
-        name="name"
-        id="name"
-        type="text"
-        placeholder="Name"
-        v-model="name"
-      />
-      <label class="alarm" v-if="name == ''">*Obligatory information</label>
-      <br />
-      <br />
-      <label for="text">CI:</label>
-      <input v-model="ci" type="number" />
-      <label class="alarm" v-if="ci == 0">*Obligatory information</label>
+      <ul class="actions">
+        <label for="text">Name:</label>
+        <input
+          name="name"
+          id="name"
+          type="text"
+          placeholder="Name"
+          v-model="name"
+        />
+        <label class="alarm" v-if="name == ''">*Obligatory information</label>
+        <br />
+        <br />
+        <label for="text">CI:</label>
+        <input v-model="ci" type="number" />
+        <label class="alarm" v-if="ci == 0">*Obligatory information</label>
 
-      <br />
-      <br />
-      <label for="text">Email:</label>
-      <input v-model="email" type="text" placeholder="example@gmail.com" />
-      <label class="alarm" v-if="email == ''">*Obligatory information</label>
+        <br />
+        <br />
+        <label for="text">Email:</label>
+        <input v-model="email" type="text" placeholder="example@gmail.com" />
+        <label class="alarm" v-if="email == ''">*Obligatory information</label>
 
-      <label class="alarm" v-if="email != '' && !validateEmail(email)"
-        >*Email is incorrect</label
-      >
-      <br />
-      <br />
-      <label for="text">Phone:</label>
-      <input v-model="phone" type="text" />
-      <label class="alarm" v-if="phone == ''">*Obligatory information</label>
+        <label class="alarm" v-if="email != '' && !validateEmail(email)"
+          >*Email is incorrect</label
+        >
+        <br />
+        <br />
+        <label for="text">Phone:</label>
+        <input v-model="phone" type="text" />
+        <label class="alarm" v-if="phone == ''">*Obligatory information</label>
 
-      <br />
-      <br />
-      <label for="text">Password:</label>
-      <input id="pwd" class="stylePwd" v-model="pwd" type="password" />
-      <label class="alarm" v-if="pwd == ''">*Obligatory information</label>
-      <br />
-      <br />
-      <label for="text">Confirm Password:</label>
-      <input
-        id="confirmPwd"
-        class="stylePwd"
-        v-model="confirmPwd"
-        type="password"
-      />
-      <label class="alarm" v-if="confirmPwd == ''"
-        >*Obligatory information</label
-      >
-      <br />
-      <label
-        id="dontEqual"
-        v-if="pwd != '' && confirmPwd != '' && pwd != confirmPwd"
-        >*Passwords don't match</label
-      >
-      <br />
-      <br />
-      <div class="alingButton">
-        <button @click="registerNewAccount" class="button save">Save</button>
-      </div>
+        <br />
+        <br />
+        <label for="text">Password:</label>
+        <input id="pwd" class="stylePwd" v-model="pwd" type="password" />
+        <label class="alarm" v-if="pwd == ''">*Obligatory information</label>
+        <br />
+        <br />
+        <label for="text">Confirm Password:</label>
+        <input
+          id="confirmPwd"
+          class="stylePwd"
+          v-model="confirmPwd"
+          type="password"
+        />
+        <label class="alarm" v-if="confirmPwd == ''"
+          >*Obligatory information</label
+        >
+        <br />
+        <label
+          id="dontEqual"
+          v-if="pwd != '' && confirmPwd != '' && pwd != confirmPwd"
+          >*Passwords don't match</label
+        >
+        <br />
+        <br />
+        <div class="aline">
+          <button @click="registerNewAccount" class="button save">
+            Save Account
+          </button>
+        </div>
+      </ul>
     </div>
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Usser",
   components: {},
@@ -81,12 +88,21 @@ export default {
       check: false
     };
   },
-
+  computed: {
+    ...mapGetters(["getAccounts"]),
+    getAllAccount() {
+      return this.getAccounts;
+    }
+  },
   methods: {
     ...mapActions(["profileView"]),
     redirectView() {
       this.profileView(false);
       this.$router.push("Account");
+    },
+    redirectInit() {
+      this.profileView(false);
+      this.$router.push("/");
     },
     validateEmail(email) {
       var valEmail = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
@@ -107,32 +123,39 @@ export default {
     ...mapActions(["addAccount"]),
     ...mapActions(["updateAccountUsser"]),
     registerNewAccount() {
+      var ciRepeat = false;
       if (
         this.name == "" ||
         this.ci == 0 ||
         this.email == "" ||
         this.phone == "" ||
-        this.changetype(this.pwd) == "" ||
-        this.changetype(this.confirmPwd) == ""
+        this.pwd == "" ||
+        this.confirmPwd == ""
       ) {
         console.log("There don't have to be empty fields");
       } else {
-        if (
-          this.changetype(this.pwd) == this.changetype(this.confirmPwd) &&
-          this.validateEmail(this.email)
-        ) {
-          this.addAccount({
-            name: this.name,
-            ci: this.ci,
-            email: this.email,
-            phone: this.phone,
-            pwd: this.changetype(this.pwd)
-          });
-          console.log("Saved Account");
-          this.updateAccountUsser(this.ci);
-          this.redirectView();
+        this.getAllAccount.forEach(account => {
+          if (account.ci === parseInt(this.ci)) {
+            ciRepeat = true;
+          }
+        });
+        if (ciRepeat) {
+          alert("Code already exists");
         } else {
-          console.log("Invalid Password");
+          if (this.pwd == this.confirmPwd && this.validateEmail(this.email)) {
+            this.addAccount({
+              name: this.name,
+              ci: this.ci,
+              email: this.email,
+              phone: this.phone,
+              pwd: this.pwd
+            });
+            console.log("Saved Account");
+            this.updateAccountUsser(this.ci);
+            this.redirectView();
+          } else {
+            console.log("Invalid Password");
+          }
         }
       }
     }
