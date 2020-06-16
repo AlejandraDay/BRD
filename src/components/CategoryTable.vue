@@ -1,24 +1,29 @@
 <template>
   <div class="table">
-    <h1 id="categoryTable-title">Categories Table</h1>
-    <select v-model="filter" id="selectableFilter" class="selectableFilter">
-      <option>All</option>
-      <option>Incomes</option>
-      <option>Expenses</option>
-    </select>
-    <input v-model="searchName" placeholder="Search by name" />
-    <!--button @click="redirectRegister()" class="addbutton">Add New</button-->
+    <h1 id="categoryTable-title" class="centeredText">Categories Table</h1>
+    <div class="moduleCentered">
+      <select v-model="filter" id="selectableFilter" class="selectableFilter">
+        <option>All</option>
+        <option>Incomes</option>
+        <option>Expenses</option>
+      </select>
+      <input v-model="searchName" placeholder="Search by name" />
+    </div>
     <br />
     <br />
 
     <table>
       <thead>
-        <tr>
+        <tr class="header">
           <th :key="column" v-for="column in this.headers">{{ column }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr :key="item.id" v-for="(item, index) in filteredGroups">
+        <tr
+          :key="item.id"
+          v-for="(item, index) in filteredGroups"
+          class="content"
+        >
           <td class="index">{{ index + lowerLimmit }}</td>
           <td class="id">{{ item.id }}</td>
           <td>{{ item.name }}</td>
@@ -44,7 +49,7 @@
         </tr>
       </tbody>
     </table>
-    <div>
+    <div class="moduleCentered">
       <br />
       <label>Items per Page:</label>
       <select v-model="groupBy">
@@ -52,11 +57,12 @@
       </select>
       <br />
       <br />
-
-      <button v-on:click="first()" class="pagingButton">First</button>
-      <button v-on:click="previous()" class="pagingButton">Previous</button>
-      <button v-on:click="next()" class="pagingButton">Next</button>
-      <button v-on:click="last()" class="pagingButton">Last</button>
+      <div class="moduleCentered">
+        <button v-on:click="first()" class="pagingButton">First</button>
+        <button v-on:click="previous()" class="pagingButton">Previous</button>
+        <button v-on:click="next()" class="pagingButton">Next</button>
+        <button v-on:click="last()" class="pagingButton">Last</button>
+      </div>
     </div>
   </div>
 </template>
@@ -203,20 +209,25 @@ export default {
 
 <style scoped>
 .selectableFilter {
-  width: 10%;
-  padding: 10px 20px;
-  margin: 8px 2px;
+  width: 20%;
+  padding: 9px 9px;
+  margin: 5px 3%;
   border: 2px solid #555;
   box-sizing: border-box;
   border-radius: 4px;
 }
 input {
-  width: 40%;
-  padding: 10px 20px;
-  margin: 8px 2px;
+  width: 70%;
+  padding: 10px 10px;
+  margin: 5px 2%;
   border: 2px solid #555;
   box-sizing: border-box;
   border-radius: 4px;
+}
+.centeredText {
+  margin: auto;
+  padding: 20px;
+  text-align: center;
 }
 .index,
 .id {
@@ -245,13 +256,17 @@ input {
 .pagingButton {
   border-style: solid;
   border: 2px solid #555;
-  margin: 1px 1px;
+  margin: 4px 2%;
   padding: 2px 9px;
-  width: 7%;
+  width: 20%;
 }
 .tabla {
   font-size: 18px;
   color: brown;
+}
+.moduleCentered {
+  width: 80%;
+  margin: auto;
 }
 table,
 th,
@@ -260,7 +275,17 @@ td {
 }
 table {
   margin: auto;
-  width: 60%;
+  width: 80%;
   padding: 10px;
+}
+.header {
+  background-color: rgb(0, 89, 255);
+  color: white;
+  text-align: center;
+}
+
+.content {
+  background-color: rgb(170, 220, 240);
+  text-align: center;
 }
 </style>

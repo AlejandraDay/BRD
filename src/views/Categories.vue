@@ -1,6 +1,7 @@
 <template>
   <div>
     <CategoryReg />
+    <div class="line"></div>
     <CategoryTable />
   </div>
 </template>
@@ -22,5 +23,9 @@ export default {
 <style scoped>
 div {
   font-family: Helvetica, sans-serif;
+}
+.line {
+  margin: 50px;
+  border: 1px solid black;
 }
 </style>
