@@ -300,7 +300,7 @@ export default new Vuex.Store({
         st => st.id === itemToUpdate.id
       );
       if (foundItem >= 0) {
-        state.TRANSACTIONS[foundItem] = itemToUpdate;
+        state.TRANSACTIONS.splice(foundItem, 1, itemToUpdate);
       }
     },
     deleteItem(state, itemToDelete) {

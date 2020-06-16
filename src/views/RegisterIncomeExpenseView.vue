@@ -141,7 +141,7 @@ export default {
       }
     },
     findCategoryId() {
-      var index = this.categories.findIndex(c => c.name == this.category);
+      var index = this.categories.findIndex(c => c.name === this.category);
       this.category = this.categories[index].id;
     },
     categoryFilter() {
