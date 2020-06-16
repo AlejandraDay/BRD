@@ -8,7 +8,7 @@ export default new Vuex.Store({
     ACCOUNTS: [
       {
         ci: 0,
-        name: "general",
+        name: "SUDO",
         email: "general@example.com",
         phone: 0,
         pwd: "admin"
@@ -237,7 +237,6 @@ export default new Vuex.Store({
   actions: {
     addAccount({ commit }, item) {
       commit("mutateAccountList", item);
-      // only permit one param
     },
     updateAccountUsser({ commit }, account) {
       commit("accountCurrent", account);
@@ -327,6 +326,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getAccounts(state) {
+      return state.ACCOUNTS;
+    },
     getAccount(state) {
       let account = state.ACCOUNTS.filter(
         account => account.ci === state.CURRENT_USER
