@@ -4,7 +4,7 @@
     <h1 id="categoryRegister-title">Register a Category</h1>
     <div class="Data">
       <label for="text">Name:</label>
-      <label class="alarm" v-if="name == ''">*Obligatory field</label>
+      <label class="alarm" v-if="name === ''">*Obligatory field</label>
       <br />
       <input
         v-model="name"
@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "CategoryRegister",
   props: {
@@ -34,25 +34,29 @@ export default {
     return {
       name: "",
       incomeBox: true,
-      expenseBox: true,
-      currentUser: 0
+      expenseBox: true
     };
   },
   methods: {
     ...mapActions(["addCategory"]),
     newCategory() {
-      if (this.name == null || this.name == "") {
+      if (this.name === null || this.name === "") {
         alert("Name field can't be empty");
       } else if (!(this.incomeBox || this.expenseBox)) {
         alert("Unchecked type, atleast one must be selected");
       } else {
         if (this.incomeBox) {
-          console.log("Adding new Income Category " + this.name);
+          console.log(
+            "User: " +
+              this.currentUserId +
+              " Adding new Income Category " +
+              this.name
+          );
           const id = this.lastId() + 1;
           this.addCategory({
             id: id, //autogen id
             name: this.name,
-            user: this.currentUser,
+            user: this.currentUserId,
             type: true
           });
           //this.$store.commit("addCategory", {
@@ -63,11 +67,16 @@ export default {
         }
         if (this.expenseBox) {
           const id = this.lastId() + 1;
-          console.log("Adding new Expense Category " + this.name);
+          console.log(
+            "User: " +
+              this.currentUserId +
+              " Adding new Expense Category " +
+              this.name
+          );
           this.addCategory({
             id: id, //autogen id
             name: this.name,
-            user: this.currentUser,
+            user: this.currentUserId,
             type: false
           });
           //this.$store.commit("addCategory", {
@@ -87,8 +96,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["getCategoryList", "idAccount"]),
     categories() {
-      return this.$store.state.CATEGORIES;
+      return this.getCategoryList;
+    },
+    currentUserId() {
+      return this.idAccount;
     }
   }
 };

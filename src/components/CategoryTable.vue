@@ -27,14 +27,14 @@
           <td v-else>Expense</td>
           <td
             class="categbtn"
-            v-if="item.user === currentUser || item.user === 0"
+            v-if="item.user === currentUserId || currentUserId === 0"
           >
             <!--If the current user created this category or its admin, can edit it-->
             <button class="editButton" @click="editCat(item)">EDIT</button>
           </td>
           <td
             class="categbtn"
-            v-if="item.user === currentUser || item.user === 0"
+            v-if="item.user === currentUserId || currentUserId === 0"
           >
             <!--If the current user created this category or its admin, can delete it-->
             <button class="deleteButton" @click="deleteCat(item)">
@@ -74,8 +74,7 @@ export default {
       searchName: "",
       groupBy_: [5, 10, 15],
       groupBy: 5,
-      group: 1,
-      currentUser: 1
+      group: 1
     };
   },
   methods: {
@@ -99,49 +98,60 @@ export default {
     redirectRegister() {
       this.$router.push("register-categories");
     },
+    checkForTransactions(categ) {
+      var hasTransactions = false;
+      const transactionList = this.transactionList;
+      transactionList.forEach(item => {
+        if (item.category == categ.id) {
+          console.log("Found in transaction " + item.id);
+          hasTransactions = true;
+        }
+      });
+
+      return hasTransactions;
+    },
     deleteCat(categ) {
-      var hasTransactions = true; //Change with checking function
+      var hasTransactions = this.checkForTransactions(categ);
       if (hasTransactions) {
+        alert("Unable to Delete, transactions still using this category");
+        //to do function when exists incomes or expenses available with this category
+      } else {
         if (confirm("Are you sure you want to delete " + categ.name + "?")) {
           console.log("Deleting " + categ.name + " | " + categ.id);
           this.deleteCategory(categ);
           //  this.$store.commit("deleteCategory", categ);
         }
-      } else {
-        alert("Unable to Delete, transactions still using this category");
-        //to do function when exists incomes or expenses available with this category
       }
     },
     editCat(categ) {
-      var hasTransactions = true; //Change with checking function
-      if (hasTransactions) {
-        var updatedName = prompt("Insert the updated name:", "");
-        if (updatedName == null || updatedName == "") {
-          console.log("Tried to change for empty name, cancelling");
-        } else {
-          if (
-            confirm(
-              "Are you sure you want to change " +
-                categ.name +
-                " with " +
-                updatedName +
-                "?"
-            )
-          ) {
-            console.log("Updating " + categ.id);
-            categ.name = updatedName;
-            this.updateCategory(categ);
-            //this.$store.commit("editCategory", categ);
-          }
-        }
+      var updatedName = prompt("Insert the updated name:", "");
+      if (updatedName === null || updatedName === "") {
+        console.log("Tried to change for empty name, cancelling");
       } else {
-        alert("Unable to Delete, transactions still using this category");
-        //to do function when exists incomes or expenses available with this category
+        if (
+          confirm(
+            "Are you sure you want to change " +
+              categ.name +
+              " with " +
+              updatedName +
+              "?"
+          )
+        ) {
+          console.log("Updating " + categ.id);
+          categ.name = updatedName;
+          this.updateCategory(categ);
+          //this.$store.commit("editCategory", categ);
+        }
       }
     }
   },
   computed: {
-    ...mapGetters(["getCategoryList", "getCategoryTableHeader"]),
+    ...mapGetters([
+      "getCategoryList",
+      "getCategoryTableHeader",
+      "getItemList",
+      "idAccount"
+    ]),
     filtered() {
       const self = this;
       const categoryList =
@@ -149,8 +159,8 @@ export default {
           ? this.categories
           : this.categories.filter(function(item) {
               if (
-                (self.filter == "Incomes" && item.type) ||
-                (self.filter == "Expenses" && !item.type)
+                (self.filter === "Incomes" && item.type) ||
+                (self.filter === "Expenses" && !item.type)
               ) {
                 return true;
               }
@@ -162,11 +172,16 @@ export default {
     },
     categories() {
       //return this.$store.state.CATEGORIES;
-      return this.getCategoryList;
+      return this.getCategoryList.filter(
+        category => category.user === this.currentUserId || category.user === 0
+      );
     },
     headers() {
       return this.getCategoryTableHeader;
       // return this.$store.state.HEADERCATEG[0];
+    },
+    transactionList() {
+      return this.getItemList;
     },
     upperLimmit() {
       return this.groupBy * this.group;
@@ -178,6 +193,9 @@ export default {
       return this.filtered.filter(
         (item, index) => index < this.upperLimmit && index >= this.lowerLimmit
       );
+    },
+    currentUserId() {
+      return this.idAccount;
     }
   }
 };
