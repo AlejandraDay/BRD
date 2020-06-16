@@ -1,30 +1,80 @@
 <template>
-  <div class="table">
+  <div class="transactions">
     <h1>{{ msg }}</h1>
+    <div class="filterDateByDate">
+      <label>Filter by: </label>
+      <label><input v-model="filterDateBy.year" type="checkbox" />Year</label>
+      <label><input v-model="filterDateBy.month" type="checkbox" />Month</label>
+      <label><input v-model="filterDateBy.date" type="checkbox" />Date</label>
+      <label>
+        <input v-model="filterCategoryBy" type="checkbox" />Category
+      </label>
+      <br />
+      <input
+        v-if="filterDateBy.year || filterDateBy.month || filterDateBy.date"
+        type="date"
+        v-model="filterDate"
+      />
+      <input
+        v-if="filterCategoryBy"
+        v-model="filterCategory"
+        placeholder="Category Name"
+      />
+    </div>
     <table>
       <thead>
         <tr class="header">
           <th :key="column" v-for="column in this.headers">
             {{ column }}
+            <button
+              class="sort"
+              v-if="column === 'Date' && !sorted"
+              v-on:click="sort()"
+            >
+              Sort
+            </button>
+            <button
+              class="sort"
+              v-else-if="column === 'Date' && sorted"
+              v-on:click="sort()"
+            >
+              Unsort
+            </button>
+            <button
+              class="direction"
+              v-if="column === 'Date' && sorted && direction"
+              v-on:click="giveDirection()"
+            >
+              ↑
+            </button>
+            <button
+              class="direction"
+              v-else-if="column === 'Date' && sorted && !direction"
+              v-on:click="giveDirection()"
+            >
+              ↓
+            </button>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr
           :key="item.id"
-          v-for="(item, index) in filtered"
+          v-for="(item, index) in filteredPaging"
           :class="[item.amount < 0 ? 'expense' : 'profit']"
         >
-          <td>{{ index + lowerLimmit }}</td>
+          <td>{{ index + lowerLimmit + 1 }}</td>
+          <td>{{ getUserName(item.user) }}</td>
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.category }}</td>
+          <td>{{ getCategoryName(item.category) }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.description }}</td>
+          <td>{{ getDate(item.date) }}</td>
         </tr>
       </tbody>
     </table>
-    <div>
+    <div class="paging">
       <select v-model="groupBy">
         <option :key="item" v-for="item in this.groupBy_">{{ item }}</option>
       </select>
@@ -37,6 +87,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "TransactionTable",
   props: {
@@ -44,15 +95,20 @@ export default {
   },
   data() {
     return {
-      filter: "",
-      groupBy_: [5, 10, 15],
+      filterDate: "",
+      filterDateBy: { year: false, month: false, date: false },
+      filterCategory: "",
+      filterCategoryBy: false,
+      groupBy_: [5, 10, 15, 20],
       groupBy: 5,
-      group: 1
+      group: 1,
+      sorted: false,
+      direction: true
     };
   },
   methods: {
     goRight() {
-      if (this.group < Math.ceil(this.transactions.length / this.groupBy)) {
+      if (this.group < Math.ceil(this.filteredByDC.length / this.groupBy)) {
         this.group++;
       }
     },
@@ -65,43 +121,110 @@ export default {
       this.group = 1;
     },
     end() {
-      this.group = Math.ceil(this.transactions.length / this.groupBy);
+      this.group = Math.ceil(this.filteredByDC.length / this.groupBy);
+    },
+    getCategoryName(categoryID) {
+      return this.getCategoryList.filter(
+        category => category.id === categoryID
+      )[0].name;
+    },
+    getUserName(userCI) {
+      return this.accounts.filter(user => user.ci === userCI)[0].name;
+    },
+    getDate({ year, month, date }) {
+      return `${year}-${month}-${date}`;
+    },
+    sort() {
+      this.sorted = !this.sorted;
+    },
+    giveDirection() {
+      this.direction = !this.direction;
     }
   },
   computed: {
-    filtered() {
-      return this.transactions.filter(
+    ...mapGetters(["getItemList"]),
+    ...mapGetters(["getCategoryList"]),
+    ...mapGetters(["getHeaders"]),
+    ...mapGetters(["getAccounts"]),
+    filteredPaging() {
+      return this.filteredByDC.filter(
         (item, index) => index >= this.lowerLimmit && index < this.upperLimmit
       );
     },
+    filteredByDC() {
+      let aux = this.transactions;
+      if (this.filterDate !== "") {
+        let aux2 = this.filterDate.split("-");
+        if (this.filterDateBy.year) {
+          aux = aux.filter(t => t.date.year === parseInt(aux2[0]));
+        }
+        if (this.filterDateBy.month) {
+          aux = aux.filter(t => t.date.month === parseInt(aux2[1]));
+        }
+        if (this.filterDateBy.date) {
+          aux = aux.filter(t => t.date.date === parseInt(aux2[2]));
+        }
+      }
+      if (this.filterCategoryBy) {
+        aux = aux.filter(
+          t => 0 <= this.getCategoryName(t.category).search(this.filterCategory)
+        );
+      }
+      return aux;
+    },
     transactions() {
-      return this.$store.state.TRANSACTIONS;
+      if (this.sorted) {
+        if (this.direction) {
+          return this.getItemList.slice().sort(function(a, b) {
+            // eslint-disable-next-line prettier/prettier
+            return (b.date.year * 100 + b.date.month * 10 + b.date.date) - (a.date.year * 100 + a.date.month * 10 + a.date.date)});
+        }
+        return this.getItemList.slice().sort(function(a, b) {
+          // eslint-disable-next-line prettier/prettier
+          return (a.date.year * 100 + a.date.month * 10 + a.date.date) - (b.date.year * 100 + b.date.month * 10 + b.date.date)});
+      }
+      return this.getItemList;
     },
     headers() {
-      return this.$store.state.HEADERS[0];
+      return this.getHeaders[0];
     },
     upperLimmit() {
       return this.groupBy * this.group;
     },
     lowerLimmit() {
       return this.upperLimmit - this.groupBy;
+    },
+    accounts() {
+      return this.getAccounts;
     }
   }
 };
 </script>
 
 <style scoped>
+.sort {
+  margin: auto;
+}
+.paging {
+  margin: auto;
+  width: 75%;
+  right: 1;
+}
+.transactions {
+  margin: auto;
+  width: 75%;
+}
 table,
 th,
 td {
-  border: 1px solid black;
+  border: 2px solid black;
   font-size: 18px;
 }
 
 table {
-  margin: auto;
-  width: 50%;
+  border-color: black;
   padding: 10px;
+  width: 100%;
 }
 
 td {

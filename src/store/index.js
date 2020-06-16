@@ -31,7 +31,16 @@ export default new Vuex.Store({
     CURRENT_USER: -1,
     VIEW_ACCOUNT: false,
     HEADERS: [
-      ["Index", "ID", "Name", "Category", "Amount", "Description"],
+      [
+        "Index",
+        "User",
+        "ID",
+        "Name",
+        "Category",
+        "Amount",
+        "Description",
+        "Date"
+      ],
       ["Index", "ID", "Name", "Created By", "Type"],
       ["Name", "Category", "Amount", "Type"]
     ],
@@ -43,7 +52,7 @@ export default new Vuex.Store({
         category: 0,
         amount: 500,
         description: "description 1",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2000, month: 12, date: 3 }
       },
       {
         user: 0,
@@ -52,7 +61,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 2",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2000, month: 11, date: 1 }
       },
       {
         user: 0,
@@ -61,7 +70,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 3",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2000, month: 11, date: 1 }
       },
       {
         user: 0,
@@ -70,7 +79,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 4",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -79,7 +88,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 5",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -88,7 +97,7 @@ export default new Vuex.Store({
         category: 1,
         amount: -50,
         description: "description 6",
-        date: { year: 2000, month: 12, date: 1 }
+        date: { year: 2001, month: 12, date: 1 }
       },
       {
         user: 0,
@@ -219,13 +228,12 @@ export default new Vuex.Store({
     ],
     CATEGORIES: [
       //type: true = income; type: false = expense
-      { id: 0, name: "Other", user: 0, type: true },
-      { id: 1, name: "Other", user: 0, type: false },
-      { id: 2, name: "Transfer", user: 0, type: true },
-      { id: 3, name: "Transfer", user: 0, type: false }
+      { id: 0, name: "OtherI", user: 0, type: true },
+      { id: 1, name: "OtherE", user: 0, type: false },
+      { id: 2, name: "TransferI", user: 0, type: true },
+      { id: 3, name: "TransferE", user: 0, type: false }
     ]
   },
-  //////////
   actions: {
     addAccount({ commit }, item) {
       commit("mutateAccountList", item);
@@ -325,6 +333,9 @@ export default new Vuex.Store({
       );
       return account[0];
     },
+    getAccounts(state) {
+      return state.ACCOUNTS;
+    },
     idAccount(state) {
       return state.CURRENT_USER;
     },
@@ -345,6 +356,9 @@ export default new Vuex.Store({
     },
     getCategoryTableHeader(state) {
       return state.HEADERS[1];
+    },
+    getHeaders(state) {
+      return state.HEADERS;
     },
     getItemTableHeader(state) {
       return state.HEADERS[2];

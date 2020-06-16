@@ -30,7 +30,7 @@
           <select v-model="category" id="categories">
             <option
               :key="cate.id"
-              v-for="cate in categoryFilter()"
+              v-for="cate in categories"
               class="optionsCategory"
             >
               {{ cate.name }}
@@ -127,6 +127,7 @@ export default {
         if (this.type == "expense") {
           this.amount = this.amount * -1;
         }
+        let aux = this.date.split("-");
         this.findCategoryId(this.category);
         this.addItem({
           name: this.name,
@@ -135,21 +136,21 @@ export default {
           type: this.type,
           user: this.user,
           id: this.lastId + 1,
-          date: this.date.split("-")
+          date: { year: aux[0], month: aux[1], date: aux[2] }
         });
       }
     },
     findCategoryId() {
       var index = this.categories.findIndex(c => c.name == this.category);
       this.category = this.categories[index].id;
-    },
-    categoryFilter() {
+    }
+    /*categoryFilter() {
       if (this.type === "income") {
         return this.categories.filter(ca => ca.type);
       } else {
         return this.categories.filter(ca => !ca.type);
       }
-    }
+    }*/
   }
 };
 </script>
