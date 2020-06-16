@@ -134,7 +134,6 @@ export default {
         this.findItemtype();
         this.findCategoryId();
         this.findItemId();
-        this.findItemUser();
         this.updateItem({
           name: this.name,
           category: this.category,
@@ -169,10 +168,6 @@ export default {
       } else {
         this.type = "expense";
       }
-    },
-    findItemUser() {
-      var index = this.items.findIndex(c => c.name == this.selectedItem);
-      this.user = this.items[index].user;
     },
     categoryFilter() {
       if (this.type === "income") {
