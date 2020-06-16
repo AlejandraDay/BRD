@@ -62,11 +62,6 @@ export default {
             user: this.currentUserId,
             type: true
           });
-          //this.$store.commit("addCategory", {
-          // id: "I" + id, //autogen id
-          // name: this.name,
-          // user: this.currentUser
-          //});
         }
         if (this.expenseBox) {
           const id = this.lastId() + 1;
@@ -82,11 +77,6 @@ export default {
             user: this.currentUserId,
             type: false
           });
-          //this.$store.commit("addCategory", {
-          // id: "E" + id, //autogen id
-          // name: this.name,
-          //user: this.currentUser
-          //});
         }
         this.name = "";
       }

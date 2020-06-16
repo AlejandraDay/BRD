@@ -7,7 +7,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import CategoryTable from "@/components/CategoryTable.vue";
 import CategoryReg from "@/components/CategoryReg.vue";
 

@@ -53,9 +53,9 @@
       <br />
       <label>Items per Page:</label>
       <select v-model="groupBy">
-        <option :key="groupLimit" v-for="groupLimit in this.groupBy_">{{
-          groupLimit
-        }}</option>
+        <option :key="groupLimit" v-for="groupLimit in this.groupBy_">
+          {{ groupLimit }}
+        </option>
       </select>
       <br />
       <br />
@@ -122,12 +122,10 @@ export default {
       var hasTransactions = this.checkForTransactions(categ);
       if (hasTransactions) {
         alert("Unable to Delete, transactions still using this category");
-        //to do function when exists incomes or expenses available with this category
       } else {
         if (confirm("Are you sure you want to delete " + categ.name + "?")) {
           console.log("Deleting " + categ.name + " | " + categ.id);
           this.deleteCategory(categ);
-          //  this.$store.commit("deleteCategory", categ);
         }
       }
     },
@@ -148,7 +146,6 @@ export default {
           console.log("Updating " + categ.id);
           categ.name = updatedName;
           this.updateCategory(categ);
-          //this.$store.commit("editCategory", categ);
         }
       }
     }
@@ -179,14 +176,12 @@ export default {
         : categoryList.filter(item => item.name.includes(this.searchName));
     },
     categories() {
-      //return this.$store.state.CATEGORIES;
       return this.getCategoryList.filter(
         category => category.user === this.currentUserId || category.user === 0
       );
     },
     headers() {
       return this.getCategoryTableHeader;
-      // return this.$store.state.HEADERCATEG[0];
     },
     transactionList() {
       return this.getItemList;
