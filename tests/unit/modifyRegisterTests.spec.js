@@ -1,16 +1,29 @@
-//import { assert } from "chai";
-//import { shallowMount, createLocalVue /*mount*/ } from "@vue/test-utils";
+// CHAI
+import { assert, expect } from "chai";
+// VUE TEST UTILS
+import { shallowMount, createLocalVue, mount } from "@vue/test-utils";
+import HelloWorld from "@/components/HelloWorld.vue";
+// components
+import ModifyDeleteItemView from "@/views/ModifyDeleteItemView.vue";
+import RegisterIncomeExpenseView from "@/views/RegisterIncomeExpenseView.vue";
+// mock data
+import { mockStore } from "./mockStore";
+/* Recommended for actions/mutations */
+import store from "@/store";
 
-//import ModifyDeleteItemView from "@/views/ModifyDeleteItemView.vue";
-//import RegisterIncomeExpenseView from "@/views/RegisterIncomeExpenseView.vue";
+import VueRouter from "vue-router";
+import Vuex from "vuex";
 
-//import VueRouter from "vue-router";
-//import Vuex from "vuex";
-//import store from "@/store";
-//import { mockStore } from "./mockStore";
-
-////////////////////////////////////////////////////////////////////////////////////////////
-/*describe("Modify Delete Income Expense", () => {
+describe("HelloWorld.vue", () => {
+  it("renders props.msg when passed", () => {
+    const msg = "new message";
+    const wrapper = shallowMount(HelloWorld, {
+      propsData: { msg }
+    });
+    expect(wrapper.text()).to.include(msg);
+  });
+});
+describe("Modify Delete Income Expense", () => {
   let localVue;
   let store;
 
@@ -20,22 +33,7 @@
     localVue.use(Vuex);
     store = new Vuex.Store(mockStore);
   });
-  it("process valid data", () => {
-    const wrapper = shallowMount(ModifyDeleteItemView, {
-      store,
-      localVue
-    });
-    wrapper.setProps({
-      name: "example",
-      category: "other",
-      type: "income",
-      user: 0,
-      id: 1,
-      amount: "2222"
-    });
-    wrapper.vm.ModifyItem();
-  });
- it("it should 8 items", () => {
+  /*it("it should 8 items", () => {
     const expectedLenght = 8 + 1; // + 1 'cause the row of names
     const wrapper = shallowMount(ModifyDeleteItemView, {
       store,
@@ -66,7 +64,7 @@
     const itemsInOptions = wrapper.find(".optionsCategory");
     assert.isTrue(wrapper.exists());
     assert.isFalse(itemsInOptions.contains(expectedName));
-  });
+  });*/
   it("React to name input", () => {
     const wrapper = shallowMount(ModifyDeleteItemView, {
       data: { message: "*Obligatory information", name: "" },
@@ -91,7 +89,19 @@
     wrapper.setData({ amount: "123" });
     assert.isFalse(wrapper.isEmpty());
   });
-  //
+  /*it("increment when save an item", () => {
+    const localVue = createLocalVue();
+    localVue.use(VueRouter);
+    localVue.use(Vuex);
+    const router = new VueRouter({ routes: [] });
+
+    const wrapper = mount(ModifyDeleteItemView, {
+      router,
+      store,
+      localVue
+    });
+    assert.equal(wrapper.vm.$store.state.TRANSACTIONS.length, 20);
+  });*/
 });
 describe("Register Income Expense", () => {
   let localVue;
@@ -127,11 +137,18 @@ describe("Register Income Expense", () => {
     wrapper.setData({ amount: "123" });
     assert.isFalse(wrapper.isEmpty());
   });
-  //
-});*/
-/*describe("Example LocalVue", () => {
+  it("calls store register action", () => {
+    const wrapper = shallowMount(RegisterIncomeExpenseView, {
+      store,
+      localVue
+    });
+    wrapper.find(".button.save");
+    assert.isTrue(wrapper.exists());
+  });
+});
+describe("Example LocalVue", () => {
   it("using the store directly", () => {
-   const localVue = createLocalVue();
+    const localVue = createLocalVue();
     localVue.use(VueRouter);
     localVue.use(Vuex);
     const router = new VueRouter({ routes: [] });
@@ -141,8 +158,6 @@ describe("Register Income Expense", () => {
       store,
       localVue
     });
-    // How to test store:
-    assert(wrapper.vm.$store.state.items.length, 8);
+    assert.equal(wrapper.vm.$store.state.TRANSACTIONS.length, 20);
   });
 });
-*/
