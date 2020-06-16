@@ -1,21 +1,29 @@
 <template>
   <div class="transactions">
     <h1>{{ msg }}</h1>
-    <div class="filterDateByDate">
+    <div class="filterByDateCategoy">
       <label>Filter by: </label>
-      <label><input v-model="filterDateBy.year" type="checkbox" />Year</label>
-      <label><input v-model="filterDateBy.month" type="checkbox" />Month</label>
-      <label><input v-model="filterDateBy.date" type="checkbox" />Date</label>
-      <label>
+      <label class="year">
+        <input v-model="filterDateBy.year" type="checkbox" />Year
+      </label>
+      <label class="month">
+        <input v-model="filterDateBy.month" type="checkbox" />Month
+      </label>
+      <label class="date">
+        <input v-model="filterDateBy.date" type="checkbox" />Date
+      </label>
+      <label class="category">
         <input v-model="filterCategoryBy" type="checkbox" />Category
       </label>
       <br />
       <input
+        class="dates"
         v-if="filterDateBy.year || filterDateBy.month || filterDateBy.date"
         type="date"
         v-model="filterDate"
       />
       <input
+        class="categories"
         v-if="filterCategoryBy"
         v-model="filterCategory"
         placeholder="Category Name"
@@ -26,33 +34,15 @@
         <tr class="header">
           <th :key="column" v-for="column in this.headers">
             {{ column }}
-            <button
-              class="sort"
-              v-if="column === 'Date' && !sorted"
-              v-on:click="sort()"
-            >
-              Sort
+            <button class="sort" v-if="column === 'Date'" v-on:click="sort()">
+              {{ sorted ? "Unsort" : "Sort" }}
             </button>
             <button
-              class="sort"
-              v-else-if="column === 'Date' && sorted"
-              v-on:click="sort()"
-            >
-              Unsort
-            </button>
-            <button
-              class="direction"
-              v-if="column === 'Date' && sorted && direction"
+              class="direction↑"
+              v-if="column === 'Date'"
               v-on:click="giveDirection()"
             >
-              ↑
-            </button>
-            <button
-              class="direction"
-              v-else-if="column === 'Date' && sorted && !direction"
-              v-on:click="giveDirection()"
-            >
-              ↓
+              {{ direction ? "↑" : "↓" }}
             </button>
           </th>
         </tr>

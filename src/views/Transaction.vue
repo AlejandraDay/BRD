@@ -2,9 +2,11 @@
   <div>
     <TransactionTable msg="This is the transaction's table" />
     <br />
-    <button>Add/Edit/Delete</button>
+    <button class="add" v-on:click="goAdd()">add</button>
     <br />
-    <button>Categories</button>
+    <button class="ed" v-on:click="goEditDelete()">Edit/Delete</button>
+    <br />
+    <button class="cat" v-on:click="goCategories()">Categories</button>
   </div>
 </template>
 
@@ -16,6 +18,17 @@ export default {
   name: "Transaction",
   components: {
     TransactionTable
+  },
+  methods: {
+    goEditDelete() {
+      this.$router.push("/ModifyDeleteItem");
+    },
+    goAdd() {
+      this.$router.push("/registerIncomeExpense");
+    },
+    goCategories() {
+      this.$router.push("/categories");
+    }
   }
 };
 </script>
