@@ -1,14 +1,9 @@
-// CHAI
 import { assert, expect } from "chai";
-// VUE TEST UTILS
-import { shallowMount, createLocalVue, mount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import HelloWorld from "@/components/HelloWorld.vue";
-// components
 import ModifyDeleteItemView from "@/views/ModifyDeleteItemView.vue";
 import RegisterIncomeExpenseView from "@/views/RegisterIncomeExpenseView.vue";
-// mock data
 import { mockStore } from "./mockStore";
-/* Recommended for actions/mutations */
 import store from "@/store";
 
 import VueRouter from "vue-router";
@@ -89,19 +84,41 @@ describe("Modify Delete Income Expense", () => {
     wrapper.setData({ amount: "123" });
     assert.isFalse(wrapper.isEmpty());
   });
-  /*it("increment when save an item", () => {
+  it("change in item when save an update", () => {
     const localVue = createLocalVue();
     localVue.use(VueRouter);
     localVue.use(Vuex);
     const router = new VueRouter({ routes: [] });
-
-    const wrapper = mount(ModifyDeleteItemView, {
+    const wrapper = shallowMount(RegisterIncomeExpenseView, {
       router,
       store,
       localVue
     });
-    assert.equal(wrapper.vm.$store.state.TRANSACTIONS.length, 20);
-  });*/
+    const wrapper1 = shallowMount(ModifyDeleteItemView, {
+      router,
+      store,
+      localVue
+    });
+    wrapper.setData({
+      name: "example",
+      category: "expense",
+      amount: 500,
+      type: "income",
+      date: "2000-12-3"
+    });
+    wrapper.vm.registerItem();
+    assert.equal(wrapper1.vm.$store.state.TRANSACTIONS[20].amount, 500);
+    wrapper1.setData({
+      name: "example",
+      category: 0,
+      amount: 600,
+      type: "income",
+      selectedItem: "example",
+      date: { year: 2000, month: 12, date: 3 }
+    });
+    wrapper1.vm.ModifyItem();
+    assert.equal(wrapper1.vm.$store.state.TRANSACTIONS[20].amount, 600);
+  });
 });
 describe("Register Income Expense", () => {
   let localVue;
@@ -145,6 +162,27 @@ describe("Register Income Expense", () => {
     wrapper.find(".button.save");
     assert.isTrue(wrapper.exists());
   });
+  it("increment when save an item", () => {
+    const localVue = createLocalVue();
+    localVue.use(VueRouter);
+    localVue.use(Vuex);
+    const router = new VueRouter({ routes: [] });
+    const wrapper = shallowMount(RegisterIncomeExpenseView, {
+      router,
+      store,
+      localVue
+    });
+    assert.equal(wrapper.vm.$store.state.TRANSACTIONS.length, 20);
+    wrapper.setData({
+      name: "name 1",
+      category: "expense",
+      amount: 600,
+      type: "income",
+      date: "2000-12-3"
+    });
+    wrapper.vm.registerItem();
+    assert.equal(wrapper.vm.$store.state.TRANSACTIONS.length, 21);
+  });
 });
 describe("Example LocalVue", () => {
   it("using the store directly", () => {
@@ -153,7 +191,7 @@ describe("Example LocalVue", () => {
     localVue.use(Vuex);
     const router = new VueRouter({ routes: [] });
 
-    const wrapper = mount(ModifyDeleteItemView, {
+    const wrapper = shallowMount(ModifyDeleteItemView, {
       router,
       store,
       localVue

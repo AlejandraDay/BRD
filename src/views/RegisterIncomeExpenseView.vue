@@ -128,7 +128,7 @@ export default {
           this.amount = this.amount * -1;
         }
         let aux = this.date.split("-");
-        this.findCategoryId(this.category);
+        this.findCategoryId();
         this.addItem({
           name: this.name,
           category: this.category,
