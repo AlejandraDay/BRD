@@ -59,7 +59,7 @@
       <br />
       <br />
       <div class="alingButton">
-        <button @click="registerItem" class="button save">Save</button>
+        <button @click="registerNewAccount" class="button save">Save</button>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@ export default {
     },
     ...mapActions(["addAccount"]),
     ...mapActions(["updateAccountUsser"]),
-    registerItem() {
+    registerNewAccount() {
       if (
         this.name == "" ||
         this.ci == 0 ||
