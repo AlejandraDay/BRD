@@ -38,6 +38,7 @@ export default {
         alert("Te user with that CI doesn't exist!!!");
         this.ci = -1;
         this.pwd = "";
+        this.$router.push("/");
       } else if (user[0].pwd === this.pwd) {
         alert(`Welcome ${user[0].name}`);
         this.updateAccountUsser(parseInt(user[0].ci));
@@ -47,6 +48,7 @@ export default {
         alert("Something went wrong!!!\nPlease try again.");
         this.ci = -1;
         this.pwd = "";
+        this.$router.push("/");
       }
     },
     register() {
