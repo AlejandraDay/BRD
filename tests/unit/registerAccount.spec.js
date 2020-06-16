@@ -45,22 +45,20 @@ describe("Account.vue", () => {
 });
 describe("RegisterAccount.vue", () => {
   let localVue;
-  // let router;
+  let router;
   let store;
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
     localVue.use(Vuex);
-    //router = new VueRouter({ routes: [] });
+    router = new VueRouter({ routes: [] });
     store = new Vuex.Store(mockStore);
-    // NEXT steps> move this to a util.
-    // wrapper = TestUtil.get(.....)
   });
   it("The Register Account should be rendered", () => {
     const wrapper = shallowMount(RegisterAccountView, {
       store,
       localVue
-    }); // wrapper = { new Vue(), html, find, findAll, etc }
+    });
     const titleAccountActual = wrapper.find("#usser");
 
     assert.equal(titleAccountActual.text(), "Register Account");
@@ -101,7 +99,6 @@ describe("RegisterAccount.vue", () => {
       },
       store,
       localVue
-      //router
     });
     const password = wrapper.find("#pwd");
     const confirmPwd = wrapper.find("#confirmPwd");
@@ -111,22 +108,24 @@ describe("RegisterAccount.vue", () => {
       confirmPwd: "12"
     });
     assert.equal(password.text(), confirmPwd.text());
-    //assert.isFalse(wrapper.isEmpty());
   });
   it("Add new Account", () => {
     const wrapper = shallowMount(RegisterAccount, {
+      router,
       store,
       localVue
     });
     let initialAccountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
-    wrapper.vm.addAccount({
-      ci: 7,
-      name: "nombre",
-      email: "email@gmail.com",
-      phone: "122212",
-      pwd: "12"
-    });
+    console.log(initialAccountListLength);
+    wrapper.vm.ci = 7;
+    wrapper.vm.name = "nombre";
+    wrapper.vm.email = "email@gmail.com";
+    wrapper.vm.phone = "email@gmail.com";
+    wrapper.vm.pwd = "12";
+    wrapper.vm.confirmPwd = "12";
+    wrapper.vm.registerNewAccount();
     let accountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
+    console.log(accountListLength);
     assert.equal(accountListLength, initialAccountListLength + 1);
   });
 });

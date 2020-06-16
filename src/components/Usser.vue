@@ -108,25 +108,22 @@ export default {
     ...mapActions(["updateAccountUsser"]),
     registerNewAccount() {
       if (
-        this.name == "" ||
-        this.ci == 0 ||
-        this.email == "" ||
-        this.phone == "" ||
-        this.changetype(this.pwd) == "" ||
-        this.changetype(this.confirmPwd) == ""
+        this.name === "" ||
+        this.ci === 0 ||
+        this.email === "" ||
+        this.phone === "" ||
+        this.pwd === "" ||
+        this.confirmPwd === ""
       ) {
         console.log("There don't have to be empty fields");
       } else {
-        if (
-          this.changetype(this.pwd) == this.changetype(this.confirmPwd) &&
-          this.validateEmail(this.email)
-        ) {
+        if (this.pwd === this.confirmPwd && this.validateEmail(this.email)) {
           this.addAccount({
             name: this.name,
             ci: this.ci,
             email: this.email,
             phone: this.phone,
-            pwd: this.changetype(this.pwd)
+            pwd: this.pwd
           });
           console.log("Saved Account");
           this.updateAccountUsser(this.ci);
