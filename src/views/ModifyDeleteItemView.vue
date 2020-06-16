@@ -30,7 +30,7 @@
           <select v-model="category" id="categories">
             <option
               :key="cate.id"
-              v-for="cate in categories"
+              v-for="cate in categoryFilter"
               class="optionsCategory"
             >
               {{ cate.name }}
@@ -162,14 +162,14 @@ export default {
     findItemUser() {
       var index = this.items.findIndex(c => c.name == this.selectedItem);
       this.user = this.items[index].user;
-    }
-    /*categoryFilter() {
+    },
+    categoryFilter() {
       if (this.type === "income") {
         return this.categories.filter(ca => ca.type);
       } else {
         return this.categories.filter(ca => !ca.type);
       }
-    }*/
+    }
   }
 };
 </script>
