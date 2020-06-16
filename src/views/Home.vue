@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home">
     <h1>Welcome to <b>My Enterprise Wallet</b></h1>
     <Login />
   </div>
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped>
-div {
+.home {
   margin: auto;
   width: 50%;
 }

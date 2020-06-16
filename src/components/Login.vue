@@ -3,14 +3,20 @@
     <h1>This is the login component</h1>
     <label for="user" type="number">Please enter your CI: </label>
     <br />
-    <input name="user" type="number" v-model="ci" />
+    <input class="ci" name="user" type="number" v-model="ci" />
     <br />
     <label for="pwd">Please enter your password: </label>
     <br />
-    <input name="pwd" type="password" v-model="pwd" />
+    <input
+      class="pwd"
+      name="pwd"
+      type="password"
+      v-model="pwd"
+      v-on:keyup.enter="login()"
+    />
     <div>
-      <button v-on:click="login()">Login</button>
-      <button v-on:click="register()">Register</button>
+      <button class="log" v-on:click="login()">Login</button>
+      <button class="register" v-on:click="register()">Register</button>
     </div>
   </div>
 </template>
@@ -22,7 +28,8 @@ export default {
   data() {
     return {
       ci: "",
-      pwd: ""
+      pwd: "",
+      alertMessage: ""
     };
   },
   methods: {
@@ -30,22 +37,21 @@ export default {
     ...mapActions(["profileView"]),
     login() {
       let user = this.getUsers.filter(u => u.ci === parseInt(this.ci));
-      console.log("depurando filtrado");
-      console.log(user);
       if (user.length === 0) {
-        alert("Te user with that CI doesn't exist!!!");
-        this.ci = -1;
+        this.alertMessage = "Te user with that CI doesn't exist!!!";
+        this.ci = "";
         this.pwd = "";
       } else if (user[0].pwd === this.pwd) {
-        alert(`Welcome ${user[0].name}`);
+        this.alertMessage = `Welcome ${user[0].name}`;
         this.updateAccountUsser(parseInt(user[0].ci));
         this.profileView(true);
         this.$router.push("Transaction");
       } else {
-        alert("Something went wrong!!!\nPlease try again.");
-        this.ci = -1;
+        this.alertMessage = "Wrong password!!!\nPlease try again.";
+        this.ci = "";
         this.pwd = "";
       }
+      alert(this.alertMessage);
     },
     register() {
       this.$router.push("RegisterUsser");
