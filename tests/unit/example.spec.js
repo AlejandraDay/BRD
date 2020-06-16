@@ -12,7 +12,6 @@ import VueRouter from "vue-router";
 import Vuex from "vuex";
 import store from "@/store";
 import { mockStore } from "./mockStore";
-import { mockCategories } from "./mockCategories.js";
 
 describe("Account.vue", () => {
   let localVue;
@@ -235,7 +234,7 @@ describe("Category", () => {
     localVue.use(VueRouter);
     localVue.use(Vuex);
     router = new VueRouter({ routes: [] });
-    store = new Vuex.Store(mockCategories);
+    store = new Vuex.Store(mockStore);
   });
 
   it("Table title should be rendered", () => {

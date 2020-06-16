@@ -125,7 +125,7 @@ export default {
     },
     editCat(categ) {
       var updatedName = prompt("Insert the updated name:", "");
-      if (updatedName == null || updatedName == "") {
+      if (updatedName === null || updatedName === "") {
         console.log("Tried to change for empty name, cancelling");
       } else {
         if (
@@ -159,8 +159,8 @@ export default {
           ? this.categories
           : this.categories.filter(function(item) {
               if (
-                (self.filter == "Incomes" && item.type) ||
-                (self.filter == "Expenses" && !item.type)
+                (self.filter === "Incomes" && item.type) ||
+                (self.filter === "Expenses" && !item.type)
               ) {
                 return true;
               }
@@ -173,7 +173,7 @@ export default {
     categories() {
       //return this.$store.state.CATEGORIES;
       return this.getCategoryList.filter(
-        category => category.user == this.currentUserId || category.user == 0
+        category => category.user === this.currentUserId || category.user === 0
       );
     },
     headers() {

@@ -4,7 +4,7 @@
     <h1 id="categoryRegister-title">Register a Category</h1>
     <div class="Data">
       <label for="text">Name:</label>
-      <label class="alarm" v-if="name == ''">*Obligatory field</label>
+      <label class="alarm" v-if="name === ''">*Obligatory field</label>
       <br />
       <input
         v-model="name"
@@ -40,7 +40,7 @@ export default {
   methods: {
     ...mapActions(["addCategory"]),
     newCategory() {
-      if (this.name == null || this.name == "") {
+      if (this.name === null || this.name === "") {
         alert("Name field can't be empty");
       } else if (!(this.incomeBox || this.expenseBox)) {
         alert("Unchecked type, atleast one must be selected");
@@ -48,7 +48,7 @@ export default {
         if (this.incomeBox) {
           console.log(
             "User: " +
-              this.currentUser +
+              this.currentUserId +
               " Adding new Income Category " +
               this.name
           );
@@ -67,7 +67,12 @@ export default {
         }
         if (this.expenseBox) {
           const id = this.lastId() + 1;
-          console.log("Adding new Expense Category " + this.name);
+          console.log(
+            "User: " +
+              this.currentUserId +
+              " Adding new Expense Category " +
+              this.name
+          );
           this.addCategory({
             id: id, //autogen id
             name: this.name,
