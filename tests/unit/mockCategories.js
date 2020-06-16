@@ -1,0 +1,12 @@
+export const mockCategories = {
+  getters: {
+    getCategoryList() {
+      return [
+        { id: "0", name: "Transfer", user: 0, type: true },
+        { id: "1", name: "Transfer", user: 0, type: false },
+        { id: "2", name: "Other", user: 0, type: true },
+        { id: "3", name: "Other", user: 0, type: false }
+      ];
+    }
+  }
+};
