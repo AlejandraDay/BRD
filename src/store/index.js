@@ -286,9 +286,11 @@ export default new Vuex.Store({
       state.VIEW_ACCOUNT = value;
     },
     deleteAccount(state, idToDelete) {
-      state.ACCOUNTS = state.ACCOUNTS.filter(
-        account => account.ci !== idToDelete
-      );
+      if (state.TRANSACTIONS.filter(t => t.user === idToDelete).length === 0) {
+        state.ACCOUNTS = state.ACCOUNTS.filter(
+          account => account.ci !== idToDelete
+        );
+      }
     },
     mutateItemList(state, item) {
       state.TRANSACTIONS.push(item);

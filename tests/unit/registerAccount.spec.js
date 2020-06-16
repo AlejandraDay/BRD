@@ -86,7 +86,7 @@ describe("RegisterAccount.vue", () => {
     wrapper.setData({
       name: "nombre",
       ci: 0,
-      email: "email@gmail.com",
+      email: "",
       phone: "122212",
       pwd: "12",
       confirmPwd: "12"
@@ -95,21 +95,17 @@ describe("RegisterAccount.vue", () => {
   });
   it("Equal of password and confirm Password", () => {
     const wrapper = shallowMount(RegisterAccount, {
-      data: {
-        pwd: "",
-        confirmPwd: ""
-      },
       store,
       localVue,
       router
     });
+    wrapper.vm.pwd = "12";
+    wrapper.vm.confirmPwd = "123345";
+    wrapper.vm.registerNewAccount();
     const password = wrapper.find("#pwd");
     const confirmPwd = wrapper.find("#confirmPwd");
+    //console.log(password);
     assert.isTrue(wrapper.exists());
-    wrapper.setData({
-      pwd: "12",
-      confirmPwd: "12"
-    });
     assert.equal(password.text(), confirmPwd.text());
     //assert.isFalse(wrapper.isEmpty());
   });

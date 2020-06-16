@@ -114,12 +114,6 @@ export default {
         return false;
       }
     },
-    changetype(pwd) {
-      if (pwd.type == "password") {
-        pwd.type = "text";
-      }
-      return pwd;
-    },
     ...mapActions(["addAccount"]),
     ...mapActions(["updateAccountUsser"]),
     registerNewAccount() {
