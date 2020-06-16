@@ -6,7 +6,9 @@
     </h1>
     <div class="moduleCentered">
       <label for="text">Name:</label>
-      <label class="alarm" v-if="name === ''">*Obligatory field</label>
+      <label class="alarm" v-if="name === ''" id="alarmInput"
+        >*Obligatory field</label
+      >
       <br />
       <input
         v-model="name"

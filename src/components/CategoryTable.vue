@@ -12,7 +12,7 @@
     <br />
     <br />
 
-    <table>
+    <table id="tableCategories">
       <thead>
         <tr class="header">
           <th :key="column" v-for="column in this.headers">{{ column }}</th>
@@ -20,29 +20,29 @@
       </thead>
       <tbody>
         <tr
-          :key="item.id"
-          v-for="(item, index) in filteredGroups"
+          :key="categ.id"
+          v-for="(categ, index) in filteredGroups"
           class="content"
         >
           <td class="index">{{ index + lowerLimmit }}</td>
-          <td class="id">{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.user }}</td>
-          <td v-if="item.type">Income</td>
+          <td class="id">{{ categ.id }}</td>
+          <td>{{ categ.name }}</td>
+          <td>{{ categ.user }}</td>
+          <td v-if="categ.type">Income</td>
           <td v-else>Expense</td>
           <td
             class="categbtn"
-            v-if="item.user === currentUserId || currentUserId === 0"
+            v-if="categ.user === currentUserId || currentUserId === 0"
           >
             <!--If the current user created this category or its admin, can edit it-->
-            <button class="editButton" @click="editCat(item)">EDIT</button>
+            <button class="editButton" @click="editCat(categ)">EDIT</button>
           </td>
           <td
             class="categbtn"
-            v-if="item.user === currentUserId || currentUserId === 0"
+            v-if="categ.user === currentUserId || currentUserId === 0"
           >
             <!--If the current user created this category or its admin, can delete it-->
-            <button class="deleteButton" @click="deleteCat(item)">
+            <button class="deleteButton" @click="deleteCat(categ)">
               DELETE
             </button>
           </td>
@@ -53,7 +53,9 @@
       <br />
       <label>Items per Page:</label>
       <select v-model="groupBy">
-        <option :key="item" v-for="item in this.groupBy_">{{ item }}</option>
+        <option :key="groupLimit" v-for="groupLimit in this.groupBy_">{{
+          groupLimit
+        }}</option>
       </select>
       <br />
       <br />
