@@ -1,95 +1,16 @@
-import { assert } from "chai";
-import { shallowMount, createLocalVue, mount } from "@vue/test-utils";
+//import { assert } from "chai";
+//import { shallowMount, createLocalVue /*mount*/ } from "@vue/test-utils";
 
-import AccountView from "@/views/Account.vue";
-import RegisterAccount from "@/views/RegisterUsser.vue";
-import RegisterAccountView from "@/components/Usser.vue";
+//import ModifyDeleteItemView from "@/views/ModifyDeleteItemView.vue";
+//import RegisterIncomeExpenseView from "@/views/RegisterIncomeExpenseView.vue";
 
-import ModifyDeleteItemView from "@/views/ModifyDeleteItemView.vue";
-import RegisterIncomeExpenseView from "@/views/RegisterIncomeExpenseView.vue";
+//import VueRouter from "vue-router";
+//import Vuex from "vuex";
+//import store from "@/store";
+//import { mockStore } from "./mockStore";
 
-import VueRouter from "vue-router";
-import Vuex from "vuex";
-import store from "@/store";
-import { mockStore } from "./mockStore";
-
-describe("Account.vue", () => {
-  let localVue;
-  let router;
-  let store;
-  beforeEach(() => {
-    localVue = createLocalVue();
-    localVue.use(VueRouter);
-    localVue.use(Vuex);
-    router = new VueRouter({ routes: [] });
-    store = new Vuex.Store(mockStore);
-    // NEXT steps> move this to a util.
-    // wrapper = TestUtil.get(.....)
-  });
-  it("The Account-Actual should be rendered", () => {
-    const wrapper = shallowMount(AccountView, {
-      router,
-      store,
-      localVue
-    }); // wrapper = { new Vue(), html, find, findAll, etc }
-    const account = "Account";
-    const titleAccountActual = wrapper.find("#account");
-
-    assert.equal(titleAccountActual.text(), account);
-  });
-});
-describe("RegisterAccount.vue", () => {
-  let localVue;
-  // let router;
-  let store;
-  beforeEach(() => {
-    localVue = createLocalVue();
-    localVue.use(VueRouter);
-    localVue.use(Vuex);
-    //router = new VueRouter({ routes: [] });
-    store = new Vuex.Store(mockStore);
-    // NEXT steps> move this to a util.
-    // wrapper = TestUtil.get(.....)
-  });
-  it("The Register Account should be rendered", () => {
-    const wrapper = shallowMount(RegisterAccount, {
-      store,
-      localVue
-    }); // wrapper = { new Vue(), html, find, findAll, etc }
-    const titleAccountActual = wrapper.find("#usser");
-
-    assert.equal(titleAccountActual.text(), "Register Account");
-  });
-  it("All input have obligatory information", () => {
-    const wrapper = shallowMount(RegisterAccountView, {
-      data: {
-        message: "*Obligatory information",
-        name: "",
-        ci: 0,
-        email: "",
-        phone: "",
-        pwd: "",
-        confirmPwd: ""
-      },
-      store,
-      localVue
-      //router
-    });
-    const alarmMessage = wrapper.find(".alarm");
-    assert.isTrue(wrapper.exists());
-    assert.equal(alarmMessage.text(), "*Obligatory information");
-    wrapper.setData({
-      name: "nombre",
-      ci: 0,
-      email: "email@gmail.com",
-      phone: "122212",
-      pwd: "12",
-      confirmPwd: "12"
-    });
-    assert.isFalse(wrapper.isEmpty());
-  });
-});
-describe("Modify Delete Income Expense", () => {
+////////////////////////////////////////////////////////////////////////////////////////////
+/*describe("Modify Delete Income Expense", () => {
   let localVue;
   let store;
 
@@ -114,7 +35,7 @@ describe("Modify Delete Income Expense", () => {
     });
     wrapper.vm.ModifyItem();
   });
-  it("it should 8 items", () => {
+ it("it should 8 items", () => {
     const expectedLenght = 8 + 1; // + 1 'cause the row of names
     const wrapper = shallowMount(ModifyDeleteItemView, {
       store,
@@ -207,10 +128,10 @@ describe("Register Income Expense", () => {
     assert.isFalse(wrapper.isEmpty());
   });
   //
-});
-describe("Example LocalVue", () => {
+});*/
+/*describe("Example LocalVue", () => {
   it("using the store directly", () => {
-    const localVue = createLocalVue();
+   const localVue = createLocalVue();
     localVue.use(VueRouter);
     localVue.use(Vuex);
     const router = new VueRouter({ routes: [] });
@@ -224,3 +145,4 @@ describe("Example LocalVue", () => {
     assert(wrapper.vm.$store.state.items.length, 8);
   });
 });
+*/
