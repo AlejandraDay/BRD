@@ -27,6 +27,7 @@
         v-if="filterCategoryBy"
         v-model="filterCategory"
         placeholder="Category Name"
+        v-on:keyup="start()"
       />
     </div>
     <table>
@@ -65,7 +66,7 @@
       </tbody>
     </table>
     <div class="paging">
-      <select class="select" v-model="groupBy">
+      <select class="select" v-model="groupBy" v-on:click="start()">
         <option :key="item" v-for="item in this.groupBy_">{{ item }}</option>
       </select>
       <button class="start" v-on:click="start()">Start</button>
