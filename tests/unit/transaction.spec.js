@@ -37,7 +37,10 @@ describe("Testing Transactions", () => {
     wrapper = mount(Transaction, {
       store
     });
-
+    wrapper.vm.$store.state.CURRENT_USER = 0;
+    wrapper = mount(Transaction, {
+      store
+    });
     expect(wrapper.find(".add").exists()).true;
     expect(wrapper.find(".ed").exists()).true;
     expect(wrapper.find(".cat").exists()).true;
@@ -56,8 +59,9 @@ describe("Testing Transactions", () => {
     expect(wrapper.find(".goleft").exists()).true;
     expect(wrapper.find(".goright").exists()).true;
     expect(wrapper.find(".end").exists()).true;
-    expect(wrapper.find(".expense").exists()).true;
     expect(wrapper.find(".profit").exists()).true;
+    expect(wrapper.find(".expense").exists()).true;
+    expect(wrapper.find("label.total").exists()).true;
   });
 
   it("Redirects to add transactions", () => {
@@ -224,6 +228,7 @@ describe("Testing Transactions", () => {
       return s;
     };
 
+    wrapper.vm.$store.state.CURRENT_USER = 0;
     wrapper.find(".sort").trigger("click");
     expect(verify(wrapper.vm.filteredByDC, true)).true;
     wrapper.find(".direction").trigger("click");
@@ -239,6 +244,7 @@ describe("Testing Transactions", () => {
       store
     });
 
+    wrapper.vm.$store.state.CURRENT_USER = 0;
     wrapper.find(".select").setValue("5");
     assert.equal(wrapper.vm.groupBy, 5);
     assert.equal(wrapper.vm.filteredPaging.length, 5);
@@ -260,6 +266,8 @@ describe("Testing Transactions", () => {
     wrapper = shallowMount(TTable, {
       store
     });
+
+    wrapper.vm.$store.state.CURRENT_USER = 0;
     assert.equal(wrapper.vm.group, 1);
     assert.equal(wrapper.vm.filteredPaging[0], wrapper.vm.filteredByDC[0]);
     assert.equal(wrapper.vm.filteredPaging[4], wrapper.vm.filteredByDC[4]);
@@ -290,8 +298,38 @@ describe("Testing Transactions", () => {
     assert.equal(wrapper.vm.filteredPaging[4], wrapper.vm.filteredByDC[4]);
 
     wrapper.find(".end").trigger("click");
-    assert.equal(wrapper.vm.group, 4);
-    assert.equal(wrapper.vm.filteredPaging[0], wrapper.vm.filteredByDC[15]);
-    assert.equal(wrapper.vm.filteredPaging[4], wrapper.vm.filteredByDC[19]);
+    let last = Math.ceil(wrapper.vm.filteredByDC.length / wrapper.vm.groupBy);
+    assert.equal(wrapper.vm.group, last);
+  });
+
+  it("Balanche shown and properly calculated", () => {
+    wrapper = shallowMount(TTable, {
+      store
+    });
+
+    wrapper.vm.$store.state.CURRENT_USER = 0;
+    let total = 0;
+    wrapper.vm.filteredByDC.forEach(t => (total += t.amount));
+    assert.equal(wrapper.vm.total, total);
+  });
+
+  it("Shows only user's transactions exept for SUDO", () => {
+    wrapper = shallowMount(TTable, {
+      store
+    });
+
+    let prove = function(list, i) {
+      if (i === list.length) {
+        return true;
+      } else {
+        return list[i - 1].user === list[i].user && prove(list, i + 1);
+      }
+    };
+
+    wrapper.vm.$store.state.CURRENT_USER = 2;
+    expect(prove(wrapper.vm.filteredByDC, 1)).true;
+
+    wrapper.vm.$store.state.CURRENT_USER = 0;
+    expect(prove(wrapper.vm.filteredByDC, 1)).false;
   });
 });

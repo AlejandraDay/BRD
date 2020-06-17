@@ -1,7 +1,7 @@
 // CHAI
 import { assert, expect } from "chai";
 // VUE TEST UTILS
-import { shallowMount, createLocalVue, mount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import HelloWorld from "@/components/HelloWorld.vue";
 // components
 import ModifyDeleteItemView from "@/views/ModifyDeleteItemView.vue";
@@ -153,11 +153,11 @@ describe("Example LocalVue", () => {
     localVue.use(Vuex);
     const router = new VueRouter({ routes: [] });
 
-    const wrapper = mount(ModifyDeleteItemView, {
+    let wrapper = shallowMount(ModifyDeleteItemView, {
       router,
       store,
       localVue
     });
-    assert.equal(wrapper.vm.$store.state.TRANSACTIONS.length, 20);
+    assert.equal(wrapper.vm.$store.state.TRANSACTIONS.length, 21);
   });
 });

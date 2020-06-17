@@ -73,6 +73,9 @@
       <button class="goright" v-on:click="goRight()">Siguiente</button>
       <button class="end" v-on:click="end()">End</button>
     </div>
+    <label class="total"
+      >{{ this.currentUser.name }}'s balance: {{ total }}</label
+    >
   </div>
 </template>
 
@@ -132,10 +135,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getItemList"]),
-    ...mapGetters(["getCategoryList"]),
-    ...mapGetters(["getHeaders"]),
-    ...mapGetters(["getAccounts"]),
+    ...mapGetters([
+      "getItemList",
+      "getCategoryList",
+      "getHeaders",
+      "getAccounts",
+      "getAccount"
+    ]),
     filteredPaging() {
       return this.filteredByDC.filter(
         (item, index) => index >= this.lowerLimmit && index < this.upperLimmit
@@ -160,7 +166,10 @@ export default {
           t => 0 <= this.getCategoryName(t.category).search(this.filterCategory)
         );
       }
-      return aux;
+      if (this.currentUser.ci === 0) {
+        return aux;
+      }
+      return aux.filter(t => t.user === this.currentUser.ci);
     },
     transactions() {
       if (this.sorted) {
@@ -186,6 +195,14 @@ export default {
     },
     accounts() {
       return this.getAccounts;
+    },
+    currentUser() {
+      return this.getAccount;
+    },
+    total() {
+      let aux = 0;
+      this.filteredByDC.forEach(t => (aux += t.amount));
+      return aux;
     }
   }
 };

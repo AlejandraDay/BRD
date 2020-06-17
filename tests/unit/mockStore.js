@@ -219,6 +219,15 @@ export const mockStore = {
         amount: -333,
         description: "description 20",
         date: { year: 2000, month: 12, date: 1 }
+      },
+      {
+        user: 2,
+        id: 1031,
+        name: "name21",
+        category: 1,
+        amount: -333,
+        description: "description 21",
+        date: { year: 2000, month: 12, date: 1 }
       }
     ],
     CATEGORIES: [
