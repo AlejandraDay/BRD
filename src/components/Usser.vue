@@ -50,6 +50,7 @@
           class="stylePwd"
           v-model="confirmPwd"
           type="password"
+          v-on:keyup.enter="registerNewAccount"
         />
         <label class="alarm" v-if="confirmPwd == ''"
           >*Obligatory information</label
