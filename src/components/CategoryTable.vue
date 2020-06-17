@@ -185,9 +185,14 @@ export default {
         : categoryList.filter(item => item.name.includes(this.searchName));
     },
     categories() {
-      return this.getCategoryList.filter(
-        category => category.user === this.currentUserId || category.user === 0
-      );
+      if (this.currentUserId === 0) {
+        return this.getCategoryList;
+      } else {
+        return this.getCategoryList.filter(
+          category =>
+            category.user === this.currentUserId || category.user === 0
+        );
+      }
     },
     headers() {
       return this.getCategoryTableHeader;
