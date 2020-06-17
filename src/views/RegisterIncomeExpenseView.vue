@@ -2,7 +2,9 @@
   <div class="register">
     <footer id="footer">
       <li>
-        <router-link to="/home" tag="button" class="buttonback">­←</router-link>
+        <router-link to="/transaction" tag="button" class="buttonback"
+          >­←</router-link
+        >
       </li>
       <div class="inner">
         <label>Select an Operation:</label>
