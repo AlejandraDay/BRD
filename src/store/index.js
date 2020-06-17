@@ -270,8 +270,8 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    mutateAccountList(state, item) {
-      state.ACCOUNTS.push(item);
+    mutateAccountList(state, newAccount) {
+      state.ACCOUNTS.push(newAccount);
     },
     updateAccount(state, accountToUpdate) {
       let foundAccountIndex = state.ACCOUNTS.findIndex(
@@ -286,11 +286,11 @@ export default new Vuex.Store({
       state.VIEW_ACCOUNT = value;
     },
     deleteAccount(state, idToDelete) {
-      let indexToDelete = state.ACCOUNTS.indexOf(
-        user => user.ci === idToDelete
-      );
-      state.ACCOUNTS.splice(indexToDelete, 1);
-      console.log(state.ACCOUNTS);
+      if (state.TRANSACTIONS.filter(t => t.user === idToDelete).length === 0) {
+        state.ACCOUNTS = state.ACCOUNTS.filter(
+          account => account.ci !== idToDelete
+        );
+      }
     },
     mutateItemList(state, item) {
       state.TRANSACTIONS.push(item);

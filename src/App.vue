@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <div v-if="visible" id="position">
-      <button id="profile" @click="redirectProfile()">Perfil</button>
+      <br />
+      <button class="button profile" @click="redirectProfile()">
+        Perfil
+      </button>
     </div>
     <div id="nav">
       <router-link to="/"></router-link>
@@ -56,14 +59,22 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-#profile {
-  border-radius: 50%;
-  padding: 20px;
-}
 #position {
   text-align: right;
 }
 #router {
   text-align: center;
+}
+.profile {
+  border-radius: 50%;
+  padding: 20px;
+  background-color: white;
+  color: black;
+  border: 2px solid #4caf50;
+}
+
+.profile:hover {
+  background-color: #4caf50;
+  color: white;
 }
 </style>
