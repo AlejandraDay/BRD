@@ -21,6 +21,8 @@
         v-if="filterDateBy.year || filterDateBy.month || filterDateBy.date"
         type="date"
         v-model="filterDate"
+        v-on:keyup="start()"
+        v-on:click="start()"
       />
       <input
         class="categories"
@@ -75,7 +77,7 @@
       <button class="end" v-on:click="end()">End</button>
     </div>
     <label class="total"
-      >{{ this.currentUser.name }}'s balance: {{ total }}</label
+      >{{ this.currentUser.name }}'s balance: <b>{{ total }}</b></label
     >
   </div>
 </template>
@@ -210,6 +212,28 @@ export default {
 </script>
 
 <style scoped>
+button {
+  border: black;
+  color: rgb(19, 170, 82);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  display: inline-block;
+}
+
+input,
+h1 {
+  margin: 10px;
+}
+
+label {
+  margin: 5px;
+}
+
 .sort {
   margin: auto;
 }
@@ -219,8 +243,10 @@ export default {
   right: 1;
 }
 .transactions {
+  background: rgba(26, 164, 168, 0.644);
   margin: auto;
   width: 75%;
+  color: black;
 }
 table,
 th,

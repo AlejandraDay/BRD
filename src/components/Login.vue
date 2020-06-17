@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1>This is the login component</h1>
+    <h1>Please tell us who you are</h1>
     <label for="user" type="number">Please enter your CI: </label>
     <br />
     <input class="ci" name="user" type="number" v-model="ci" />
@@ -67,6 +67,19 @@ export default {
 </script>
 
 <style scoped>
+button {
+  border: black;
+  color: rgb(19, 170, 82);
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  display: inline-block;
+}
 .login {
   margin: auto;
   width: 75%;

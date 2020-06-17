@@ -15,7 +15,11 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  margin: 10px;
+}
 .home {
+  background: rgba(26, 164, 168, 0.644);
   margin: auto;
   width: 50%;
 }

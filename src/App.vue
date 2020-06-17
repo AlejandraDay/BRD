@@ -26,7 +26,7 @@ export default {
     ...mapActions(["profileView"]),
     redirectProfile() {
       this.profileView(false);
-      this.$router.push("Account");
+      this.$router.push("/Account");
     }
   },
   computed: {
@@ -40,6 +40,9 @@ export default {
 
 <style>
 #app {
+  width: 100%;
+  height: 100%;
+  background: rgba(56, 47, 47, 0.178);
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
