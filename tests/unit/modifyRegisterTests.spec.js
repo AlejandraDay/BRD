@@ -182,7 +182,7 @@ describe("Register Income Expense", () => {
     assert.equal(wrapper.vm.category, 0);
   });
 });
-describe("Example LocalVue", () => {
+describe("LocalVue", () => {
   it("using the store directly", () => {
     const localVue = createLocalVue();
     localVue.use(VueRouter);
