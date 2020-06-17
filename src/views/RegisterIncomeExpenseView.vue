@@ -126,20 +126,24 @@ export default {
       ) {
         alert("The spaces can not be empty");
       } else {
-        if (this.type == "expense") {
-          this.amount = this.amount * -1;
+        if(onlyID()){
+          alert("The name already exist");
+        }else{
+          if (this.type == "expense") {
+            this.amount = this.amount * -1;
+          }
+          let aux = this.date.split("-");
+          this.findCategoryId();
+          this.addItem({
+            name: this.name,
+            category: this.category,
+            amount: parseInt(this.amount),
+            type: this.type,
+            user: this.user,
+            id: this.lastId + 1,
+            date: { year: aux[0], month: aux[1], date: aux[2] }
+          });
         }
-        let aux = this.date.split("-");
-        this.findCategoryId();
-        this.addItem({
-          name: this.name,
-          category: this.category,
-          amount: parseInt(this.amount),
-          type: this.type,
-          user: this.user,
-          id: this.lastId + 1,
-          date: { year: aux[0], month: aux[1], date: aux[2] }
-        });
       }
     },
     findCategoryId() {
@@ -151,6 +155,13 @@ export default {
         return this.categories.filter(ca => ca.type);
       } else {
         return this.categories.filter(ca => !ca.type);
+      }
+    },
+    onlyID(){
+      if(this.items.filter(ca => ca.name === this.name).length === 0){
+        return true;
+      }else{
+        return false;
       }
     }
   }
