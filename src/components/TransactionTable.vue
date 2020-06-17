@@ -38,7 +38,7 @@
               {{ sorted ? "Unsort" : "Sort" }}
             </button>
             <button
-              class="direction↑"
+              class="direction"
               v-if="column === 'Date'"
               v-on:click="giveDirection()"
             >
@@ -65,13 +65,13 @@
       </tbody>
     </table>
     <div class="paging">
-      <select v-model="groupBy">
+      <select class="select" v-model="groupBy">
         <option :key="item" v-for="item in this.groupBy_">{{ item }}</option>
       </select>
-      <button v-on:click="start()">Start</button>
-      <button v-on:click="goLeft()">Anterior</button>
-      <button v-on:click="goRight()">Siguiente</button>
-      <button v-on:click="end()">End</button>
+      <button class="start" v-on:click="start()">Start</button>
+      <button class="goleft" v-on:click="goLeft()">Anterior</button>
+      <button class="goright" v-on:click="goRight()">Siguiente</button>
+      <button class="end" v-on:click="end()">End</button>
     </div>
   </div>
 </template>
