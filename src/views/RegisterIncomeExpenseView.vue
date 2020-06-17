@@ -126,9 +126,9 @@ export default {
       ) {
         alert("The spaces can not be empty");
       } else {
-        if(onlyID()){
+        if (this.onlyID()) {
           alert("The name already exist");
-        }else{
+        } else {
           if (this.type == "expense") {
             this.amount = this.amount * -1;
           }
@@ -157,11 +157,11 @@ export default {
         return this.categories.filter(ca => !ca.type);
       }
     },
-    onlyID(){
-      if(this.items.filter(ca => ca.name === this.name).length === 0){
-        return true;
-      }else{
+    onlyID() {
+      if (this.items.filter(ca => ca.name === this.name).length === 0) {
         return false;
+      } else {
+        return true;
       }
     }
   }
