@@ -24,7 +24,7 @@ export default new Vuex.Store({
         ci: 7815499,
         name: "Alejandra Quelali",
         email: "aleq@gmail.com",
-        phone: "79845264",
+        phone: 79845264,
         pwd: "13234day"
       }
     ],

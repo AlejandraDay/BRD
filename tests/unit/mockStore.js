@@ -19,7 +19,7 @@ export const mockStore = {
         ci: 7815499,
         name: "Alejandra Quelali",
         email: "aleq@gmail.com",
-        phone: "79845264",
+        phone: 79845264,
         pwd: "13234day"
       }
     ],
@@ -274,8 +274,8 @@ export const mockStore = {
     }
   },
   mutations: {
-    mutateAccountList(state, item) {
-      state.ACCOUNTS.push(item);
+    mutateAccountList(state, newAccount) {
+      state.ACCOUNTS.push(newAccount);
     },
     updateAccount(state, accountToUpdate) {
       let foundAccountIndex = state.ACCOUNTS.findIndex(

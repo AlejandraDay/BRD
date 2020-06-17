@@ -32,7 +32,7 @@
           <select v-model="category" id="categories">
             <option
               :key="cate.id"
-              v-for="cate in categoryFilter"
+              v-for="cate in categoryFilter()"
               class="optionsCategory"
             >
               {{ cate.name }}
@@ -118,11 +118,11 @@ export default {
     ...mapActions(["addItem"]),
     registerItem() {
       if (
-        this.name == "" ||
-        this.category == "" ||
-        this.amount == 0 ||
-        this.type == "" ||
-        this.date == {}
+        this.name === "" ||
+        this.category === "" ||
+        this.amount === 0 ||
+        this.type === "" ||
+        this.date === {}
       ) {
         alert("The spaces can not be empty");
       } else {
@@ -134,7 +134,7 @@ export default {
         this.addItem({
           name: this.name,
           category: this.category,
-          amount: this.amount,
+          amount: parseInt(this.amount),
           type: this.type,
           user: this.user,
           id: this.lastId + 1,

@@ -111,7 +111,6 @@ export default {
       const transactionList = this.transactionList;
       transactionList.forEach(item => {
         if (item.category == categ.id) {
-          console.log("Found in transaction " + item.id);
           hasTransactions = true;
         }
       });
@@ -124,7 +123,6 @@ export default {
         alert("Unable to Delete, transactions still using this category");
       } else {
         if (confirm("Are you sure you want to delete " + categ.name + "?")) {
-          console.log("Deleting " + categ.name + " | " + categ.id);
           this.deleteCategory(categ);
         }
       }
@@ -132,7 +130,7 @@ export default {
     editCat(categ) {
       var updatedName = prompt("Insert the updated name:", "");
       if (updatedName === null || updatedName === "") {
-        console.log("Tried to change for empty name, cancelling");
+        alert("Tried to change for empty name, cancelling");
       } else {
         if (
           confirm(
@@ -143,7 +141,6 @@ export default {
               "?"
           )
         ) {
-          console.log("Updating " + categ.id);
           categ.name = updatedName;
           this.updateCategory(categ);
         }

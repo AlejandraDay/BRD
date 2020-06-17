@@ -8,7 +8,7 @@
           </div>
           <div class="alingButton">
             <button @click="redirectLogin()" class="button delete">
-              Sign Off
+              Sign out
             </button>
           </div>
         </ul>
@@ -44,20 +44,12 @@
           placeholder="*Confirm password"
         />
         <label class="alarm" v-if="pwd == ''">*Obligatory information</label>
-        <!--label class="alarm2" v-if="confirmPwd == ''"
-          >*Obligatory information</label
-        -->
         <label
           class="alarm"
           v-if="pwd != '' && confirmPwd != '' && pwd != confirmPwd"
           >*Passwords don't match</label
         >
         <br />
-        <!--div class="alingButton">
-          <button @click="updateData" class="btn btn-warning">
-            Actualizar
-          </button>
-        </div-->
       </ul>
       <div class="aline">
         <ul class="actions">
@@ -98,7 +90,6 @@ export default {
       return this.getAccount;
     },
     id() {
-      // console.log(this.idAccount);
       return this.idAccount;
     }
   },
@@ -126,11 +117,11 @@ export default {
       if (
         this.accountToEdit.name === "" ||
         this.accountToEdit.email === "" ||
-        this.accountToEdit.phone === "" ||
+        this.accountToEdit.phone === 0 ||
         this.pwd === "" ||
         this.confirmPwd === ""
       ) {
-        console.log("There don't have to be empty fields");
+        alert("There don't have to be empty fields");
       } else {
         if (
           this.pwd === this.confirmPwd &&
@@ -140,15 +131,14 @@ export default {
             name: this.accountToEdit.name,
             ci: this.id,
             email: this.accountToEdit.email,
-            phone: this.accountToEdit.phone,
+            phone: parseInt(this.accountToEdit.phone),
             pwd: this.pwd
           });
-          console.log(this.account);
           alert("Changes made successsfully");
           this.$forceUpdate();
           this.redirectInit();
         } else {
-          console.log("Invalid Changes");
+          alert("Invalid Changes");
         }
       }
     },

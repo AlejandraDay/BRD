@@ -32,7 +32,7 @@
           <select v-model="category" id="categories">
             <option
               :key="cate.id"
-              v-for="cate in categoryFilter"
+              v-for="cate in categoryFilter()"
               class="optionsCategory"
             >
               {{ cate.name }}
@@ -120,16 +120,15 @@ export default {
     ...mapActions(["updateItem", "deleteItem"]),
     ModifyItem() {
       if (
-        this.name == "" ||
-        this.category == "" ||
-        this.amount == 0 ||
-        this.type == "" ||
-        this.date == {} ||
-        this.selectedItem == ""
+        this.name === "" ||
+        this.category === "" ||
+        this.amount === 0 ||
+        this.date === {} ||
+        this.selectedItem === ""
       ) {
         alert("The spaces can't be empty");
       } else {
-        if (this.type == "expense") {
+        if (this.type === "expense") {
           this.amount = this.amount * -1;
         }
         let aux = this.date.split("-");
@@ -139,7 +138,7 @@ export default {
         this.updateItem({
           name: this.name,
           category: this.category,
-          amount: this.amount,
+          amount: parseInt(this.amount),
           type: this.type,
           user: this.user,
           id: this.selectedItem,

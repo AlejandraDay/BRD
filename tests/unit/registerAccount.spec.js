@@ -26,7 +26,7 @@ describe("RegisterAccount.vue", () => {
     wrapper.vm.ci = 45;
     wrapper.vm.name = "";
     wrapper.vm.email = "email@gmail.com";
-    wrapper.vm.phone = "";
+    wrapper.vm.phone = 0;
     wrapper.vm.pwd = "12";
     wrapper.vm.confirmPwd = "12";
     let length = wrapper.vm.$store.state.ACCOUNTS.length;
@@ -55,12 +55,11 @@ describe("RegisterAccount.vue", () => {
     wrapper.vm.ci = 44;
     wrapper.vm.name = "nombre";
     wrapper.vm.email = "email@gmail.com";
-    wrapper.vm.phone = "122212";
+    wrapper.vm.phone = 122212;
     wrapper.vm.pwd = "12";
     wrapper.vm.confirmPwd = "12";
     wrapper.vm.registerNewAccount();
     let accountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
-    console.log(accountListLength);
     assert.equal(accountListLength, initialAccountListLength + 1);
   });
 });

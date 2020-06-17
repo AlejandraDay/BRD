@@ -16,7 +16,7 @@ describe("Testing Transactions", () => {
 
   before(function() {
     global.alert = function(alertMessage) {
-      wrapper.vm.alertMessage == alertMessage;
+      console.log(alertMessage);
     };
     const originalPush = VueRouter.prototype.push;
     VueRouter.prototype.push = function push(location) {

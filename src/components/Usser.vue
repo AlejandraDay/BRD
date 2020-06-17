@@ -81,7 +81,7 @@ export default {
       name: "",
       ci: 0,
       email: "",
-      phone: "",
+      phone: 0,
       pwd: "",
       confirmPwd: "",
       check: false
@@ -96,7 +96,7 @@ export default {
   methods: {
     ...mapActions(["profileView"]),
     redirectView() {
-      this.profileView(false);
+      this.profileView(true);
       this.$router.push("/transaction");
     },
     redirectInit() {
@@ -119,11 +119,11 @@ export default {
         this.name === "" ||
         this.ci === 0 ||
         this.email === "" ||
-        this.phone === "" ||
+        this.phone === 0 ||
         this.pwd === "" ||
         this.confirmPwd === ""
       ) {
-        console.log("There don't have to be empty fields");
+        alert("There don't have to be empty fields");
       } else {
         this.getAllAccount.forEach(account => {
           if (account.ci === parseInt(this.ci)) {
@@ -138,14 +138,14 @@ export default {
               name: this.name,
               ci: this.ci,
               email: this.email,
-              phone: this.phone,
+              phone: parseInt(this.phone),
               pwd: this.pwd
             });
-            console.log("Saved Account");
+            alert("Saved Account");
             this.updateAccountUsser(this.ci);
             this.redirectView();
           } else {
-            console.log("Invalid Password");
+            alert("Invalid Password");
           }
         }
       }

@@ -49,12 +49,6 @@ export default {
         alert("Unchecked type, atleast one must be selected");
       } else {
         if (this.incomeBox) {
-          console.log(
-            "User: " +
-              this.currentUserId +
-              " Adding new Income Category " +
-              this.name
-          );
           const id = this.lastId() + 1;
           this.addCategory({
             id: id, //autogen id
@@ -65,12 +59,6 @@ export default {
         }
         if (this.expenseBox) {
           const id = this.lastId() + 1;
-          console.log(
-            "User: " +
-              this.currentUserId +
-              " Adding new Expense Category " +
-              this.name
-          );
           this.addCategory({
             id: id, //autogen id
             name: this.name,
