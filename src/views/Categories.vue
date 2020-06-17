@@ -1,5 +1,8 @@
 <template>
   <div>
+    <button v-on:click="redirectTransactions()" class="redirectButton">
+      Transactions
+    </button>
     <CategoryReg />
     <div class="line"></div>
     <CategoryTable />
@@ -15,11 +18,25 @@ export default {
   components: {
     CategoryTable,
     CategoryReg
+  },
+  methods: {
+    redirectTransactions() {
+      this.$router.push("Transaction");
+    }
   }
 };
 </script>
 
 <style scoped>
+.redirectButton {
+  width: 10%;
+  padding: 10px 10px;
+  margin: 5px 5%;
+  border: 2px solid rgb(212, 212, 212);
+  background-color: rgb(208, 253, 255);
+  box-sizing: border-box;
+  border-radius: 4px;
+}
 div {
   font-family: Helvetica, sans-serif;
 }

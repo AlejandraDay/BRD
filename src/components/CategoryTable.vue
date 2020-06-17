@@ -2,12 +2,21 @@
   <div class="table">
     <h1 id="categoryTable-title" class="centeredText">Categories Table</h1>
     <div class="moduleCentered">
-      <select v-model="filter" id="selectableFilter" class="selectableFilter">
+      <select
+        v-model="filter"
+        id="selectableFilter"
+        class="selectableFilter"
+        v-on:click="first()"
+      >
         <option>All</option>
         <option>Incomes</option>
         <option>Expenses</option>
       </select>
-      <input v-model="searchName" placeholder="Search by name" />
+      <input
+        v-model="searchName"
+        placeholder="Search by name"
+        v-on:keyup="first()"
+      />
     </div>
     <br />
     <br />
@@ -53,9 +62,12 @@
       <br />
       <label>Items per Page:</label>
       <select v-model="groupBy">
-        <option :key="groupLimit" v-for="groupLimit in this.groupBy_">
-          {{ groupLimit }}
-        </option>
+        <option
+          :key="groupLimit"
+          v-for="groupLimit in this.groupBy_"
+          v-on:click="first()"
+          >{{ groupLimit }}</option
+        >
       </select>
       <br />
       <br />
