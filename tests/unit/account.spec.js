@@ -37,9 +37,34 @@ describe("AccountData.vue", () => {
       router
     });
     let initialAccountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
-    //await wrapper.vm.redirectProfile();
     await wrapper.vm.deleteA(2);
     let accountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
     assert.equal(accountListLength, initialAccountListLength - 1);
   });
+  it("Don't delete administrator account", async () => {
+    const wrapper = shallowMount(Account, {
+      store,
+      localVue,
+      router
+    });
+    let initialAccountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
+    await wrapper.vm.deleteA(0);
+    let accountListLength = wrapper.vm.$store.state.ACCOUNTS.length;
+    assert.equal(accountListLength, initialAccountListLength);
+  });
+  /*  it("Add new Account", () => {
+    const wrapper = shallowMount(Account, {
+      store,
+      localVue,
+      router
+    });
+
+    wrapper.vm.ci = 44;
+    wrapper.vm.name = "nombre";
+    wrapper.vm.email = "email@gmail.com";
+    wrapper.vm.phone = "122212";
+    wrapper.vm.pwd = "12";
+    wrapper.vm.confirmPwd = "12";
+    wrapper.vm.registerNewAccount();
+  });*/
 });

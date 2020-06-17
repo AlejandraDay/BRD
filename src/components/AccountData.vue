@@ -102,7 +102,7 @@ export default {
       return this.getAccount;
     },
     id() {
-      console.log(this.idAccount);
+      // console.log(this.idAccount);
       return this.idAccount;
     }
   },
@@ -124,26 +124,20 @@ export default {
         return false;
       }
     },
-    changetype(pwd) {
-      if (pwd.type == "password") {
-        pwd.type = "text";
-      }
-      return pwd;
-    },
     ...mapActions(["updateAccount"]),
     ...mapActions(["deleteAccount"]),
     saveUpdateAccount() {
       if (
-        this.accountToEdit.name === "" ||
+        this.a === "" ||
         this.accountToEdit.email === "" ||
         this.accountToEdit.phone === "" ||
-        this.changetype(this.pwd) === "" ||
-        this.changetype(this.confirmPwd) === ""
+        this.pwd === "" ||
+        this.confirmPwd === ""
       ) {
         console.log("There don't have to be empty fields");
       } else {
         if (
-          this.changetype(this.pwd) === this.changetype(this.confirmPwd) &&
+          this.pwd === this.confirmPwd &&
           this.validateEmail(this.accountToEdit.email)
         ) {
           this.updateAccount({
@@ -151,7 +145,7 @@ export default {
             ci: this.id,
             email: this.accountToEdit.email,
             phone: this.accountToEdit.phone,
-            pwd: this.changetype(this.pwd)
+            pwd: this.pwd
           });
           console.log(this.account);
           alert("Changes made successsfully");

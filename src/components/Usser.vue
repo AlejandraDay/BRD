@@ -97,7 +97,7 @@ export default {
     ...mapActions(["profileView"]),
     redirectView() {
       this.profileView(false);
-      this.$router.push("Account");
+      this.$router.push("/transaction");
     },
     redirectInit() {
       this.profileView(false);
