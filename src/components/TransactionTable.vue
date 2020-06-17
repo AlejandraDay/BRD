@@ -1,21 +1,29 @@
 <template>
   <div class="transactions">
     <h1>{{ msg }}</h1>
-    <div class="filterDateByDate">
+    <div class="filterByDateCategoy">
       <label>Filter by: </label>
-      <label><input v-model="filterDateBy.year" type="checkbox" />Year</label>
-      <label><input v-model="filterDateBy.month" type="checkbox" />Month</label>
-      <label><input v-model="filterDateBy.date" type="checkbox" />Date</label>
-      <label>
+      <label class="year">
+        <input v-model="filterDateBy.year" type="checkbox" />Year
+      </label>
+      <label class="month">
+        <input v-model="filterDateBy.month" type="checkbox" />Month
+      </label>
+      <label class="date">
+        <input v-model="filterDateBy.date" type="checkbox" />Date
+      </label>
+      <label class="category">
         <input v-model="filterCategoryBy" type="checkbox" />Category
       </label>
       <br />
       <input
+        class="dates"
         v-if="filterDateBy.year || filterDateBy.month || filterDateBy.date"
         type="date"
         v-model="filterDate"
       />
       <input
+        class="categories"
         v-if="filterCategoryBy"
         v-model="filterCategory"
         placeholder="Category Name"
@@ -26,33 +34,15 @@
         <tr class="header">
           <th :key="column" v-for="column in this.headers">
             {{ column }}
-            <button
-              class="sort"
-              v-if="column === 'Date' && !sorted"
-              v-on:click="sort()"
-            >
-              Sort
-            </button>
-            <button
-              class="sort"
-              v-else-if="column === 'Date' && sorted"
-              v-on:click="sort()"
-            >
-              Unsort
+            <button class="sort" v-if="column === 'Date'" v-on:click="sort()">
+              {{ sorted ? "Unsort" : "Sort" }}
             </button>
             <button
               class="direction"
-              v-if="column === 'Date' && sorted && direction"
+              v-if="column === 'Date'"
               v-on:click="giveDirection()"
             >
-              ↑
-            </button>
-            <button
-              class="direction"
-              v-else-if="column === 'Date' && sorted && !direction"
-              v-on:click="giveDirection()"
-            >
-              ↓
+              {{ direction ? "↑" : "↓" }}
             </button>
           </th>
         </tr>
@@ -75,14 +65,17 @@
       </tbody>
     </table>
     <div class="paging">
-      <select v-model="groupBy">
+      <select class="select" v-model="groupBy">
         <option :key="item" v-for="item in this.groupBy_">{{ item }}</option>
       </select>
-      <button v-on:click="start()">Start</button>
-      <button v-on:click="goLeft()">Anterior</button>
-      <button v-on:click="goRight()">Siguiente</button>
-      <button v-on:click="end()">End</button>
+      <button class="start" v-on:click="start()">Start</button>
+      <button class="goleft" v-on:click="goLeft()">Anterior</button>
+      <button class="goright" v-on:click="goRight()">Siguiente</button>
+      <button class="end" v-on:click="end()">End</button>
     </div>
+    <label class="total"
+      >{{ this.currentUser.name }}'s balance: {{ total }}</label
+    >
   </div>
 </template>
 
@@ -142,10 +135,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getItemList"]),
-    ...mapGetters(["getCategoryList"]),
-    ...mapGetters(["getHeaders"]),
-    ...mapGetters(["getAccounts"]),
+    ...mapGetters([
+      "getItemList",
+      "getCategoryList",
+      "getHeaders",
+      "getAccounts",
+      "getAccount"
+    ]),
     filteredPaging() {
       return this.filteredByDC.filter(
         (item, index) => index >= this.lowerLimmit && index < this.upperLimmit
@@ -170,7 +166,10 @@ export default {
           t => 0 <= this.getCategoryName(t.category).search(this.filterCategory)
         );
       }
-      return aux;
+      if (this.currentUser.ci === 0) {
+        return aux;
+      }
+      return aux.filter(t => t.user === this.currentUser.ci);
     },
     transactions() {
       if (this.sorted) {
@@ -196,6 +195,14 @@ export default {
     },
     accounts() {
       return this.getAccounts;
+    },
+    currentUser() {
+      return this.getAccount;
+    },
+    total() {
+      let aux = 0;
+      this.filteredByDC.forEach(t => (aux += t.amount));
+      return aux;
     }
   }
 };
