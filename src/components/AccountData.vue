@@ -83,10 +83,6 @@ export default {
   name: "Account",
   data() {
     return {
-      //  name: "",
-      //  ci: 0,
-      //  email: "",
-      //   phone: "",
       pwd: "",
       confirmPwd: "",
       accountToEdit: {}
@@ -128,7 +124,7 @@ export default {
     ...mapActions(["deleteAccount"]),
     saveUpdateAccount() {
       if (
-        this.a === "" ||
+        this.accountToEdit.name === "" ||
         this.accountToEdit.email === "" ||
         this.accountToEdit.phone === "" ||
         this.pwd === "" ||
