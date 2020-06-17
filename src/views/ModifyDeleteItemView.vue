@@ -86,7 +86,8 @@ export default {
       category: "",
       amount: 0,
       date: {},
-      selectedItem: ""
+      selectedItem: "",
+      type: ""
     };
   },
   computed: {
@@ -129,9 +130,10 @@ export default {
         if (this.type == "expense") {
           this.amount = this.amount * -1;
         }
+        let aux = this.date.split("-");
+        this.findItemtype();
         this.findCategoryId();
         this.findItemId();
-        this.findItemUser();
         this.updateItem({
           name: this.name,
           category: this.category,
@@ -139,7 +141,7 @@ export default {
           type: this.type,
           user: this.user,
           id: this.selectedItem,
-          date: this.date.split("-")
+          date: { year: aux[0], month: aux[1], date: aux[2] }
         });
       }
     },
@@ -159,9 +161,13 @@ export default {
       var index = this.items.findIndex(c => c.name == this.selectedItem);
       this.selectedItem = this.items[index].id;
     },
-    findItemUser() {
+    findItemtype() {
       var index = this.items.findIndex(c => c.name == this.selectedItem);
-      this.user = this.items[index].user;
+      if (this.items[index].amount > 0) {
+        this.type = "income";
+      } else {
+        this.type = "expense";
+      }
     },
     categoryFilter() {
       if (this.type === "income") {
