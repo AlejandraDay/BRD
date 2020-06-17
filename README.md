@@ -21,6 +21,11 @@ npm run build
 npm run test:unit
 ```
 
+### Run your unit tests with Mocha Awesom
+```
+npm run test:awesome
+```
+
 ### Run your end-to-end tests
 ```
 npm run test:e2e
